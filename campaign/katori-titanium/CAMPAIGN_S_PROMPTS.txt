@@ -56,6 +56,12 @@ Using the uploaded photo as the exact product reference (same brushed-titanium b
 Text on image: indigo kicker "DITCH PLASTIC FOR GOOD", big serif headline "Upgrade your board." (bold + italic), price badge "UNDER $30" (the "$30" in yellow), three black pills "0 plastic", "0 mold", "0 odors", gold stars "★★★★★ 4.7 on Amazon", a big rounded orange-yellow button "SHOP NOW →".
 
 =====================================================================
+[9] وش للحمة ووش للخضار (Double-sided)
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same silver brushed-titanium cutting board, rounded corners, small round hanging hole at top-right, vertical brushed grain - do not change its design), create a 4:5 vertical premium ad split into two halves. Light off-white background with a subtle grid. Left half: the titanium board lying flat, top-down view, with a raw ribeye steak and a sprig of rosemary on it, a thin red accent line on that side. Right half: the same titanium board (its other side) lying flat, top-down view, with fresh red bell pepper, broccoli, cherry tomatoes and lettuce on it, a thin green accent line on that side. A small circular "flip" arrow icon between the two boards. Clean editorial food photography, soft natural daylight, crisp shadows.
+Text on image: indigo uppercase kicker "DOUBLE-SIDED", big serif headline "One side for meat. One for veggies." (bold + italic), red pill under the left board "SIDE A · RAW MEAT", green pill under the right board "SIDE B · FRUIT & VEGGIES", footer "KATORI · SIZE S · 8 x 11.5 IN".
+
+=====================================================================
 ضيف ده في آخر أي برومبت لو الموقع بيدعم Negative Prompt:
 ---------------------------------------------------------------------
 distorted product, changed board shape, extra holes, handle slot, logos, watermark, misspelled text, extra fingers, warped hands, blurry, low quality
