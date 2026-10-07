@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/v2.css" />
+    <style>
+      .line { overflow: hidden; display: block; }
+      #stage { position: absolute; inset: -30px; }
+      #beams { left: -760px; top: -1300px; width: 2600px; height: 2600px; border-radius: 50%;
+        background: conic-gradient(from 0deg, rgba(255,255,255,.22) 0 14deg, transparent 14deg 90deg, rgba(255,255,255,.22) 90deg 104deg, transparent 104deg 180deg, rgba(255,255,255,.22) 180deg 194deg, transparent 194deg 270deg, rgba(255,255,255,.22) 270deg 284deg, transparent 284deg 360deg); }
+      .hz { position: absolute; left: 0; width: 1140px; height: 110px; overflow: hidden; border-top: 6px solid #111; border-bottom: 6px solid #111; }
+      .hz .strip { position: absolute; left: 0; top: 0; width: 2600px; height: 100%; background: repeating-linear-gradient(-45deg, var(--hazard) 0 56px, #111 56px 112px); }
+      #strobe { background: #000; opacity: 0; }
+      .kw { position: absolute; left: 0; right: 0; text-align: center; font-family: Anton; font-size: 270px; line-height: .9; letter-spacing: 6px; }
+      .grain { position: absolute; inset: -60px; background: url("assets/grain.png"); background-size: 540px 960px; opacity: .06; mix-blend-mode: overlay; }
+      .sticker { position: absolute; left: 50%; transform: translateX(-50%); padding: 18px 30px; border-radius: 18px; background: #fff; color: #111; font-weight: 700; font-size: 46px; line-height: 1.2; text-align: center; white-space: nowrap; box-shadow: 0 8px 26px rgba(0,0,0,.25); }
+      .caps { position: absolute; left: 50px; right: 50px; top: 1330px; height: 240px; }
+      .cap { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-weight: 900; font-size: 92px; line-height: 1.05; color: #fff; opacity: 0;
+        -webkit-text-stroke: 5px #000; paint-order: stroke fill; text-shadow: 0 8px 20px rgba(0,0,0,.5); }
+      .cw { display: inline-block; }
+      .mag { position: absolute; width: 330px; height: 330px; border-radius: 50%; border: 10px solid #111; background: rgba(255,255,255,.35); box-shadow: 0 20px 40px rgba(0,0,0,.3); overflow: hidden; }
+      .mag .lbl { position: absolute; left: 50%; bottom: 34px; transform: translateX(-50%); background: var(--red); color: #fff; font-weight: 900; font-size: 24px; letter-spacing: 2px; padding: 6px 14px; border-radius: 8px; }
+      .mag .speck { width: 16px; height: 16px; background: #fff; box-shadow: 0 0 0 2px rgba(0,0,0,.25); }
+      .price { position: absolute; width: 240px; height: 240px; border-radius: 50%; background: #fff; color: var(--acc); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 40px rgba(0,0,0,.25); }
+      .price .s { font-weight: 800; font-size: 26px; letter-spacing: 4px; color: var(--ink); }
+      .price .p { font-family: Playfair; font-weight: 900; font-size: 100px; line-height: 1; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920">
+      <div id="stage" data-layout-allow-overflow>
+
+        <!-- HOOK: full-screen kitchen warning (0 - 3s) -->
+        <div id="s1" class="clip bg-red" data-start="0" data-duration="3.4" data-track-index="0">
+          <div class="abs" id="beams" data-layout-allow-overflow></div>
+          <div class="hz" style="top: 30px;"><div class="strip" id="hzTop" data-layout-allow-overflow></div></div>
+          <div class="hz" style="bottom: 30px;"><div class="strip" id="hzBot" data-layout-allow-overflow></div></div>
+          <img class="abs" id="warnIcon" src="assets/warning.svg" alt="" style="left: 400px; top: 220px; width: 340px;" />
+          <div class="kw" id="kw1" style="top: 590px; color: #fff;">KITCHEN</div>
+          <div class="kw" id="kw2" style="top: 840px; color: var(--hazard); -webkit-text-stroke: 6px #111; paint-order: stroke fill;">WARNING</div>
+          <div class="fill" id="strobe"></div>
+        </div>
+
+        <!-- plastic sheds microplastics (3 - 5.9) -->
+        <div id="s2" class="clip bg-paper" data-start="3" data-duration="2.9" data-track-index="0">
+          <img class="abs" id="plastic" src="assets/plastic_board.svg" alt="" style="left: 110px; top: 360px; width: 860px;" />
+          <img class="abs" id="knifeA" src="assets/knife.svg" alt="" style="left: 300px; top: 520px; width: 720px;" />
+          <div class="fill" id="specks2"></div>
+          <div class="mag" id="mag" style="left: 640px; top: 820px;"><div class="fill" id="magSpecks"></div><div class="lbl">MICROPLASTICS</div></div>
+        </div>
+
+        <!-- switched to titanium (5.9 - 7.7) -->
+        <div id="s3" class="clip bg-acc" data-start="5.9" data-duration="1.8" data-track-index="0">
+          <img class="abs" id="burst1" src="assets/burst.svg" alt="" style="right: -40px; top: -40px; width: 460px; transform: scaleX(-1);" data-layout-allow-overflow />
+          <img class="abs" id="burst2" src="assets/burst.svg" alt="" style="left: -40px; bottom: -40px; width: 420px; transform: scaleY(-1);" data-layout-allow-overflow />
+          <div class="shadow" style="left: 240px; top: 1320px; width: 620px; height: 100px;"></div>
+          <div class="tiboard" id="tb3" style="left: 270px; top: 380px; width: 560px; height: 805px;">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="sheen" id="tb3sheen"></div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+          </div>
+          <div class="tile" id="tile" style="left: 760px; top: 1000px;">
+            <div class="n">22</div><div class="sym">Ti</div><div class="nm">Titanium</div><div class="wt">47.867</div>
+          </div>
+        </div>
+
+        <!-- lemon: nothing soaks in (7.7 - 9.25) -->
+        <div id="s4" class="clip bg-paper" data-start="7.7" data-duration="1.55" data-track-index="0">
+          <div class="card" id="lemonCard" style="left: 40px; top: 420px; width: 1000px; height: 690px;"><img src="assets/lemon_photo.jpg" alt="" /></div>
+        </div>
+
+        <!-- knife-friendly (9.25 - 10.8) -->
+        <div id="s5" class="clip bg-paper" data-start="9.25" data-duration="1.55" data-track-index="0">
+          <div class="shadow" style="left: 240px; top: 1250px; width: 620px; height: 90px;"></div>
+          <div class="tiboard" id="tb5" style="left: 260px; top: 360px; width: 560px; height: 805px; transform: rotate(6deg);">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+          </div>
+          <img class="abs" id="knifeB" src="assets/knife.svg" alt="" style="left: 220px; top: 700px; width: 780px;" />
+        </div>
+
+        <!-- two sides (10.8 - 11.55) -->
+        <div id="s6" class="clip bg-paper" data-start="10.8" data-duration="0.75" data-track-index="0">
+          <div style="position: absolute; inset: 0; perspective: 1800px;">
+            <div class="tiboard" id="tb6" style="left: 260px; top: 360px; width: 560px; height: 805px;">
+              <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="side-label">SIDE A · MEAT</div></div>
+              <div class="face back"><div class="tone2"></div><div class="tone"></div><div class="side-label" style="opacity: 0;">SIDE B · VEGGIES</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- dishwasher (11.55 - 13.2) -->
+        <div id="s7" class="clip bg-paper" data-start="11.55" data-duration="1.65" data-track-index="0">
+          <div class="card" id="dwCard" style="left: 220px; top: 330px; width: 640px; height: 1108px;"><img src="assets/dishwasher_photo.jpg" alt="" /></div>
+          <div class="fill" id="bubbles"></div>
+        </div>
+
+        <!-- end card (13.2 - 15) -->
+        <div id="s8" class="clip bg-acc" data-start="13.2" data-duration="1.8" data-track-index="0">
+          <img class="abs" src="assets/burst.svg" alt="" style="left: -40px; top: -40px; width: 420px;" data-layout-allow-overflow />
+          <div class="shadow" style="left: 260px; top: 1240px; width: 560px; height: 90px;"></div>
+          <div class="tiboard" id="tb8" style="left: 300px; top: 420px; width: 480px; height: 690px;">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="sheen" id="tb8sheen"></div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+          </div>
+          <div class="price" id="price" style="left: 760px; top: 420px;"><span class="s">UNDER</span><span class="p">$30</span></div>
+        </div>
+      </div>
+
+      <div id="look" class="clip" data-start="0" data-duration="15" data-track-index="1">
+        <div class="grain" data-layout-allow-overflow id="grain"></div>
+      </div>
+
+      <div id="k2" class="clip" data-start="3.05" data-duration="2.85" data-track-index="2">
+        <div class="sticker" id="k2s" style="top: 170px; ">every. single. cut. 😳</div>
+      </div>
+      <div id="k3" class="clip" data-start="6.05" data-duration="1.65" data-track-index="2">
+        <div class="sticker" id="k3s" style="top: 170px; ">100% titanium ✨</div>
+      </div>
+      <div id="k4" class="clip" data-start="7.75" data-duration="1.5" data-track-index="2">
+        <div class="sticker" id="k4s" style="top: 170px; ">no smell. no stains. 🙌</div>
+      </div>
+      <div id="k5" class="clip" data-start="9.3" data-duration="1.5" data-track-index="2">
+        <div class="sticker" id="k5s" style="top: 170px; ">knife-friendly 🔪</div>
+      </div>
+      <div id="k6" class="clip" data-start="10.85" data-duration="0.7" data-track-index="2">
+        <div class="sticker" id="k6s" style="top: 170px; ">double-sided 🔄</div>
+      </div>
+      <div id="k7" class="clip" data-start="11.6" data-duration="1.6" data-track-index="2">
+        <div class="sticker" id="k7s" style="top: 170px; ">dishwasher safe 🧼</div>
+      </div>
+      <div id="k8" class="clip" data-start="13.35" data-duration="1.65" data-track-index="2">
+        <div class="sticker" id="k8s" style="top: 170px; background: #111; color: #fff;">⭐ 4.7 on Amazon</div>
+      </div>
+      <div id="k9" class="clip" data-start="13.7" data-duration="1.3" data-track-index="2">
+        <div class="sticker" id="k9s" style="top: 1640px; background: #ffe14d;">tap “Shop now” 👇</div>
+      </div>
+
+      <div id="captions" class="clip" data-start="0" data-duration="15" data-track-index="3">
+        <div class="caps">
+          <div class="cap" id="cap1"><span class="cw" id="w1_0">STOP!</span></div>
+          <div class="cap" id="cap2"><span class="cw" id="w2_0">IF</span> <span class="cw" id="w2_1">YOU</span> <span class="cw" id="w2_2">STILL</span></div>
+          <div class="cap" id="cap3"><span class="cw" id="w3_0">CHOP</span> <span class="cw" id="w3_1">ON</span> <span class="cw" id="w3_2">PLASTIC</span></div>
+          <div class="cap" id="cap4"><span class="cw" id="w4_0">WATCH</span> <span class="cw" id="w4_1">THIS</span></div>
+          <div class="cap" id="cap5"><span class="cw" id="w5_0">EVERY</span> <span class="cw" id="w5_1">CUT</span> <span class="cw" id="w5_2">SCRAPES</span></div>
+          <div class="cap" id="cap6"><span class="cw" id="w6_0">TINY</span> <span class="cw" id="w6_1">BITS</span> <span class="cw" id="w6_2">OF</span></div>
+          <div class="cap" id="cap7"><span class="cw" id="w7_0">PLASTIC</span> <span class="cw" id="w7_1">INTO</span> <span class="cw" id="w7_2">YOUR</span></div>
+          <div class="cap" id="cap8"><span class="cw" id="w8_0">FOOD</span></div>
+          <div class="cap" id="cap9"><span class="cw" id="w9_0">SO</span> <span class="cw" id="w9_1">I</span> <span class="cw" id="w9_2">SWITCHED</span></div>
+          <div class="cap" id="cap10"><span class="cw" id="w10_0">TO</span> <span class="cw" id="w10_1">PURE</span> <span class="cw" id="w10_2">TITANIUM</span></div>
+          <div class="cap" id="cap11"><span class="cw" id="w11_0">NOTHING</span> <span class="cw" id="w11_1">SOAKS</span> <span class="cw" id="w11_2">IN</span></div>
+          <div class="cap" id="cap12"><span class="cw" id="w12_0">NO</span> <span class="cw" id="w12_1">SMELL</span></div>
+          <div class="cap" id="cap13"><span class="cw" id="w13_0">AND</span> <span class="cw" id="w13_1">IT&#x27;S</span> <span class="cw" id="w13_2">EASY</span></div>
+          <div class="cap" id="cap14"><span class="cw" id="w14_0">ON</span> <span class="cw" id="w14_1">MY</span> <span class="cw" id="w14_2">KNIVES</span></div>
+          <div class="cap" id="cap15"><span class="cw" id="w15_0">TWO</span> <span class="cw" id="w15_1">SIDES</span></div>
+          <div class="cap" id="cap16"><span class="cw" id="w16_0">AND</span> <span class="cw" id="w16_1">IT</span> <span class="cw" id="w16_2">GOES</span></div>
+          <div class="cap" id="cap17"><span class="cw" id="w17_0">RIGHT</span> <span class="cw" id="w17_1">IN</span> <span class="cw" id="w17_2">THE</span></div>
+          <div class="cap" id="cap18"><span class="cw" id="w18_0">DISHWASHER</span></div>
+          <div class="cap" id="cap19"><span class="cw" id="w19_0">LINK</span> <span class="cw" id="w19_1">IS</span> <span class="cw" id="w19_2">BELOW!</span></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let seed = 7;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+      const make = (parentId, n, cls, styleFn) => {
+        const p = document.getElementById(parentId), els = [];
+        for (let i = 0; i < n; i++) { const d = document.createElement("div"); d.className = cls; Object.assign(d.style, styleFn(i)); p.appendChild(d); els.push(d); }
+        return els;
+      };
+      document.querySelectorAll(".tiboard").forEach((b) => {
+        for (let i = 1; i <= 6; i++) { const e = document.createElement("div"); e.className = "edge"; e.style.transform = `translateZ(${-i * 2}px)`; b.insertBefore(e, b.firstChild); }
+      });
+      const specks2 = make("specks2", 36, "speck", () => ({ left: "560px", top: "690px", background: rnd() > 0.5 ? "#fff" : "#cfe3ff" }));
+      const magSpecks = make("magSpecks", 18, "speck", () => ({ left: 30 + rnd() * 260 + "px", top: 30 + rnd() * 220 + "px", transform: `rotate(${rnd() * 90}deg)` }));
+      const bubbles = make("bubbles", 18, "bubble", () => { const s = 30 + rnd() * 60; return { width: s + "px", height: s + "px", left: 240 + rnd() * 600 + "px", top: 1250 + rnd() * 250 + "px" }; });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set("#knifeA", { x: 520, y: -260, rotation: 28, opacity: 1 }, 0);
+
+      // handheld drift
+      tl.fromTo("#stage", { x: -5, y: 4, rotation: -0.3 }, { x: 5, y: -4, rotation: 0.3, duration: 0.9, ease: "sine.inOut", repeat: 15, yoyo: true }, 0);
+      tl.fromTo("#grain", { x: 0, y: 0 }, { x: 37, y: -23, duration: 0.1, ease: "steps(1)", repeat: 149, yoyo: true }, 0);
+
+      // hook
+      tl.fromTo("#beams", { rotation: 0 }, { rotation: 260, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#hzTop", { x: 0 }, { x: -1270, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#hzBot", { x: -1270 }, { x: 0, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#strobe", { opacity: 0 }, { opacity: 0.38, duration: 0.25, ease: "steps(1)", repeat: 11, yoyo: true }, 0);
+      tl.fromTo("#warnIcon", { scale: 1.4, rotation: -10 }, { scale: 1, rotation: 0, duration: 0.35, ease: "back.out(3)" }, 0);
+      tl.to("#warnIcon", { scale: 1.08, duration: 0.25, repeat: 9, yoyo: true, ease: "sine.inOut" }, 0.4);
+      tl.fromTo("#kw1", { scale: 1.06 }, { scale: 1, duration: 0.22, ease: "power4.out" }, 0);
+      tl.fromTo("#kw2", { scale: 1.06 }, { scale: 1, duration: 0.22, ease: "power4.out" }, 0.08);
+
+      // plastic + microplastics
+      tl.fromTo("#plastic", { rotation: -8, scale: 0.9 }, { rotation: -3, scale: 1, duration: 2.9, ease: "power1.out" }, 3.0);
+      [3.3, 3.8, 4.4].forEach((t, k) => {
+        tl.fromTo("#knifeA", { x: 520, y: -260, rotation: 28 }, { x: -260, y: 120, rotation: 10, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
+        specks2.forEach((el, i) => {
+          if (i % 3 !== k) return;
+          const a = -Math.PI * (0.1 + rnd() * 0.8), r = 140 + rnd() * 420;
+          tl.fromTo(el, { x: 0, y: 0, opacity: 1, scale: 0.5 + rnd() }, { x: Math.cos(a) * r, y: Math.sin(a) * r + 260, opacity: 0, rotation: rnd() * 360, duration: 0.9, ease: "power2.out" }, t + 0.18);
+        });
+      });
+      tl.set("#knifeA", { opacity: 0 }, 4.75);
+      tl.fromTo("#mag", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.4, ease: "back.out(2.4)" }, 4.75);
+      magSpecks.forEach((el, i) => tl.fromTo(el, { scale: 0 }, { scale: 1, duration: 0.2, ease: "back.out(3)" }, 4.95 + i * 0.03));
+
+      // titanium reveal
+      tl.fromTo("#s3", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(80% at 50% 50%)", duration: 0.45, ease: "power3.out" }, 5.9);
+      tl.fromTo(["#burst1", "#burst2"], { scale: 0 }, { scale: 1, duration: 0.45, ease: "back.out(2)" }, 6.05);
+      tl.fromTo("#tb3", { rotationY: -85, y: 200, opacity: 0 }, { rotationY: -18, y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 5.95);
+      tl.to("#tb3", { rotationY: 14, y: -16, duration: 1.1, ease: "sine.inOut" }, 6.65);
+      tl.fromTo("#tb3sheen", { x: -300 }, { x: 900, duration: 0.8, ease: "power2.inOut" }, 6.5);
+      tl.fromTo("#tile", { rotation: -25, scale: 0 }, { rotation: 6, scale: 1, duration: 0.45, ease: "back.out(2.2)" }, 6.6);
+
+      // lemon
+      tl.fromTo("#lemonCard", { y: 260, rotation: 5, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.45, ease: "power3.out" }, 7.7);
+      tl.to("#lemonCard img", { scale: 1.12, duration: 1.5, ease: "none" }, 7.7);
+
+      // knife-friendly
+      tl.fromTo("#tb5", { rotation: 12, scale: 0.9 }, { rotation: 6, scale: 1, duration: 1.5, ease: "power2.out" }, 9.25);
+      tl.fromTo("#knifeB", { x: 560, y: -140, rotation: -10 }, { x: -320, y: 80, rotation: -16, duration: 0.5, ease: "power2.inOut" }, 9.5);
+
+      // flip
+      tl.fromTo("#tb6", { rotationY: 0 }, { rotationY: 180, duration: 0.5, ease: "power3.inOut" }, 10.9);
+      tl.set("#tb6 .front .side-label", { opacity: 0 }, 11.15);
+      tl.set("#tb6 .back .side-label", { opacity: 1 }, 11.15);
+
+      // dishwasher
+      tl.fromTo("#dwCard", { y: 300, rotation: 6, opacity: 0 }, { y: 0, rotation: 2, opacity: 1, duration: 0.45, ease: "power3.out" }, 11.55);
+      bubbles.forEach((el, i) => tl.fromTo(el, { y: 0, opacity: 0, scale: 0.4 }, { y: -700 - (i % 5) * 90, opacity: 1, scale: 1, duration: 1.0, ease: "power1.out" }, 11.65 + (i % 9) * 0.06));
+
+      // end card
+      tl.fromTo("#s8", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(80% at 50% 50%)", duration: 0.45, ease: "power3.out" }, 13.2);
+      tl.fromTo("#tb8", { rotationY: -60, y: 160, opacity: 0 }, { rotationY: -14, y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 13.25);
+      tl.to("#tb8", { rotationY: 14, duration: 1.2, ease: "sine.inOut" }, 13.85);
+      tl.fromTo("#tb8sheen", { x: -300 }, { x: 900, duration: 0.8, ease: "power2.inOut" }, 13.8);
+      tl.fromTo("#price", { scale: 0, rotation: -40 }, { scale: 1, rotation: 10, duration: 0.4, ease: "back.out(2.5)" }, 13.6);
+
+      // stickers
+      tl.fromTo("#k2s", { scale: 0.4, opacity: 0, rotation: -11 }, { scale: 1, opacity: 1, rotation: -3, duration: 0.28, ease: "back.out(2.6)" }, 3.07);
+      tl.fromTo("#k3s", { scale: 0.4, opacity: 0, rotation: -5 }, { scale: 1, opacity: 1, rotation: 3, duration: 0.28, ease: "back.out(2.6)" }, 6.069999999999999);
+      tl.fromTo("#k4s", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 7.77);
+      tl.fromTo("#k5s", { scale: 0.4, opacity: 0, rotation: -6 }, { scale: 1, opacity: 1, rotation: 2, duration: 0.28, ease: "back.out(2.6)" }, 9.32);
+      tl.fromTo("#k6s", { scale: 0.4, opacity: 0, rotation: -11 }, { scale: 1, opacity: 1, rotation: -3, duration: 0.28, ease: "back.out(2.6)" }, 10.87);
+      tl.fromTo("#k7s", { scale: 0.4, opacity: 0, rotation: -6 }, { scale: 1, opacity: 1, rotation: 2, duration: 0.28, ease: "back.out(2.6)" }, 11.62);
+      tl.fromTo("#k8s", { scale: 0.4, opacity: 0, rotation: -11 }, { scale: 1, opacity: 1, rotation: -3, duration: 0.28, ease: "back.out(2.6)" }, 13.37);
+      tl.fromTo("#k9s", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 13.719999999999999);
+
+      // captions
+      tl.fromTo("#cap1", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 0.200);
+      tl.set("#cap1", { opacity: 0 }, 0.576);
+      tl.set("#w1_0", { color: "#ffe14d" }, 0.200);
+      tl.set("#w1_0", { color: "#ffffff" }, 0.581);
+      tl.fromTo("#cap2", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 0.581);
+      tl.set("#cap2", { opacity: 0 }, 1.130);
+      tl.set("#w2_0", { color: "#ffe14d" }, 0.581);
+      tl.set("#w2_0", { color: "#ffffff" }, 0.720);
+      tl.set("#w2_1", { color: "#ffe14d" }, 0.720);
+      tl.set("#w2_1", { color: "#ffffff" }, 0.893);
+      tl.set("#w2_2", { color: "#ffe14d" }, 0.893);
+      tl.set("#w2_2", { color: "#ffffff" }, 1.135);
+      tl.fromTo("#cap3", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 1.135);
+      tl.set("#cap3", { opacity: 0 }, 1.962);
+      tl.set("#w3_0", { color: "#ffe14d" }, 1.135);
+      tl.set("#w3_0", { color: "#ffffff" }, 1.343);
+      tl.set("#w3_1", { color: "#ffe14d" }, 1.343);
+      tl.set("#w3_1", { color: "#ffffff" }, 1.482);
+      tl.set("#w3_2", { color: "#ffe14d" }, 1.482);
+      tl.set("#w3_2", { color: "#ffffff" }, 1.967);
+      tl.fromTo("#cap4", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 1.967);
+      tl.set("#cap4", { opacity: 0 }, 2.585);
+      tl.set("#w4_0", { color: "#ffe14d" }, 1.967);
+      tl.set("#w4_0", { color: "#ffffff" }, 2.209);
+      tl.set("#w4_1", { color: "#ffe14d" }, 2.209);
+      tl.set("#w4_1", { color: "#ffffff" }, 2.590);
+      tl.fromTo("#cap5", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 3.100);
+      tl.set("#cap5", { opacity: 0 }, 3.908);
+      tl.set("#w5_0", { color: "#ffe14d" }, 3.100);
+      tl.set("#w5_0", { color: "#ffffff" }, 3.371);
+      tl.set("#w5_1", { color: "#ffe14d" }, 3.371);
+      tl.set("#w5_1", { color: "#ffffff" }, 3.564);
+      tl.set("#w5_2", { color: "#ffe14d" }, 3.564);
+      tl.set("#w5_2", { color: "#ffffff" }, 3.913);
+      tl.fromTo("#cap6", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 3.913);
+      tl.set("#cap6", { opacity: 0 }, 4.527);
+      tl.set("#w6_0", { color: "#ffe14d" }, 3.913);
+      tl.set("#w6_0", { color: "#ffffff" }, 4.145);
+      tl.set("#w6_1", { color: "#ffe14d" }, 4.145);
+      tl.set("#w6_1", { color: "#ffffff" }, 4.377);
+      tl.set("#w6_2", { color: "#ffe14d" }, 4.377);
+      tl.set("#w6_2", { color: "#ffffff" }, 4.532);
+      tl.fromTo("#cap7", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 4.532);
+      tl.set("#cap7", { opacity: 0 }, 5.339);
+      tl.set("#w7_0", { color: "#ffe14d" }, 4.532);
+      tl.set("#w7_0", { color: "#ffffff" }, 4.880);
+      tl.set("#w7_1", { color: "#ffe14d" }, 4.880);
+      tl.set("#w7_1", { color: "#ffffff" }, 5.112);
+      tl.set("#w7_2", { color: "#ffe14d" }, 5.112);
+      tl.set("#w7_2", { color: "#ffffff" }, 5.344);
+      tl.fromTo("#cap8", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 5.344);
+      tl.set("#cap8", { opacity: 0 }, 5.765);
+      tl.set("#w8_0", { color: "#ffe14d" }, 5.344);
+      tl.set("#w8_0", { color: "#ffffff" }, 5.770);
+      tl.fromTo("#cap9", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 6.000);
+      tl.set("#cap9", { opacity: 0 }, 6.626);
+      tl.set("#w9_0", { color: "#ffe14d" }, 6.000);
+      tl.set("#w9_0", { color: "#ffffff" }, 6.149);
+      tl.set("#w9_1", { color: "#ffe14d" }, 6.149);
+      tl.set("#w9_1", { color: "#ffffff" }, 6.260);
+      tl.set("#w9_2", { color: "#ffe14d" }, 6.260);
+      tl.set("#w9_2", { color: "#ffffff" }, 6.631);
+      tl.fromTo("#cap10", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 6.631);
+      tl.set("#cap10", { opacity: 0 }, 7.555);
+      tl.set("#w10_0", { color: "#ffe14d" }, 6.631);
+      tl.set("#w10_0", { color: "#ffffff" }, 6.780);
+      tl.set("#w10_1", { color: "#ffe14d" }, 6.780);
+      tl.set("#w10_1", { color: "#ffffff" }, 7.003);
+      tl.set("#w10_2", { color: "#ffe14d" }, 7.003);
+      tl.set("#w10_2", { color: "#ffffff" }, 7.560);
+      tl.fromTo("#cap11", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 7.750);
+      tl.set("#cap11", { opacity: 0 }, 8.675);
+      tl.set("#w11_0", { color: "#ffe14d" }, 7.750);
+      tl.set("#w11_0", { color: "#ffffff" }, 8.085);
+      tl.set("#w11_1", { color: "#ffe14d" }, 8.085);
+      tl.set("#w11_1", { color: "#ffffff" }, 8.345);
+      tl.set("#w11_2", { color: "#ffe14d" }, 8.345);
+      tl.set("#w11_2", { color: "#ffffff" }, 8.680);
+      tl.fromTo("#cap12", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 8.680);
+      tl.set("#cap12", { opacity: 0 }, 9.271);
+      tl.set("#w12_0", { color: "#ffe14d" }, 8.680);
+      tl.set("#w12_0", { color: "#ffffff" }, 8.829);
+      tl.set("#w12_1", { color: "#ffe14d" }, 8.829);
+      tl.set("#w12_1", { color: "#ffffff" }, 9.276);
+      tl.fromTo("#cap13", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 9.276);
+      tl.set("#cap13", { opacity: 0 }, 9.903);
+      tl.set("#w13_0", { color: "#ffe14d" }, 9.276);
+      tl.set("#w13_0", { color: "#ffffff" }, 9.462);
+      tl.set("#w13_1", { color: "#ffe14d" }, 9.462);
+      tl.set("#w13_1", { color: "#ffffff" }, 9.685);
+      tl.set("#w13_2", { color: "#ffe14d" }, 9.685);
+      tl.set("#w13_2", { color: "#ffffff" }, 9.908);
+      tl.fromTo("#cap14", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 9.908);
+      tl.set("#cap14", { opacity: 0 }, 10.685);
+      tl.set("#w14_0", { color: "#ffe14d" }, 9.908);
+      tl.set("#w14_0", { color: "#ffffff" }, 10.057);
+      tl.set("#w14_1", { color: "#ffe14d" }, 10.057);
+      tl.set("#w14_1", { color: "#ffffff" }, 10.206);
+      tl.set("#w14_2", { color: "#ffe14d" }, 10.206);
+      tl.set("#w14_2", { color: "#ffffff" }, 10.690);
+      tl.fromTo("#cap15", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 10.850);
+      tl.set("#cap15", { opacity: 0 }, 11.439);
+      tl.set("#w15_0", { color: "#ffe14d" }, 10.850);
+      tl.set("#w15_0", { color: "#ffffff" }, 11.025);
+      tl.set("#w15_1", { color: "#ffe14d" }, 11.025);
+      tl.set("#w15_1", { color: "#ffffff" }, 11.444);
+      tl.fromTo("#cap16", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 11.444);
+      tl.set("#cap16", { opacity: 0 }, 11.963);
+      tl.set("#w16_0", { color: "#ffe14d" }, 11.444);
+      tl.set("#w16_0", { color: "#ffffff" }, 11.618);
+      tl.set("#w16_1", { color: "#ffe14d" }, 11.618);
+      tl.set("#w16_1", { color: "#ffffff" }, 11.758);
+      tl.set("#w16_2", { color: "#ffe14d" }, 11.758);
+      tl.set("#w16_2", { color: "#ffffff" }, 11.968);
+      tl.fromTo("#cap17", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 11.968);
+      tl.set("#cap17", { opacity: 0 }, 12.521);
+      tl.set("#w17_0", { color: "#ffe14d" }, 11.968);
+      tl.set("#w17_0", { color: "#ffffff" }, 12.212);
+      tl.set("#w17_1", { color: "#ffe14d" }, 12.212);
+      tl.set("#w17_1", { color: "#ffffff" }, 12.352);
+      tl.set("#w17_2", { color: "#ffe14d" }, 12.352);
+      tl.set("#w17_2", { color: "#ffffff" }, 12.526);
+      tl.fromTo("#cap18", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 12.526);
+      tl.set("#cap18", { opacity: 0 }, 13.115);
+      tl.set("#w18_0", { color: "#ffe14d" }, 12.526);
+      tl.set("#w18_0", { color: "#ffffff" }, 13.120);
+      tl.fromTo("#cap19", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 13.300);
+      tl.set("#cap19", { opacity: 0 }, 14.145);
+      tl.set("#w19_0", { color: "#ffe14d" }, 13.300);
+      tl.set("#w19_0", { color: "#ffffff" }, 13.532);
+      tl.set("#w19_1", { color: "#ffe14d" }, 13.532);
+      tl.set("#w19_1", { color: "#ffffff" }, 13.686);
+      tl.set("#w19_2", { color: "#ffe14d" }, 13.686);
+      tl.set("#w19_2", { color: "#ffffff" }, 14.150);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

@@ -7,8 +7,10 @@
 
 | الملف | الوصف |
 |---|---|
-| `output/videos/katori-ad-15s-9x16.mp4` | إعلان احترافي 15 ثانية، 1080×1920، فيه هوك 3 ثواني وفويس أوفر ومزيكا |
-| `output/videos/katori-ugc-15s-9x16.mp4` | فيديو بأسلوب UGC مدته 15 ثانية، بصوت كرييتر وكابشن كلمة بكلمة وستيكرز |
+| `output/videos/katori-ad-15s-v2-9x16.mp4` | ⭐ **النسخة البريميوم (v2)**: إعلان 15 ثانية بستايل editorial |
+| `output/videos/katori-ugc-15s-v2-9x16.mp4` | ⭐ **UGC v2**: بنفس الستايل البريميوم مع كابشن وستيكرز |
+| `output/videos/katori-ad-15s-9x16.mp4` | النسخة الأولى (v1) |
+| `output/videos/katori-ugc-15s-9x16.mp4` | النسخة الأولى من الـ UGC (v1) |
 | `output/videos/*-cover.jpg` | صور الغلاف (thumbnail) |
 | `output/images/01-closeup-material.jpg` | **من قريب**: خامة التيتانيوم المصقولة مع عدسة تكبير |
 | `output/images/02-wide-lifestyle.jpg` | **من بعيد**: اللوح في المطبخ |
@@ -21,7 +23,41 @@
 
 ---
 
-## 1) الإعلان الاحترافي (15 ثانية)
+## ⭐ النسخة v2 (البريميوم)
+
+**إيه اللي اتغير عن v1:**
+- **أول 3 ثواني كلها شاشة KITCHEN WARNING** على الشاشة كلها: أحمر، شرايط تحذير صفرا وسودا بتتحرك، إضاءة سارينة بتلف، فلاش بيرمش، ومعاها **صوت إنذار (سارينة + بيب)**.
+- **الجودة:** شلت كل الصور اللي كانت بتتقص وتتكبر وتبوظ. البلاستيك المخدوش والسكينة والإنذار بقوا **رسومات فيكتور** حادة في أي مقاس. لوح التيتانيوم بقى **ريندر 3D** فيه سُمك وانعكاس معدني، وبيلف ويتقلب. ولوح الخشب صورة **Pexels مجانية** بدقة أعلى، معروضة في كارت من غير تكبير زيادة.
+- **ستايل بريميوم زي الريفرنس:** خط serif (Playfair) بيمزج italic مع bold، نص ضخم باهت في الخلفية، لون واحد قوي (indigo) مع ورق فاتح بشبكة خطوط، أشكال starburst، انتقالات wipe، وبلاطة عنصر "Ti 22" من الجدول الدوري كـ visual metaphor.
+- **المميزات أوضح:** كل ميزة ليها مشهد ورقم (01/05 → 05/05):
+  1. Nothing soaks in: نقط ميه بتتجمع على السطح.
+  2. Kind to your knives: سكينة بتعدي على اللوح.
+  3. Two sides: اللوح بيتقلب 3D.
+  4. Acid-proof: صورة الليمون الحقيقية.
+  5. Dishwasher safe: صورة الغسالة الحقيقية مع فقاقيع.
+- **الصوت:** سارينة، impacts، whoosh مع كل انتقال، صوت السكينة، وبيت بريميوم. الفويس أوفر واضح فوق كل ده.
+
+**ستوري بورد الإعلان v2:**
+
+| الوقت | المشهد | الفويس أوفر |
+|---|---|---|
+| 0–3 | ⚠ KITCHEN WARNING على الشاشة كلها مع سارينة، وبعدها "YOUR CUTTING BOARD IS **FEEDING YOU PLASTIC**" وجزيئات بتطير | *"Warning! Your cutting board is feeding you plastic."* |
+| 3–5.7 | سكينة بتخدش البلاستيك والجزيئات بتطير، ثم صورة الخشب. ✕ على الاتنين | *"Plastic sheds. Wood soaks up everything."* |
+| 5.7–8 | خلفية indigo، ولوح التيتانيوم 3D داخل بلفّة، وبلاطة Ti 22 | *"Meet one hundred percent pure titanium."* |
+| 8–12.3 | 5 مميزات، كل واحدة مرقمة، ومعاها wipe | *"Non-porous. Knife-friendly. Double-sided. Acid-proof, and dishwasher safe."* |
+| 12.3–15 | Ditch plastic / Upgrade today، و Under $30، و 0 plastic · 0 mold · 0 odors، و ★4.7، وزرار SHOP NOW | *"Upgrade today. Tap shop now."* |
+
+**سكريبت UGC v2:**
+1. (0–3، KITCHEN WARNING والسارينة) *"Stop! If you still chop on plastic, watch this."*
+2. *"Every cut scrapes tiny bits of plastic into your food."* مع عدسة مكبرة عليها MICROPLASTICS
+3. *"So I switched to pure titanium."*
+4. *"Nothing soaks in, no smell, and it's easy on my knives."*
+5. *"Two sides, and it goes right in the dishwasher."*
+6. *"Link is below!"* مع Under $30 و ★4.7 و tap Shop now 👇
+
+---
+
+## 1) الإعلان الاحترافي v1 (15 ثانية)
 
 | الوقت | المشهد | الفويس أوفر |
 |---|---|---|
@@ -76,21 +112,26 @@
 
 - **السعر:** كتبت "Under $30" بدل الرقم بالظبط ($29.75) عشان الإعلانات تفضل صح لو السعر اتغير. التقييم 4.7★ من صفحة المنتج، راجعه قبل ما تنشر.
 - **الادعاءات:** كل الادعاءات من الليستنج نفسه (non-porous, dishwasher safe, corrosion-resistant, softer than steel). جملة "plastic boards shed microplastics" مبنية على دراسات منشورة. ما فيش ادعاءات طبية.
-- **الصور:** كلها مأخوذة من صور المنتج اللي بعتها، ومفيش أي صورة متولدة. الدايرة اللي في صورة 01 جزء حقيقي من سطح اللوح، بس متكبر ومزوّد الكونتراست.
+- **الصور:** صور v1 مأخوذة من صور المنتج اللي بعتها. في v2 فيه صورة لوح خشب من Pexels (رخصة مجانية للاستخدام التجاري، تصوير Boryslav Shoot)، ولوح التيتانيوم ريندر بخامة معمولة بالكود، والرسومات فيكتور. الدايرة اللي في صورة 01 جزء حقيقي من سطح اللوح، بس متكبر ومزوّد الكونتراست.
 - **الصوت:** الفويس أوفر معمول بـ Kokoro TTS (محلي). لو عايز صوت بشري، استبدل ملفات `source/audio/a*_t.wav` و`u*_t.wav` واعمل mix تاني. المزيكا متولدة بالكود ومفيهاش حقوق.
 
 ## إعادة البناء
 
 ```bash
-# الفيديوهات (HyperFrames → mp4 صامت، وبعدين ffmpeg للصوت)
-cd source/ad-15s  && npx hyperframes@0.8.140 render -q high -o /tmp/ad_silent.mp4
-python3 source/scripts/build_ugc.py
-cd source/ugc-15s && npx hyperframes@0.8.140 render -q high -o /tmp/ugc_silent.mp4
-A=source/audio
-source/scripts/mix.sh /tmp/ad_silent.mp4 $A/music_ad.wav output/videos/katori-ad-15s-9x16.mp4 \
-  $A/a1_t.wav@0.15 $A/a2_t.wav@3.05 $A/a3_t.wav@6.1 $A/a4_t.wav@9.9 $A/a5_t.wav@12.3
-MUSIC_VOL=0.35 source/scripts/mix.sh /tmp/ugc_silent.mp4 $A/music_ugc.wav output/videos/katori-ugc-15s-9x16.mp4 \
-  $A/u1_t.wav@0.1 $A/u2_t.wav@3.4 $A/u3_t.wav@4.9 $A/u4_t.wav@8.55 $A/u5_t.wav@11.2
+HF="npx hyperframes@0.8.140"; A2=source/audio/v2
+# v2 — إعلان
+(cd source/ad-15s-v2 && $HF render -q high -o /tmp/ad2.mp4)
+source/scripts/mix_v2.sh /tmp/ad2.mp4 $A2/music_ad_v2.wav $A2/sfx_ad_v2.wav output/videos/katori-ad-15s-v2-9x16.mp4 \
+  $A2/a1_t.wav@0.25 $A2/a2_t.wav@3.15 $A2/a3_t.wav@5.75 $A2/a4_t.wav@8.0 $A2/a5_t.wav@10.65 $A2/a7_t.wav@12.6
+# v2 — UGC
+python3 source/scripts/build_ugc_v2.py && (cd source/ugc-15s-v2 && $HF render -q high -o /tmp/ugc2.mp4)
+MUSIC_VOL=0.4 SFX_VOL=0.7 source/scripts/mix_v2.sh /tmp/ugc2.mp4 $A2/music_ugc_v2.wav $A2/sfx_ugc_v2.wav output/videos/katori-ugc-15s-v2-9x16.mp4 \
+  $A2/u1_t.wav@0.2 $A2/u2_t.wav@3.1 $A2/u3_t.wav@6.0 $A2/u4_t.wav@7.75 $A2/u5_t.wav@10.85 $A2/u6_t.wav@13.3
+# الصوت والرسومات من الصفر
+python3 source/scripts/sound_v2.py $A2 ad; python3 source/scripts/sound_v2.py $A2 ugc
+python3 source/scripts/make_svgs.py source/v2/assets; python3 source/scripts/make_textures.py source/v2/assets/ti_texture.jpg
+
+# v1 (الصوت في source/audio/v1، والسكريبت source/scripts/mix.sh)
 
 # الصور
 cd source/scripts && ln -sf "$(npm root -g)" node_modules && node render_images.mjs && rm node_modules   # يحتاج playwright

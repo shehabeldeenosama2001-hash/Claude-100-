@@ -1,0 +1,82 @@
+/* Katori v2 — premium editorial motion system (shared by ad + UGC) */
+@font-face { font-family: "Anton"; font-weight: 400; src: url("fonts/Anton-400.woff2") format("woff2"); }
+@font-face { font-family: "Montserrat"; font-weight: 500 900; src: url("fonts/Montserrat-800.woff2") format("woff2"); }
+@font-face { font-family: "Playfair"; font-weight: 700; font-style: normal; src: url("fonts/Playfair-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Playfair"; font-weight: 900; font-style: normal; src: url("fonts/Playfair-normal-900.woff2") format("woff2"); }
+@font-face { font-family: "Playfair"; font-weight: 400; font-style: italic; src: url("fonts/Playfair-italic-400.woff2") format("woff2"); }
+@font-face { font-family: "Playfair"; font-weight: 700; font-style: italic; src: url("fonts/Playfair-italic-700.woff2") format("woff2"); }
+@font-face { font-family: "Playfair"; font-weight: 900; font-style: italic; src: url("fonts/Playfair-italic-900.woff2") format("woff2"); }
+
+:root {
+  --paper: #f2f0eb;
+  --ink: #111214;
+  --acc: #4a2be8;      /* anodized-titanium indigo */
+  --acc-soft: #d9d2ff;
+  --red: #d10a0a;
+  --hazard: #ffd400;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Montserrat, sans-serif; color: var(--ink); }
+.clip { position: absolute; inset: 0; overflow: hidden; }
+.abs { position: absolute; }
+.fill { position: absolute; inset: 0; }
+
+/* backgrounds */
+.bg-paper { background-color: var(--paper);
+  background-image: linear-gradient(rgba(17,18,20,.055) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(17,18,20,.055) 1.5px, transparent 1.5px);
+  background-size: 90px 90px; background-position: -1px -1px; }
+.bg-acc { background-color: var(--acc);
+  background-image: linear-gradient(rgba(255,255,255,.08) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(255,255,255,.08) 1.5px, transparent 1.5px);
+  background-size: 90px 90px; color: #fff; }
+.bg-red { background: radial-gradient(ellipse at 50% 40%, #ff1f1f 0%, #c00000 55%, #6e0000 100%); color: #fff; }
+
+/* type */
+.serif-i { font-family: Playfair, serif; font-style: italic; font-weight: 400; }
+.serif-b { font-family: Playfair, serif; font-weight: 900; }
+.serif-bi { font-family: Playfair, serif; font-style: italic; font-weight: 900; }
+.anton { font-family: Anton, sans-serif; text-transform: uppercase; }
+.kicker { font-weight: 800; letter-spacing: 7px; text-transform: uppercase; font-size: 26px; }
+.ghost { position: absolute; font-family: Playfair, serif; font-style: italic; font-weight: 900; line-height: .8; white-space: nowrap; color: rgba(17,18,20,.06); }
+.ghost::before { content: attr(data-text); }
+.bg-acc .ghost { color: rgba(255,255,255,.09); }
+.w { display: inline-block; }
+.counter { position: absolute; left: 70px; top: 120px; font-weight: 800; font-size: 26px; letter-spacing: 6px; }
+.counter b { color: var(--acc); }
+
+/* titanium board render (8 x 11.5 proportions) */
+.tiboard { position: absolute; transform-style: preserve-3d; }
+.tiboard .face { position: absolute; inset: 0; border-radius: 7% / 4.9%; overflow: hidden; backface-visibility: hidden;
+  background: url("ti_texture.jpg") center / cover;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.9), inset 0 0 0 5px rgba(120,126,134,.35), inset 0 -22px 34px rgba(0,0,0,.18), inset 0 22px 34px rgba(255,255,255,.35);
+  filter: contrast(1.12);
+  -webkit-mask-image: radial-gradient(circle at 86% 6.2%, transparent 3.6%, #000 3.8%);
+          mask-image: radial-gradient(circle at 86% 6.2%, transparent 3.6%, #000 3.8%); }
+.tiboard .back { transform: translateZ(-14px) rotateY(180deg);
+  -webkit-mask-image: radial-gradient(circle at 14% 6.2%, transparent 3.6%, #000 3.8%);
+          mask-image: radial-gradient(circle at 14% 6.2%, transparent 3.6%, #000 3.8%); }
+.tiboard .tone { position: absolute; inset: 0; background:
+  linear-gradient(122deg, rgba(255,255,255,.65) 0%, rgba(255,255,255,.08) 26%, rgba(20,24,30,.22) 48%, rgba(255,255,255,.42) 66%, rgba(255,255,255,.05) 80%, rgba(20,24,30,.28) 100%); mix-blend-mode: soft-light; }
+.tiboard .tone2 { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(0,0,0,.16)); }
+.tiboard .edge { position: absolute; inset: 0; border-radius: 7% / 4.9%; background: linear-gradient(180deg, #a9afb6, #6d737a);
+  -webkit-mask-image: radial-gradient(circle at 86% 6.2%, transparent 3.6%, #000 3.8%); mask-image: radial-gradient(circle at 86% 6.2%, transparent 3.6%, #000 3.8%); }
+.tiboard .sheen { position: absolute; top: -20%; left: -10%; width: 45%; height: 140%; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0)); transform: rotate(14deg); }
+.tiboard .side-label { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); padding: 10px 26px; border-radius: 999px; background: rgba(17,18,20,.82); color: #fff; font-weight: 800; font-size: 26px; letter-spacing: 3px; white-space: nowrap; }
+.shadow { position: absolute; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(0,0,0,.38) 0%, rgba(0,0,0,0) 70%); }
+
+/* cards + chips */
+.card { position: absolute; border-radius: 34px; overflow: hidden; box-shadow: 0 40px 80px rgba(17,18,20,.28); background: #fff; }
+.card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.chip { display: inline-flex; align-items: center; gap: 12px; padding: 14px 26px; border-radius: 999px; font-weight: 800; font-size: 28px; white-space: nowrap; }
+.chip.ink { background: var(--ink); color: #fff; }
+.chip.white { background: #fff; color: var(--ink); }
+.stamp { position: absolute; width: 150px; height: 150px; border-radius: 50%; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 96px; font-weight: 900; box-shadow: 0 0 0 10px #fff, 0 20px 40px rgba(0,0,0,.3); }
+.tile { position: absolute; width: 230px; height: 260px; border: 5px solid #fff; border-radius: 18px; color: #fff; padding: 18px 20px; font-family: Montserrat; }
+.tile .n { font-weight: 800; font-size: 32px; }
+.tile .sym { font-family: Playfair, serif; font-weight: 900; font-size: 120px; line-height: 1; margin-top: 2px; }
+.tile .nm { font-weight: 700; font-size: 24px; letter-spacing: 1px; }
+.tile .wt { font-weight: 600; font-size: 20px; opacity: .8; }
+.drop { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.95) 0 12%, rgba(190,220,255,.55) 30%, rgba(90,140,200,.35) 70%, rgba(40,80,140,.5) 100%); box-shadow: 0 6px 10px rgba(0,0,0,.18); }
+.bubble { position: absolute; border-radius: 50%; border: 3px solid rgba(255,255,255,.9); background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.7), rgba(255,255,255,.08) 60%); }
+.speck { position: absolute; width: 14px; height: 14px; border-radius: 3px; background: #fff; box-shadow: 0 0 0 2px rgba(0,0,0,.08); }
+.btn { position: absolute; display: flex; align-items: center; justify-content: center; border-radius: 999px; font-weight: 900; letter-spacing: 3px; }
