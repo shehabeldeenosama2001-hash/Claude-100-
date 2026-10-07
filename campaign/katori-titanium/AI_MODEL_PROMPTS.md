@@ -17,6 +17,19 @@ Wearing a plain sage-green linen apron over a cream crew-neck t-shirt, thin gold
 no other jewelry. Relaxed, genuine expressions. Does not resemble any real person or celebrity.
 ```
 
+### بلوك الـ UGC Style
+> الصقه **في آخر كل برومبت** (صور وفيديو)، مكان `[UGC STYLE]`. ده اللي بيخلّي الفيديو يبان إن حد صوّره بموبايله، مش إعلان معمول في استوديو.
+
+```
+[UGC STYLE] Authentic TikTok/Instagram Reels UGC. Filmed by herself on an iPhone front camera held
+at arm's length (selfie POV) or propped on the counter, vertical 9:16. Slight natural hand shake,
+imperfect off-center framing, quick casual glances at the camera, talks fast and naturally like
+she's telling a friend, real reactions (eye-rolls, laughing, "ugh"), small natural pauses.
+Real lived-in home kitchen with everyday clutter (fruit bowl, dish towel, coffee mug), mixed
+window daylight, slightly warm phone color, no cinematic look, no studio lights, no color grade,
+no slow motion, no text on screen.
+```
+
 **ليه الشكل ده؟** المشتري الأساسي لمنتجات المطبخ على Amazon US ستات من 25 لـ 45 سنة، مهتمين بالأكل الصحي والبيت. Emma شكلها طبيعي وقريب منهم، مش موديل فاشون، وده بيخلّي الـ UGC يبان حقيقي.
 
 **بدائل لو عايز تعمل A/B test:**
@@ -30,10 +43,9 @@ no other jewelry. Relaxed, genuine expressions. Does not resemble any real perso
 ```
 Ultra-realistic smartphone photo, vertical 9:16. [CHARACTER BIBLE]
 She stands in a bright, lived-in modern kitchen with white subway tiles, a wooden shelf with jars,
-and a window on the left giving soft natural daylight. Medium shot from the waist up, looking
-straight into the camera with a relaxed half-smile, as if about to film a TikTok.
-Shot on iPhone 15 Pro front camera, natural colors, slight lens softness, no beauty filter,
-no studio lighting, authentic UGC look.
+and a window on the left giving soft natural daylight. Selfie-style frame from chest up, phone held at
+arm's length, looking straight into the lens with a relaxed half-smile, as if starting a TikTok.
+Shot on iPhone 15 Pro front camera, natural colors, slight lens softness, no beauty filter. [UGC STYLE]
 ```
 
 **شيت المرجع**، عشان الشخصية تفضل ثابتة في كل اللقطات:
@@ -51,10 +63,10 @@ of the face, on a plain light-gray background, same outfit and hairstyle in ever
 
 | # | البرومبت |
 |---|---|
-| A | `[CHARACTER BIBLE] holding an old, heavily used wooden cutting board close to the camera. The board has dark mold spots, deep knife grooves and brown stains. Her nose is wrinkled in disgust. Same kitchen, natural window light, vertical 9:16, realistic iPhone photo.` |
-| B | `[CHARACTER BIBLE] tilting an old white plastic cutting board toward the camera, covered in deep knife scratches and yellow-orange food stains, pointing at the scratches with one finger, concerned expression. Vertical 9:16, realistic iPhone photo.` |
-| C | `[CHARACTER BIBLE] holding up a brushed-titanium cutting board (use the uploaded product photo as exact reference: silver brushed metal, rounded corners, handle cut-out) with a proud, excited smile, tapping it with her fingernail. Vertical 9:16, realistic iPhone photo.` |
-| D | `[CHARACTER BIBLE] slicing a lemon on the brushed-titanium cutting board (exact product reference) on the counter, lemon slices on the board, close-medium shot, natural light. Vertical 9:16.` |
+| A | `[CHARACTER BIBLE] holding an old, heavily used wooden cutting board close to the camera. The board has dark mold spots, deep knife grooves and brown stains. Her nose is wrinkled in disgust. Same kitchen, natural window light, vertical 9:16, realistic iPhone photo. [UGC STYLE]` |
+| B | `[CHARACTER BIBLE] tilting an old white plastic cutting board toward the camera, covered in deep knife scratches and yellow-orange food stains, pointing at the scratches with one finger, concerned expression. Vertical 9:16, realistic iPhone photo. [UGC STYLE]` |
+| C | `[CHARACTER BIBLE] holding up a brushed-titanium cutting board (use the uploaded product photo as exact reference: silver brushed metal, rounded corners, handle cut-out) with a proud, excited smile, tapping it with her fingernail. Vertical 9:16, realistic iPhone photo. [UGC STYLE]` |
+| D | `[CHARACTER BIBLE] slicing a lemon on the brushed-titanium cutting board (exact product reference) on the counter, lemon slices on the board, close-medium shot, natural light. Vertical 9:16. [UGC STYLE]` |
 
 ---
 
@@ -65,53 +77,60 @@ of the face, on a plain light-gray background, same outfit and hairstyle in ever
 
 **كليب 1: الهوك (0–4 ث)**، start frame من A
 ```
-/Dolly In  Handheld selfie-style vertical video. [CHARACTER BIBLE] pushes the moldy wooden
+/Dolly In  Selfie POV vertical UGC video, phone in her hand. [CHARACTER BIBLE] pushes the moldy wooden
 cutting board toward the camera, disgusted, then looks straight into the lens and says:
 "Stop. If your cutting board looks like this… throw it out."
 Natural kitchen ambience, realistic, no music.
+[UGC STYLE]
 ```
 
 **كليب 2: البلاستيك (4–10 ث)**، start frame من B
 ```
-Handheld vertical UGC video. [CHARACTER BIBLE] runs her fingernail across the deep scratches on
+Vertical UGC video, phone propped on the counter / selfie POV. [CHARACTER BIBLE] runs her fingernail across the deep scratches on
 an old white plastic cutting board, camera briefly moves closer to the scratches, then back to
 her face. She says: "Plastic boards get these deep scratches — and every cut scrapes tiny bits
 of plastic into your food." Realistic, natural light.
+[UGC STYLE]
 ```
 
 **كليب 3: الخشب (10–15 ث)**
 ```
-Handheld vertical UGC video. [CHARACTER BIBLE] picks up the stained, moldy wooden board, sniffs
+Vertical UGC video, phone propped on the counter / selfie POV. [CHARACTER BIBLE] picks up the stained, moldy wooden board, sniffs
 it and grimaces, points at the dark grooves. She says: "And wood isn't better. It soaks up juice,
 stains and smells." Realistic, natural light.
+[UGC STYLE]
 ```
 
 **كليب 4: ظهور التيتانيوم (15–19 ث)**، start frame من C
 ```
-/Orbit Left  Handheld vertical UGC video. [CHARACTER BIBLE] tosses the old boards aside, lifts the
+/Orbit Left  Vertical UGC video, phone propped on the counter / selfie POV. [CHARACTER BIBLE] tosses the old boards aside, lifts the
 brushed-titanium cutting board (exact product reference) and taps it — a clear metallic "ting".
 She smiles: "So I switched to this. One hundred percent pure titanium."
+[UGC STYLE]
 ```
 
 **كليب 5: مش بيمتص حاجة (19–25 ث)**، start frame من D
 ```
-Handheld vertical UGC video. [CHARACTER BIBLE] slices a lemon on the titanium board, then rinses
+Vertical UGC video, phone propped on the counter / selfie POV. [CHARACTER BIBLE] slices a lemon on the titanium board, then rinses
 the board under the kitchen faucet, water beading and running off the brushed metal.
 She says: "Nothing soaks in. I just rinse it… and it's clean."
+[UGC STYLE]
 ```
 
 **كليب 6: السكينة والوشّين (25–32 ث)**
 ```
-Handheld vertical UGC video. [CHARACTER BIBLE] slices a tomato smoothly on the titanium board,
+Vertical UGC video, phone propped on the counter / selfie POV. [CHARACTER BIBLE] slices a tomato smoothly on the titanium board,
 then flips the board over to show the second side. She says: "It's easy on my knives — and it's
 double-sided. One side for meat, one for veggies."
+[UGC STYLE]
 ```
 
 **كليب 7: الغسالة والـ CTA (32–39 ث)**
 ```
-/Dolly Out  Handheld vertical UGC video. [CHARACTER BIBLE] slides the titanium board into the
+/Dolly Out  Vertical UGC video, phone propped on the counter / selfie POV. [CHARACTER BIBLE] slides the titanium board into the
 dishwasher rack, closes it, then holds the board next to her face and smiles at the camera:
 "And it goes right in the dishwasher. Best thirty-dollar kitchen upgrade. Link's below."
+[UGC STYLE]
 ```
 
 **ضيف في آخر كل برومبت فيديو** (عشان الـ AI يبعد عن الحاجات دي):
