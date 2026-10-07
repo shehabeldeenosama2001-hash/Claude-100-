@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Montserrat"; font-weight: 500 900; src: url("assets/fonts/Montserrat-800.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Montserrat, Inter, sans-serif; }
+      .clip { position: absolute; inset: 0; overflow: hidden; }
+      /* handheld phone camera: the whole stage drifts/tilts a little */
+      #stage { position: absolute; inset: -40px; }
+      .cam { position: absolute; inset: 0; }
+      .cam img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .fill { position: absolute; inset: -60px; }
+      .fill img { width: 100%; height: 100%; object-fit: cover; filter: blur(40px) brightness(.7); }
+      .cam.fit { inset: auto 0 260px 0; height: 1080px; }
+      .cam.fit img { object-fit: contain; }
+      .grade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,170,90,.10), rgba(255,140,60,.06)); mix-blend-mode: soft-light; pointer-events: none; }
+      .grain { position: absolute; inset: -60px; background: url("assets/grain.png"); background-size: 540px 960px; opacity: .07; mix-blend-mode: overlay; }
+      .sticker { position: absolute; left: 50%; transform: translateX(-50%); max-width: 900px; padding: 18px 30px; border-radius: 18px; background: #fff; color: #111; font-weight: 700; font-size: 46px; line-height: 1.2; text-align: center; white-space: nowrap; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+      .caps { position: absolute; left: 60px; right: 60px; top: 1180px; height: 260px; }
+      .cap { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-weight: 900; font-size: 84px; line-height: 1.08; color: #fff; opacity: 0;
+        -webkit-text-stroke: 4px #000; paint-order: stroke fill; text-shadow: 0 6px 18px rgba(0,0,0,.55); }
+      .cw { display: inline-block; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920">
+      <div id="stage" data-layout-allow-overflow>
+{{SCENES}}
+      </div>
+
+      <div id="look" class="clip" data-start="0" data-duration="15" data-track-index="1">
+        <div class="grade"></div>
+        <div class="grain" data-layout-allow-overflow id="grain"></div>
+      </div>
+
+{{STICKERS}}
+
+      <div id="captions" class="clip" data-start="0" data-duration="15" data-track-index="3">
+        <div class="caps">
+          {{CAPTIONS}}
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // handheld drift (deterministic sine wobble on the whole stage)
+      tl.fromTo("#stage", { x: -6, y: 4, rotation: -0.35 }, { x: 6, y: -5, rotation: 0.35, duration: 0.9, ease: "sine.inOut", repeat: 15, yoyo: true }, 0);
+      tl.fromTo("#grain", { x: 0, y: 0 }, { x: 37, y: -23, duration: 0.1, ease: "steps(1)", repeat: 149, yoyo: true }, 0);
+
+      // scene push-ins / pans
+      {{SCENE_JS}}
+
+      // stickers
+      {{STICKER_JS}}
+
+      // word-by-word captions
+      {{CAPTION_JS}}
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
