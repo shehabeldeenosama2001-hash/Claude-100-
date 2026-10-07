@@ -8,6 +8,7 @@
 | الملف | الوصف |
 |---|---|
 | `output/videos/katori-ad-25s-v2-9x16.mp4` | ⭐⭐ **الإعلان الأساسي، 25 ثانية**: إيقاع هادي وكل الصور حقيقية |
+| `output/videos/katori-ugc-25s-v2-9x16.mp4` | ⭐⭐ **UGC الأساسي، 25 ثانية**: صور حقيقية، صوت كرييتر، كابشن وستيكرز |
 | `output/videos/katori-ad-15s-v2-9x16.mp4` | نسخة v2 مدتها 15 ثانية (سريعة، مناسبة للـ Stories) |
 | `output/videos/katori-ugc-15s-v2-9x16.mp4` | ⭐ **UGC v2**: بنفس الستايل البريميوم مع كابشن وستيكرز |
 | `output/videos/katori-ad-15s-9x16.mp4` | النسخة الأولى (v1) |
@@ -48,6 +49,25 @@
 | 19–21.3 | 04: Acid? No problem (الليمون) | *"Acid-proof. Lemon won't stain it."* |
 | 21.3–22.8 | 05: Dishwasher safe (الغسالة) | *"And it's dishwasher safe."* |
 | 22.8–25 | Ditch plastic / Upgrade today، و Under $30، و 0 plastic · 0 mold · 0 odors، و ★4.7، وزرار SHOP NOW | *"Upgrade your kitchen. Tap shop now."* |
+
+---
+
+## ⭐⭐ UGC الأساسي، 25 ثانية (`katori-ugc-25s-v2-9x16.mp4`)
+
+نفس طريقة الإعلان الأساسي: KITCHEN WARNING في أول 3 ثواني مع السارينة، وبعد كده **صور حقيقية بس**. كل صورة معروضة في كارت قريب من حجمها الأصلي، وورا الكارت نفس الصورة مضبّبة، فيبان كأنه فيديو موبايل. الكاميرا بتهتز خفيف كأنها في الإيد. الكابشن بيظهر كلمة بكلمة، ومعاه ستيكرز بنفس شكل ستيكرز تيك توك.
+
+| الوقت | المشهد | الفويس (صوت بنت) |
+|---|---|---|
+| 0–3 | ⚠ KITCHEN WARNING مع السارينة | *"Stop! If you still chop on plastic, you need to see this."* |
+| 3–7.1 | البلاستيك المخدوش (my old board 😬)، وجزيئات بتطير، وMICROPLASTICS | *"This is my old plastic board. Every cut scrapes tiny bits into your food."* |
+| 7.1–9.7 | 3 لقطات خشب حقيقية: STAINS، ثم DEEP GROOVES، ثم MOLD | *"And wood? Stains, deep grooves, even mold."* |
+| 9.7–11.5 | لوح التيتانيوم الحقيقي (100% titanium ✨) | *"So I switched to pure titanium."* |
+| 11.5–14.3 | تحت الحنفية (nothing soaks in 💧) | *"Nothing soaks in. I just rinse it, and it's clean."* |
+| 14.3–15.7 | السكينة (knife-friendly 🔪) | *"It's easy on my knives."* |
+| 15.7–18.4 | اللوح بيتقلب: SIDE A للحمة، SIDE B للخضار | *"Two sides. One for meat, one for veggies."* |
+| 18.4–19.9 | الليمون (acid-proof 🍋) | *"Lemon doesn't even stain it."* |
+| 19.9–21.7 | الغسالة مع فقاقيع (dishwasher safe 🧼) | *"And it goes right in the dishwasher."* |
+| 21.7–25 | Under $30، و ⭐ 4.7، و tap "Shop now" 👇 | *"Best kitchen upgrade under thirty bucks. Link is below!"* |
 
 ---
 
@@ -153,6 +173,12 @@ A3=source/audio/v2-25s
 DUR=25 source/scripts/mix_v2.sh /tmp/ad25.mp4 $A3/music_ad25_v2.wav $A3/sfx_ad25_v2.wav output/videos/katori-ad-25s-v2-9x16.mp4 \
   $A3/v01.wav@0.2 $A3/v02.wav@3.1 $A3/v03.wav@6.5 $A3/v04.wav@9.4 $A3/v05.wav@11.85 $A3/v06.wav@14.2 $A3/v07.wav@15.9 $A3/v08.wav@19.15 $A3/v09.wav@21.45 $A3/v10.wav@22.8
 # (الصوت: python3 source/scripts/sound_v2.py $A3 ad25)
+# UGC 25 ثانية
+A4=source/audio/ugc-25s
+python3 source/scripts/build_ugc_25s.py && (cd source/ugc-25s-v2 && $HF render -q high -o /tmp/ugc25.mp4)
+DUR=25 MUSIC_VOL=0.4 SFX_VOL=0.7 source/scripts/mix_v2.sh /tmp/ugc25.mp4 $A4/music_ugc25_v2.wav $A4/sfx_ugc25_v2.wav output/videos/katori-ugc-25s-v2-9x16.mp4 \
+  $A4/u01.wav@0.1 $A4/u02.wav@3.08 $A4/u03.wav@7.16 $A4/u04.wav@9.78 $A4/u05.wav@11.56 $A4/u06.wav@14.36 $A4/u07.wav@15.74 $A4/u08.wav@18.42 $A4/u09.wav@19.99 $A4/u10.wav@21.75
+# (الصوت: python3 source/scripts/sound_v2.py $A4 ugc25)
 
 A2=source/audio/v2
 # v2 — إعلان
