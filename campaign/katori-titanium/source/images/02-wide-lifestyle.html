@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wide lifestyle</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .bg { left: 0; right: 0; bottom: 0; height: 1080px; }
+    .bg img { object-position: 50% 50%; }
+    .shade { inset: 0; background: linear-gradient(180deg, #0b0d10 0%, #0b0d10 22%, rgba(11,13,16,0) 40%, rgba(11,13,16,0) 70%, rgba(11,13,16,.9) 100%); }
+    .title { left: 60px; right: 60px; top: 70px; }
+    .title h1 { font-size: 96px; margin-top: 14px; }
+    .title p { margin-top: 18px; font-weight: 600; font-size: 32px; line-height: 1.35; color: rgba(255,255,255,.9); }
+    .row { left: 60px; right: 60px; bottom: 120px; display: flex; flex-wrap: wrap; gap: 14px; }
+  </style>
+</head>
+<body>
+  <div class="abs bg"><img class="cover" src="assets/ti_hero.jpg" alt="" /></div>
+  <div class="abs shade"></div>
+  <div class="abs title">
+    <div class="kicker" style="color: #c9ced5;">The everyday upgrade</div>
+    <h1 class="display"><span class="metal">One board.</span><br />Every kitchen job.</h1>
+    <p>Raw meat, citrus, onions, veggies — wipe, rinse, done.</p>
+  </div>
+  <div class="abs row">
+    <span class="chip light">Double-sided</span>
+    <span class="chip light">Dishwasher safe</span>
+    <span class="chip light">Knife-friendly</span>
+    <span class="chip light">4 sizes</span>
+  </div>
+  <div class="brand">KATORI</div>
+</body>
+</html>

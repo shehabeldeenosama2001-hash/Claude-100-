@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>In use</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: var(--paper); color: var(--ink); }
+    .title { left: 60px; right: 60px; top: 64px; }
+    .title h1 { font-size: 96px; margin-top: 12px; }
+    .photo { left: 40px; right: 40px; top: 330px; height: 700px; border-radius: 36px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.18); }
+    .photo img { object-position: 58% 50%; }
+    .tag { position: absolute; }
+    .grid { left: 60px; right: 60px; top: 1070px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .cell { background: #fff; border-radius: 22px; padding: 22px 18px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,.06); }
+    .cell b { display: block; font-family: Anton, sans-serif; font-size: 44px; text-transform: uppercase; letter-spacing: .5px; }
+    .cell span { display: block; margin-top: 6px; font-weight: 600; font-size: 22px; color: #4b5563; }
+  </style>
+</head>
+<body>
+  <div class="abs title">
+    <div class="kicker" style="color: #4b5563;">Acid? Juice? Raw meat?</div>
+    <h1 class="display">Nothing soaks in.</h1>
+  </div>
+  <div class="abs photo"><img class="cover" src="assets/lemon_full.jpg" alt="" /></div>
+  <div class="abs" style="left: 80px; top: 370px;"><span class="chip dark"><span class="dot ok">✓</span>Lemon-proof — no stains</span></div>
+  <div class="abs grid">
+    <div class="cell"><b>No odors</b><span>non-porous metal</span></div>
+    <div class="cell"><b>No mold</b><span>no grooves to hide in</span></div>
+    <div class="cell"><b>No plastic</b><span>no microplastic shavings</span></div>
+  </div>
+  <div class="brand" style="color: var(--ink);">KATORI</div>
+</body>
+</html>

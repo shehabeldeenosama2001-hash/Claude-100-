@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/v2.css" />
+    <style>
+      .line { overflow: hidden; display: block; }
+      .line > .w { display: inline-block; }
+      /* hook */
+      #beams { left: -760px; top: -1300px; width: 2600px; height: 2600px; border-radius: 50%;
+        background: conic-gradient(from 0deg, rgba(255,255,255,.22) 0 14deg, transparent 14deg 90deg, rgba(255,255,255,.22) 90deg 104deg, transparent 104deg 180deg, rgba(255,255,255,.22) 180deg 194deg, transparent 194deg 270deg, rgba(255,255,255,.22) 270deg 284deg, transparent 284deg 360deg); }
+      .hz { position: absolute; left: 0; width: 1080px; height: 110px; overflow: hidden; border-top: 6px solid #111; border-bottom: 6px solid #111; }
+      .hz .strip { position: absolute; left: 0; top: 0; width: 2600px; height: 100%; background: repeating-linear-gradient(-45deg, var(--hazard) 0 56px, #111 56px 112px); }
+      #strobe { background: #000; opacity: 0; }
+      .kw { position: absolute; left: 0; right: 0; text-align: center; font-family: Anton; font-size: 270px; line-height: .9; letter-spacing: 6px; }
+      #hookBox { left: 60px; right: 60px; top: 1270px; height: 330px; background: #111; border: 8px solid var(--hazard); border-radius: 28px; text-align: center; padding-top: 50px; }
+      #hookBox .l1 { color: #fff; font-weight: 900; font-size: 52px; letter-spacing: 3px; }
+      #hookBox .l2 { color: var(--hazard); font-family: Anton; font-size: 116px; line-height: 1.05; margin-top: 30px; white-space: nowrap; }
+      /* problem */
+      .big-i { font-size: 120px; line-height: 1; }
+      .big-b { font-size: 132px; line-height: 1; }
+      /* features */
+      .fhead { position: absolute; left: 70px; right: 70px; top: 190px; }
+      .fhead .kicker { color: var(--acc); margin-bottom: 18px; }
+      .fhead .t1 { font-size: 132px; line-height: 1.02; }
+      .fhead .t2 { font-size: 150px; line-height: 1.0; }
+      .slice { position: absolute; height: 6px; border-radius: 3px; background: linear-gradient(90deg, rgba(74,43,232,0), var(--acc)); transform-origin: 100% 50%; }
+      #wipe { background: var(--acc); }
+      .price { position: absolute; width: 230px; height: 230px; border-radius: 50%; background: #fff; color: var(--acc); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 40px rgba(0,0,0,.25); }
+      .price .s { font-weight: 800; font-size: 26px; letter-spacing: 4px; color: var(--ink); }
+      .price .p { font-family: Playfair; font-weight: 900; font-size: 100px; line-height: 1; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920">
+
+      <!-- ===================== HOOK: full-screen KITCHEN WARNING (0 - 3s) ===================== -->
+      <div id="hook" class="clip bg-red" data-start="0" data-duration="3.4" data-track-index="0">
+        <div class="abs" id="beams" data-layout-allow-overflow></div>
+        <div id="hookShake" class="fill">
+          <div class="hz" style="top: 0;"><div class="strip" id="hzTop" data-layout-allow-overflow></div></div>
+          <div class="hz" style="bottom: 0;"><div class="strip" id="hzBot" data-layout-allow-overflow></div></div>
+          <img class="abs" id="warnIcon" src="assets/warning.svg" alt="" style="left: 370px; top: 175px; width: 340px;" />
+          <div class="kw" id="kw1" style="top: 540px; color: #fff;">KITCHEN</div>
+          <div class="kw" id="kw2" style="top: 790px; color: var(--hazard); -webkit-text-stroke: 6px #111; paint-order: stroke fill;">WARNING</div>
+          <div class="abs" id="hookBox">
+            <div class="l1" id="hl1">YOUR CUTTING BOARD IS</div>
+            <div class="l2" id="hl2">FEEDING YOU PLASTIC</div>
+          </div>
+          <div class="fill" id="hookSpecks"></div>
+        </div>
+        <div class="fill" id="strobe"></div>
+      </div>
+
+      <!-- ===================== PROBLEM: plastic sheds / wood soaks (3 - 5.7s) ===================== -->
+      <div id="prob" class="clip" data-start="3" data-duration="2.75" data-track-index="1">
+        <div class="fill bg-paper" id="probIn">
+          <div class="ghost" data-text="why?" style="right: -60px; top: 40px; font-size: 380px;"></div>
+          <img class="abs" id="plastic" src="assets/plastic_board.svg" alt="" style="left: 150px; top: 200px; width: 780px;" />
+          <img class="abs" id="knife1" src="assets/knife.svg" alt="" style="left: 300px; top: 330px; width: 720px;" />
+          <div class="fill" id="probSpecks"></div>
+          <div class="stamp" id="st1" style="left: 830px; top: 160px;">✕</div>
+          <div class="abs" style="left: 80px; top: 790px;">
+            <span class="line"><span class="w serif-i big-i" id="p1a" style="margin-right: 28px;">Plastic</span><span class="w serif-b big-b" id="p1b">sheds.</span></span>
+          </div>
+          <div class="card" id="woodCard" style="left: 500px; top: 1010px; width: 520px; height: 740px;"><img src="assets/wood_photo.jpg" alt="" style="object-position: 50% 40%;" /></div>
+          <div class="stamp" id="st2" style="left: 900px; top: 960px;">✕</div>
+          <div class="abs" style="left: 70px; top: 1120px; width: 400px;">
+            <span class="line"><span class="w serif-i big-i" id="p2a">Wood</span></span>
+            <span class="line"><span class="w serif-b" id="p2b" style="font-size: 82px;">soaks up</span></span>
+            <span class="line"><span class="w serif-b" id="p2c" style="font-size: 82px;">everything.</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== REVEAL: pure titanium (5.7 - 8.0s) ===================== -->
+      <div id="reveal" class="clip" data-start="5.7" data-duration="2.4" data-track-index="2">
+        <div class="fill bg-acc" id="revIn">
+          <div class="ghost" data-text="Titanium" style="left: -40px; top: 1840px; font-size: 330px; transform: rotate(-90deg); transform-origin: 0 0;"></div>
+          <img class="abs" id="burst1" src="assets/burst.svg" alt="" style="right: -40px; top: -40px; width: 480px; transform: scaleX(-1);" data-layout-allow-overflow />
+          <img class="abs" id="burst2" src="assets/burst.svg" alt="" style="left: -40px; bottom: -40px; width: 420px; transform: scaleY(-1);" data-layout-allow-overflow />
+          <div class="abs" style="left: 80px; top: 170px;">
+            <span class="line"><span class="w serif-i" id="r1" style="font-size: 104px;">Meet</span></span>
+            <span class="line"><span class="w serif-b" id="r2" style="font-size: 150px; line-height: 1;">pure</span></span>
+            <span class="line"><span class="w serif-b" id="r3" style="font-size: 150px; line-height: 1.05;">titanium.</span></span>
+          </div>
+          <div class="shadow" id="rvShadow" style="left: 300px; top: 1560px; width: 620px; height: 100px;"></div>
+          <div class="tiboard" id="tbR" style="left: 380px; top: 640px; width: 580px; height: 834px;">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="sheen" id="tbRsheen"></div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+          </div>
+          <div class="tile" id="tile" style="left: 70px; top: 1180px;">
+            <div class="n">22</div><div class="sym">Ti</div><div class="nm">Titanium</div><div class="wt">47.867</div>
+          </div>
+          <div class="abs" id="revChips" style="left: 70px; top: 1660px; display: flex; gap: 16px;">
+            <span class="chip white">100% Titanium</span><span class="chip white">Non-toxic</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== FEATURES (8.0 - 12.35s) ===================== -->
+      <div id="f1" class="clip bg-paper" data-start="8" data-duration="0.85" data-track-index="3">
+        <div class="counter"><b>01</b> / 05</div>
+        <div class="ghost" data-text="pure" style="right: -80px; top: 1280px; font-size: 420px;"></div>
+        <div class="fhead">
+          <div class="kicker">Non-porous surface</div>
+          <span class="line"><span class="w serif-i t1" id="f1a">Nothing</span></span>
+          <span class="line"><span class="w serif-b t2" id="f1b">soaks in.</span></span>
+        </div>
+        <div class="shadow" style="left: 250px; top: 1640px; width: 600px; height: 90px;"></div>
+        <div class="tiboard" id="tb1" style="left: 250px; top: 700px; width: 580px; height: 834px;">
+          <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="sheen" id="tb1sheen"></div></div>
+          <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+        </div>
+        <div class="fill" id="drops"></div>
+      </div>
+
+      <div id="f2" class="clip bg-paper" data-start="8.85" data-duration="0.85" data-track-index="3">
+        <div class="counter"><b>02</b> / 05</div>
+        <div class="fhead">
+          <div class="kicker">Softer than steel</div>
+          <span class="line"><span class="w serif-i t1" id="f2a">Kind to</span></span>
+          <span class="line"><span class="w serif-b t2" id="f2b">your knives.</span></span>
+        </div>
+        <div class="shadow" style="left: 250px; top: 1640px; width: 600px; height: 90px;"></div>
+        <div class="tiboard" id="tb2" style="left: 250px; top: 700px; width: 580px; height: 834px; transform: rotate(6deg);">
+          <div class="face front"><div class="tone2"></div><div class="tone"></div></div>
+          <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+        </div>
+        <div class="slice" id="slice" style="left: 160px; top: 1130px; width: 780px; transform: rotate(-14deg);"></div>
+        <img class="abs" id="knife2" src="assets/knife.svg" alt="" style="left: 260px; top: 1040px; width: 760px;" />
+      </div>
+
+      <div id="f3" class="clip bg-paper" data-start="9.7" data-duration="0.9" data-track-index="3">
+        <div class="counter"><b>03</b> / 05</div>
+        <div class="fhead">
+          <div class="kicker">Double-sided</div>
+          <span class="line"><span class="w serif-b t2" id="f3a">Two sides.</span></span>
+          <span class="line"><span class="w serif-i t1" id="f3b">One board.</span></span>
+        </div>
+        <div class="shadow" style="left: 250px; top: 1640px; width: 600px; height: 90px;"></div>
+        <div style="position: absolute; inset: 0; perspective: 1800px;">
+          <div class="tiboard" id="tb3" style="left: 260px; top: 720px; width: 560px; height: 805px;">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="side-label">SIDE A · MEAT</div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div><div class="side-label" style="opacity: 0;">SIDE B · VEGGIES</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="f4" class="clip bg-paper" data-start="10.6" data-duration="0.85" data-track-index="3">
+        <div class="counter"><b>04</b> / 05</div>
+        <div class="fhead">
+          <div class="kicker">Corrosion-resistant</div>
+          <span class="line"><span class="w serif-i t1" id="f4a">Acid?</span></span>
+          <span class="line"><span class="w serif-b t2" id="f4b">No problem.</span></span>
+        </div>
+        <div class="card" id="lemonCard" style="left: 70px; top: 760px; width: 940px; height: 646px;"><img src="assets/lemon_photo.jpg" alt="" /></div>
+        <div class="abs" id="f4chip" style="left: 70px; top: 1480px;"><span class="chip ink">No stains · No metallic taste</span></div>
+      </div>
+
+      <div id="f5" class="clip bg-paper" data-start="11.45" data-duration="0.9" data-track-index="3">
+        <div class="counter"><b>05</b> / 05</div>
+        <div class="fhead">
+          <div class="kicker">Zero effort</div>
+          <span class="line"><span class="w serif-i t1" id="f5a">Dishwasher</span></span>
+          <span class="line"><span class="w serif-b t2" id="f5b">safe.</span></span>
+        </div>
+        <div class="card" id="dwCard" style="left: 430px; top: 700px; width: 580px; height: 1004px;"><img src="assets/dishwasher_photo.jpg" alt="" /></div>
+        <div class="fill" id="bubbles"></div>
+        <div class="abs" id="f5chip" style="left: 70px; top: 1180px; width: 340px;"><span class="chip ink">or rinse &amp; go</span></div>
+      </div>
+
+      <!-- indigo wipe panel covering each feature cut -->
+      <div id="wipes" class="clip" data-start="7.8" data-duration="4.7" data-track-index="5">
+        <div class="fill" id="wipe" data-layout-allow-overflow></div>
+      </div>
+
+      <!-- ===================== CTA (12.35 - 15s) ===================== -->
+      <div id="cta" class="clip" data-start="12.35" data-duration="2.65" data-track-index="4">
+        <div class="fill bg-acc" id="ctaIn">
+          <img class="abs" id="burst3" src="assets/burst.svg" alt="" style="left: -40px; top: -40px; width: 460px;" data-layout-allow-overflow />
+          <img class="abs" id="burst4" src="assets/burst.svg" alt="" style="right: -40px; bottom: -40px; width: 420px; transform: rotate(180deg);" data-layout-allow-overflow />
+          <div class="abs" style="left: 80px; top: 170px;">
+            <span class="line"><span class="w serif-i" id="c1" style="font-size: 104px;">Ditch plastic.</span></span>
+            <span class="line"><span class="w serif-b" id="c2" style="font-size: 132px; line-height: 1.05;">Upgrade today.</span></span>
+          </div>
+          <div class="shadow" style="left: 300px; top: 1250px; width: 480px; height: 80px;"></div>
+          <div class="tiboard" id="tbC" style="left: 320px; top: 500px; width: 440px; height: 633px;">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="sheen" id="tbCsheen"></div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+          </div>
+          <div class="price" id="price" style="left: 780px; top: 520px;"><span class="s">UNDER</span><span class="p">$30</span></div>
+          <div class="abs" id="zeros" style="left: 0; right: 0; top: 1310px; display: flex; justify-content: center; gap: 14px;">
+            <span class="chip white">0 plastic</span><span class="chip white">0 mold</span><span class="chip white">0 odors</span>
+          </div>
+          <div class="abs" id="stars" style="left: 0; right: 0; top: 1420px; text-align: center; font-weight: 800; font-size: 34px; color: #fff;">★★★★★ &nbsp;4.7 on Amazon</div>
+          <div class="btn" id="btn" style="left: 190px; top: 1500px; width: 700px; height: 130px; background: #fff; color: var(--acc); font-size: 52px;">SHOP NOW →</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // deterministic PRNG for particle layouts (no Math.random in compositions)
+      let seed = 22;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+      const make = (parentId, n, cls, styleFn) => {
+        const p = document.getElementById(parentId), els = [];
+        for (let i = 0; i < n; i++) { const d = document.createElement("div"); d.className = cls; Object.assign(d.style, styleFn(i)); p.appendChild(d); els.push(d); }
+        return els;
+      };
+      const hookSpecks = make("hookSpecks", 26, "speck", () => ({ left: "530px", top: "1560px", opacity: "0", transform: `rotate(${rnd() * 90}deg)` }));
+      const probSpecks = make("probSpecks", 30, "speck", () => ({ left: "560px", top: "470px", background: rnd() > 0.5 ? "#fff" : "#cfe3ff" }));
+      const drops = make("drops", 14, "drop", (i) => { const s = 34 + rnd() * 46; return { width: s + "px", height: s * 0.92 + "px", left: 340 + rnd() * 400 + "px", top: 850 + rnd() * 560 + "px" }; });
+      const bubbles = make("bubbles", 16, "bubble", () => { const s = 26 + rnd() * 54; return { width: s + "px", height: s + "px", left: 450 + rnd() * 520 + "px", top: 1500 + rnd() * 300 + "px" }; });
+
+      // fake metal thickness: stacked edge layers behind each board's front face
+      document.querySelectorAll(".tiboard").forEach((b) => {
+        for (let i = 1; i <= 6; i++) { const e = document.createElement("div"); e.className = "edge"; e.style.transform = `translateZ(${-i * 2}px)`; b.insertBefore(e, b.firstChild); }
+      });
+      const tl = gsap.timeline({ paused: true });
+      tl.set("#hookShake", { x: 0, y: 0 }, 0);
+      tl.set("#knife1", { x: 520, y: -260, rotation: 28, opacity: 1 }, 0);
+      tl.set("#wipe", { x: 1100 }, 0);
+      const lineIn = (sel, t, d = 0.45) => tl.fromTo(sel, { yPercent: 110 }, { yPercent: 0, duration: d, ease: "power4.out" }, t);
+
+      // ---------- HOOK ----------
+      tl.fromTo("#beams", { rotation: 0 }, { rotation: 260, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#hzTop", { x: 0 }, { x: -1270, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#hzBot", { x: -1270 }, { x: 0, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#strobe", { opacity: 0 }, { opacity: 0.38, duration: 0.25, ease: "steps(1)", repeat: 11, yoyo: true }, 0);
+      tl.fromTo("#warnIcon", { scale: 1.5, rotation: -10 }, { scale: 1, rotation: 0, duration: 0.35, ease: "back.out(3)" }, 0);
+      tl.to("#warnIcon", { scale: 1.08, duration: 0.25, repeat: 9, yoyo: true, ease: "sine.inOut" }, 0.4);
+      tl.fromTo("#kw1", { scale: 1.06 }, { scale: 1, duration: 0.22, ease: "power4.out" }, 0);
+      tl.fromTo("#kw2", { scale: 1.06 }, { scale: 1, duration: 0.22, ease: "power4.out" }, 0.08);
+      tl.fromTo("#hookShake", { x: -16, y: 8 }, { x: 0, y: 0, duration: 0.05, repeat: 5, yoyo: true }, 0.18);
+      tl.fromTo("#hookBox", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.85);
+      tl.fromTo("#hl1", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.95);
+      tl.fromTo("#hl2", { scale: 2.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(2.5)" }, 1.78);
+      tl.fromTo("#hookShake", { x: 14, y: -8 }, { x: 0, y: 0, duration: 0.05, repeat: 5, yoyo: true }, 1.8);
+      hookSpecks.forEach((el) => {
+        const a = rnd() * Math.PI * 2, r = 260 + rnd() * 520;
+        tl.fromTo(el, { x: 0, y: 0, opacity: 1, scale: 0.6 + rnd() }, { x: Math.cos(a) * r, y: Math.sin(a) * r * 0.7 - 120, opacity: 0, rotation: rnd() * 400, duration: 0.9 + rnd() * 0.4, ease: "power3.out", immediateRender: false }, 1.85);
+      });
+
+      // ---------- PROBLEM ----------
+      tl.fromTo("#probIn", { y: 1920 }, { y: 0, duration: 0.38, ease: "power4.out" }, 3.0);
+      tl.fromTo("#plastic", { rotation: -10, scale: 0.9 }, { rotation: -5, scale: 1, duration: 2.7, ease: "power1.out" }, 3.0);
+      [3.2, 3.62].forEach((t, k) => {
+        tl.fromTo("#knife1", { x: 520, y: -260, rotation: 28, opacity: 1 }, { x: -260, y: 120, rotation: 10, duration: 0.3, ease: "power2.in" }, t);
+        probSpecks.forEach((el, i) => {
+          if (i % 2 !== k) return;
+          const a = -Math.PI * (0.1 + rnd() * 0.8), r = 120 + rnd() * 380;
+          tl.fromTo(el, { x: 0, y: 0, opacity: 1, scale: 0.5 + rnd() }, { x: Math.cos(a) * r, y: Math.sin(a) * r + 220, opacity: 0, rotation: rnd() * 360, duration: 0.8, ease: "power2.out" }, t + 0.18);
+        });
+      });
+      tl.set("#knife1", { opacity: 0 }, 3.95);
+      tl.fromTo("#st1", { scale: 0, rotation: -60 }, { scale: 1, rotation: 0, duration: 0.3, ease: "back.out(3)" }, 3.55);
+      lineIn("#p1a", 3.15); lineIn("#p1b", 3.4);
+      tl.fromTo("#woodCard", { x: 700, rotation: 18 }, { x: 0, rotation: 5, duration: 0.5, ease: "power4.out" }, 4.05);
+      tl.to("#woodCard img", { scale: 1.12, duration: 1.6, ease: "none" }, 4.1);
+      lineIn("#p2a", 4.15); lineIn("#p2b", 4.45); lineIn("#p2c", 4.7);
+      tl.fromTo("#st2", { scale: 0, rotation: -60 }, { scale: 1, rotation: 0, duration: 0.3, ease: "back.out(3)" }, 4.9);
+
+      // ---------- REVEAL ----------
+      tl.fromTo("#revIn", { x: 1080 }, { x: 0, duration: 0.4, ease: "power4.inOut" }, 5.6);
+      tl.fromTo(["#burst1", "#burst2"], { scale: 0 }, { scale: 1, duration: 0.5, ease: "back.out(2)", stagger: 0.08 }, 5.85);
+      tl.to("#burst1", { rotation: 12, duration: 2, ease: "sine.inOut" }, 6.3);
+      lineIn("#r1", 5.8); lineIn("#r2", 6.05); lineIn("#r3", 6.25);
+      tl.fromTo("#tbR", { rotationY: -85, rotationX: 10, y: 260, opacity: 0 }, { rotationY: -20, rotationX: 4, y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 5.95);
+      tl.to("#tbR", { rotationY: 14, rotationX: -2, y: -20, duration: 1.4, ease: "sine.inOut" }, 6.75);
+      tl.fromTo("#tbRsheen", { x: -300 }, { x: 900, duration: 0.9, ease: "power2.inOut" }, 6.6);
+      tl.fromTo("#rvShadow", { scaleX: 0.3, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.8 }, 5.95);
+      tl.fromTo("#tile", { rotation: -25, scale: 0, opacity: 0 }, { rotation: -6, scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2.2)" }, 6.7);
+      tl.fromTo("#revChips", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 7.0);
+
+      // ---------- WIPES between features ----------
+      [7.85, 8.7, 9.55, 10.45, 11.3].forEach((t) => {
+        tl.fromTo("#wipe", { x: 1100 }, { x: -1100, duration: 0.32, ease: "power2.inOut" }, t);
+      });
+
+      // ---------- F1 non-porous ----------
+      lineIn("#f1a", 8.05, 0.35); lineIn("#f1b", 8.15, 0.35);
+      tl.fromTo("#tb1", { rotation: -10, rotationX: 0, scale: 0.92 }, { rotation: -4, scale: 1, duration: 0.85, ease: "power2.out" }, 8.0);
+      tl.fromTo("#tb1sheen", { x: -300 }, { x: 900, duration: 0.7, ease: "power2.inOut" }, 8.1);
+      drops.forEach((el, i) => tl.fromTo(el, { scale: 0 }, { scale: 1, duration: 0.22, ease: "back.out(3)" }, 8.12 + i * 0.04));
+
+      // ---------- F2 knife ----------
+      lineIn("#f2a", 8.9, 0.35); lineIn("#f2b", 9.0, 0.35);
+      tl.fromTo("#knife2", { x: 560, y: -120, rotation: -10 }, { x: -300, y: 60, rotation: -16, duration: 0.42, ease: "power2.inOut" }, 9.02);
+      tl.fromTo("#slice", { scaleX: 0, opacity: 1 }, { scaleX: 1, opacity: 0.0, duration: 0.5, ease: "power2.out" }, 9.12);
+
+      // ---------- F3 double-sided flip ----------
+      lineIn("#f3a", 9.75, 0.35); lineIn("#f3b", 9.85, 0.35);
+      tl.fromTo("#tb3", { rotationY: 0 }, { rotationY: 180, duration: 0.55, ease: "power3.inOut" }, 9.98);
+      tl.set("#tb3 .front .side-label", { opacity: 0 }, 10.25);
+      tl.set("#tb3 .back .side-label", { opacity: 1 }, 10.25);
+
+      // ---------- F4 acid ----------
+      lineIn("#f4a", 10.65, 0.35); lineIn("#f4b", 10.75, 0.35);
+      tl.fromTo("#lemonCard", { y: 200, rotation: 4, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.45, ease: "power3.out" }, 10.62);
+      tl.to("#lemonCard img", { scale: 1.1, duration: 0.85, ease: "none" }, 10.62);
+      tl.fromTo("#f4chip", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 }, 10.9);
+
+      // ---------- F5 dishwasher ----------
+      lineIn("#f5a", 11.5, 0.35); lineIn("#f5b", 11.6, 0.35);
+      tl.fromTo("#dwCard", { x: 400, rotation: 6 }, { x: 0, rotation: 2, duration: 0.45, ease: "power3.out" }, 11.47);
+      bubbles.forEach((el, i) => tl.fromTo(el, { y: 0, opacity: 0, scale: 0.4 }, { y: -500 - (i % 5) * 80, opacity: 1, scale: 1, duration: 0.8, ease: "power1.out" }, 11.5 + (i % 8) * 0.05));
+      tl.fromTo("#f5chip", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3 }, 11.8);
+
+      // ---------- CTA ----------
+      tl.fromTo("#ctaIn", { y: -1920 }, { y: 0, duration: 0.4, ease: "power4.out" }, 12.3);
+      tl.fromTo(["#burst3", "#burst4"], { scale: 0 }, { scale: 1, duration: 0.45, ease: "back.out(2)" }, 12.55);
+      lineIn("#c1", 12.5); lineIn("#c2", 12.7);
+      tl.fromTo("#tbC", { rotationY: -60, y: 200, opacity: 0 }, { rotationY: -15, y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 12.5);
+      tl.to("#tbC", { rotationY: 15, y: -16, duration: 1.8, ease: "sine.inOut" }, 13.2);
+      tl.fromTo("#tbCsheen", { x: -300 }, { x: 900, duration: 0.9, ease: "power2.inOut" }, 13.3);
+      tl.fromTo("#price", { scale: 0, rotation: -40 }, { scale: 1, rotation: 10, duration: 0.45, ease: "back.out(2.5)" }, 13.0);
+      tl.fromTo("#zeros .chip", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, stagger: 0.09, ease: "power3.out" }, 13.1);
+      tl.fromTo("#stars", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 13.45);
+      tl.fromTo("#btn", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2.2)" }, 13.5);
+      tl.to("#btn", { scale: 1.06, duration: 0.28, repeat: 3, yoyo: true, ease: "sine.inOut" }, 13.95);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

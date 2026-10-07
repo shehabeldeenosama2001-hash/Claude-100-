@@ -1,0 +1,110 @@
+KATORI - برومبتات صور المنتج بزوايا مختلفة + زوايا الحملة الإعلانية
+=====================================================================
+
+الجزء الأول: برومبتات صور المنتج (Nano Banana / Imagen في Google Flow أو Gemini)
+---------------------------------------------------------------------
+قبل أي برومبت: ارفع صورة المنتج الأصلية (اللوح على الأبيض مع اللحمة والخضار) كمرجع.
+كل برومبت فيه جملة بتطلب إن المنتج يفضل زي ما هو بالظبط. ده مهم عشان الإعلان مايبقاش مضلل.
+
+[1] Hero بزاوية 3/4 على رخام
+--------------------------------
+Using the uploaded photo as the exact product reference, create a premium product photo of the same brushed-titanium cutting board (identical shape, rounded corners, small round hanging hole at top-right, vertical brushed-metal grain, same size proportions 8 x 11.5 inches). The board stands slightly angled at a 3/4 view on a white Carrara marble kitchen counter, soft morning window light from the left, gentle reflection on the metal, a sprig of fresh rosemary and half a lemon beside it, shallow depth of field, clean modern kitchen softly blurred behind. Photorealistic commercial product photography, 4:5 vertical. Do not change the product design, do not add logos or text.
+
+[2] Low angle "بطولي" على خلفية غامقة
+--------------------------------
+Using the uploaded photo as the exact product reference, the same brushed-titanium cutting board stands upright, shot from a low angle so it looks heroic and premium, on a dark slate surface with a dark charcoal background, dramatic rim light outlining its edges, a soft highlight sweeping across the brushed metal, subtle reflection on the slate. Luxury product photography, 4:5 vertical. Keep the product exactly identical, no text, no logos.
+
+[3] Flat lay من فوق (Top-down)
+--------------------------------
+Using the uploaded photo as the exact product reference, top-down flat lay of the same brushed-titanium cutting board lying flat on a light oak kitchen table, with a raw ribeye steak on one half, and fresh red bell pepper, broccoli, cherry tomatoes and parsley arranged around it, a chef knife beside it, linen napkin at the corner. Bright natural daylight, crisp shadows, editorial food photography, 4:5 vertical. The board must stay identical to the reference, no text.
+
+[4] Lifestyle في مطبخ حقيقي (Wide)
+--------------------------------
+Using the uploaded photo as the exact product reference, a wide lifestyle photo of a bright, warm modern home kitchen. The same brushed-titanium cutting board lies on the counter with sliced vegetables on it, a wooden bowl, a coffee mug and a plant nearby, soft afternoon window light, cozy atmosphere, shot from a slight high angle. Photorealistic interior lifestyle photography, 9:16 vertical. Keep the board identical, no people, no text.
+
+[5] إيد ماسكة اللوح (Hand-held)
+--------------------------------
+Using the uploaded photo as the exact product reference, a close-up of a woman's hand holding the same brushed-titanium cutting board by its edge, tilting it toward the camera so light glints across the brushed metal, blurred kitchen background, natural daylight, realistic skin and nails. Photorealistic, 4:5 vertical. Keep the board identical, no text.
+
+[6] ميه بتتجمع نقط (Non-porous)
+--------------------------------
+Using the uploaded photo as the exact product reference, the same brushed-titanium cutting board lying at a slight angle under a kitchen faucet, clear water running and beading into droplets on the brushed metal surface, sparkling highlights, stainless sink softly blurred. Macro-style commercial photography, 4:5 vertical. Keep the board identical, no text.
+
+[7] ماكرو للخامة (Close-up texture)
+--------------------------------
+Using the uploaded photo as the exact product reference, an extreme macro close-up of the brushed-titanium surface of the same board near its rounded corner and the round hanging hole, showing the fine vertical brushed grain in sharp detail, a soft light streak crossing the metal, shallow depth of field. Commercial macro photography, 1:1. Keep the material and shape identical, no text.
+
+[8] الحافة / الزاوية الجانبية (Side profile)
+--------------------------------
+Using the uploaded photo as the exact product reference, a side-angle shot of the same brushed-titanium cutting board standing on its long edge on a white surface, showing how thin and sleek the metal board is, soft studio light, clean white seamless background with a soft shadow. Product photography, 4:5 vertical. Keep the product identical, no text.
+
+[9] اللوح متعلق (Hanging hole)
+--------------------------------
+Using the uploaded photo as the exact product reference, the same brushed-titanium cutting board hanging by its small round hole on a matte black hook on a white tiled kitchen wall, next to hanging wooden spoons, soft daylight, minimal Scandinavian kitchen. Photorealistic, 4:5 vertical. Keep the board identical, no text.
+
+[10] في غسالة الأطباق
+--------------------------------
+Using the uploaded photo as the exact product reference, the same brushed-titanium cutting board placed upright in the lower rack of an open modern dishwasher among white plates, clean bright kitchen light, slight steam. Photorealistic, 4:5 vertical. Keep the board identical, no text.
+
+[11] هدية (Father's Day / Gift)
+--------------------------------
+Using the uploaded photo as the exact product reference, the same brushed-titanium cutting board placed in an open matte-black gift box with tissue paper, a small kraft gift tag and twine beside it, on a dark walnut table, warm cozy lighting. Premium gift product photography, 4:5 vertical. Keep the board identical, no text on the tag.
+
+[12] قبل / بعد (Old vs New)
+--------------------------------
+Using the uploaded photo as the exact product reference, a side-by-side split composition: on the left an old, scratched, stained wooden cutting board with dark mold spots, dull lighting; on the right the same clean brushed-titanium cutting board shining under bright light with fresh vegetables. Clear contrast between old and new, photorealistic, 1:1. Keep the titanium board identical, no text.
+
+
+الجزء التاني: زوايا الحملة الإعلانية (Marketing Angles)
+---------------------------------------------------------------------
+كل زاوية = إعلان لوحده بهوك ورسالة مختلفة. اعمل تيست للزوايا ضد بعض، وكمّل باللي يجيب أرخص تكلفة شراء.
+
+ANGLE 1 - الصحة / الميكروبلاستيك
+  الهوك:       "Your cutting board is feeding you plastic."
+  العنوان:      No Plastic. No Microplastics. 100% Titanium.
+  النص:        Every cut on a plastic board scrapes tiny particles into your food. Switch to pure titanium - non-toxic, non-porous, and built to last.
+  الصور:        [12] قبل/بعد + [3] Flat lay + فيديو الـ KITCHEN WARNING
+
+ANGLE 2 - النضافة / العفن والريحة
+  الهوك:       "Look what's living in your wooden cutting board."
+  العنوان:      Nothing Soaks In. Nothing Grows.
+  النص:        Wood soaks up juices, stains and smells. Titanium is non-porous - rinse it and it's clean.
+  الصور:        [6] الميه + صورة الخشب المعفّن الحقيقية
+
+ANGLE 3 - السهولة / توفير الوقت
+  الهوك:       "I stopped scrubbing cutting boards."
+  العنوان:      Rinse. Done. Or Toss It in the Dishwasher.
+  النص:        No oiling, no soaking, no scrubbing stains. Just rinse it or put it in the dishwasher.
+  الصور:        [10] الغسالة + [6] الميه
+
+ANGLE 4 - المتانة / اشتريه مرة واحدة
+  الهوك:       "The last cutting board you'll need to buy."
+  العنوان:      Won't Crack. Won't Warp. Won't Rust.
+  النص:        Plastic warps, wood cracks. Pure titanium is corrosion-resistant and built for years of daily chopping.
+  الصور:        [2] Low angle غامق + [8] الحافة
+
+ANGLE 5 - السكاكين
+  الهوك:       "Your metal cutting board is ruining your knives."
+  العنوان:      Kind to Your Knives.
+  النص:        Titanium is softer than steel, so your blades stay sharp longer - unlike stainless steel boards.
+  الصور:        [5] الإيد + صورة السكينة والليمون الحقيقية
+
+ANGLE 6 - هدية (عيد الأب / المناسبات)
+  الهوك:       "The gift for the dad who has everything."
+  العنوان:      A Kitchen Upgrade He'll Use Every Day.
+  النص:        Non-toxic, sleek, and built to last - the gift that actually gets used. Under $30.
+  الصور:        [11] الهدية + [1] Hero على الرخام
+
+ANGLE 7 - الشكل / مطبخ بريميوم
+  الهوك:       "This is the most satisfying kitchen upgrade."
+  العنوان:      Sleek Titanium. Premium Kitchen.
+  النص:        Brushed titanium that looks as good as it works. Double-sided, hangs anywhere, cleans in seconds.
+  الصور:        [4] Lifestyle + [9] متعلق + [7] ماكرو
+
+نصيحة للتيست:
+  - ابدأ بـ 3 زوايا: 1 (الصحة) و 2 (النضافة) و 3 (السهولة)، لأنها أقوى زوايا للمنتج ده.
+  - كل زاوية: فيديو + 2 صور، بنفس الميزانية لمدة 3-4 أيام.
+  - الزاوية اللي تجيب أقل تكلفة شراء: كبّر ميزانيتها، واعمل منها هوكات تانية.
+  - زاوية الهدية (6): شغّلها قبل المناسبات بأسبوعين (عيد الأب، الكريسماس، Black Friday).
+
+تنبيه: أي صورة متولدة بالـ AI راجعها كويس إن المنتج فيها مطابق للحقيقي في الشكل والحجم قبل ما تنشرها.

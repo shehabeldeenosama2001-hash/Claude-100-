@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Comparison</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: radial-gradient(ellipse at 50% 0%, #2a2f36 0%, #0b0d10 70%); }
+    .title { left: 60px; right: 60px; top: 64px; text-align: center; }
+    .title h1 { font-size: 92px; margin-top: 12px; }
+    table { position: absolute; left: 50px; right: 50px; top: 300px; width: 980px; border-collapse: separate; border-spacing: 0 14px; }
+    th { padding-bottom: 6px; }
+    th .ph { width: 190px; height: 150px; border-radius: 22px; overflow: hidden; margin: 0 auto 12px; border: 3px solid rgba(255,255,255,.25); }
+    th.win .ph { border-color: #fff; box-shadow: 0 0 0 6px rgba(255,255,255,.12); }
+    th .nm { font-weight: 900; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; color: #c9ced5; }
+    th.win .nm { color: #fff; }
+    td { background: rgba(255,255,255,.06); padding: 24px 14px; text-align: center; font-size: 26px; }
+    td:first-child { text-align: left; padding-left: 28px; border-radius: 18px 0 0 18px; font-weight: 700; font-size: 28px; width: 380px; }
+    td:last-child { border-radius: 0 18px 18px 0; background: rgba(255,255,255,.14); }
+    td .dot { width: 46px; height: 46px; font-size: 26px; }
+    .foot { left: 60px; right: 60px; bottom: 60px; text-align: center; font-weight: 600; font-size: 24px; color: #9ca3af; }
+  </style>
+</head>
+<body>
+  <div class="abs title">
+    <div class="kicker" style="color: #c9ced5;">Why people are switching</div>
+    <h1 class="display">Plastic vs wood vs <span class="metal">titanium</span></h1>
+  </div>
+  <table>
+    <tr>
+      <th></th>
+      <th><div class="ph"><img class="cover" src="assets/plastic.jpg" alt="" /></div><div class="nm">Plastic</div></th>
+      <th><div class="ph"><img class="cover" src="assets/wood.jpg" alt="" /></div><div class="nm">Wood</div></th>
+      <th class="win"><div class="ph"><img class="cover" src="assets/ti_hero.jpg" alt="" style="object-position: 50% 40%;" /></div><div class="nm">Titanium</div></th>
+    </tr>
+    <tr><td>No microplastic shavings</td><td><span class="dot no">✕</span></td><td><span class="dot ok">✓</span></td><td><span class="dot ok">✓</span></td></tr>
+    <tr><td>Non-porous (no odors, stains)</td><td><span class="dot no">✕</span></td><td><span class="dot no">✕</span></td><td><span class="dot ok">✓</span></td></tr>
+    <tr><td>Nowhere for mold to grow</td><td><span class="dot no">✕</span></td><td><span class="dot no">✕</span></td><td><span class="dot ok">✓</span></td></tr>
+    <tr><td>Dishwasher safe</td><td><span class="dot ok">✓</span></td><td><span class="dot no">✕</span></td><td><span class="dot ok">✓</span></td></tr>
+    <tr><td>Won't crack or warp</td><td><span class="dot no">✕</span></td><td><span class="dot no">✕</span></td><td><span class="dot ok">✓</span></td></tr>
+  </table>
+  <div class="abs foot">Titanium is softer than steel knives, so your blades stay sharp.</div>
+</body>
+</html>

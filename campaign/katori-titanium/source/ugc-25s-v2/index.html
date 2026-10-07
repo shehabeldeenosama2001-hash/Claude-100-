@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/v2.css" />
+    <style>
+      #stage { position: absolute; inset: -30px; }
+      #beams { left: -760px; top: -1300px; width: 2600px; height: 2600px; border-radius: 50%;
+        background: conic-gradient(from 0deg, rgba(255,255,255,.22) 0 14deg, transparent 14deg 90deg, rgba(255,255,255,.22) 90deg 104deg, transparent 104deg 180deg, rgba(255,255,255,.22) 180deg 194deg, transparent 194deg 270deg, rgba(255,255,255,.22) 270deg 284deg, transparent 284deg 360deg); }
+      .hz { position: absolute; left: 0; width: 1140px; height: 110px; overflow: hidden; border-top: 6px solid #111; border-bottom: 6px solid #111; }
+      .hz .strip { position: absolute; left: 0; top: 0; width: 2600px; height: 100%; background: repeating-linear-gradient(-45deg, var(--hazard) 0 56px, #111 56px 112px); }
+      #strobe { background: #000; opacity: 0; }
+      .kw { position: absolute; left: 0; right: 0; text-align: center; font-family: Anton; font-size: 270px; line-height: .9; letter-spacing: 6px; }
+      .blurfill { position: absolute; inset: -80px; }
+      .blurfill img { width: 100%; height: 100%; object-fit: cover; filter: blur(46px) brightness(.62) saturate(1.1); }
+      .card { border-radius: 40px; box-shadow: 0 40px 90px rgba(0,0,0,.45); }
+      .tag { position: absolute; }
+      .chip.red { background: var(--red); color: #fff; }
+      .chip.acc { background: var(--acc); color: #fff; }
+      .grain { position: absolute; inset: -60px; background: url("assets/grain.png"); background-size: 540px 960px; opacity: .06; mix-blend-mode: overlay; }
+      .sticker { position: absolute; left: 50%; transform: translateX(-50%); padding: 18px 30px; border-radius: 18px; background: #fff; color: #111; font-weight: 700; font-size: 48px; line-height: 1.2; text-align: center; white-space: nowrap; box-shadow: 0 8px 26px rgba(0,0,0,.3); }
+      .caps { position: absolute; left: 50px; right: 50px; top: 1500px; height: 240px; }
+      .cap { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-weight: 900; font-size: 90px; line-height: 1.05; color: #fff; opacity: 0;
+        -webkit-text-stroke: 5px #000; paint-order: stroke fill; text-shadow: 0 8px 20px rgba(0,0,0,.5); }
+      .cw { display: inline-block; }
+      .flip { position: absolute; transform-style: preserve-3d; }
+      .flip .side { position: absolute; inset: 0; border-radius: 40px; overflow: hidden; backface-visibility: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.45); background: #fff; }
+      .flip .side img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .flip .side.b { transform: rotateY(180deg); }
+      .price { position: absolute; width: 240px; height: 240px; border-radius: 50%; background: #fff; color: var(--acc); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 40px rgba(0,0,0,.3); }
+      .price .s { font-weight: 800; font-size: 26px; letter-spacing: 4px; color: var(--ink); }
+      .price .p { font-family: Playfair; font-weight: 900; font-size: 100px; line-height: 1; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="25" data-width="1080" data-height="1920">
+      <div id="stage" data-layout-allow-overflow>
+
+        <!-- 0 - 3s: full-screen KITCHEN WARNING -->
+        <div id="hook" class="clip bg-red" data-start="0" data-duration="3.1" data-track-index="0">
+          <div class="abs" id="beams" data-layout-allow-overflow></div>
+          <div class="hz" style="top: 30px;"><div class="strip" id="hzTop" data-layout-allow-overflow></div></div>
+          <div class="hz" style="bottom: 30px;"><div class="strip" id="hzBot" data-layout-allow-overflow></div></div>
+          <img class="abs" id="warnIcon" src="assets/warning.svg" alt="" style="left: 400px; top: 230px; width: 340px;" />
+          <div class="kw" id="kw1" style="top: 600px; color: #fff;">KITCHEN</div>
+          <div class="kw" id="kw2" style="top: 850px; color: var(--hazard); -webkit-text-stroke: 6px #111; paint-order: stroke fill;">WARNING</div>
+          <div class="fill" id="strobe"></div>
+        </div>
+
+      <div id="p1" class="clip" data-start="3.0" data-duration="4.1" data-track-index="0">
+        <div class="blurfill"><img src="assets/plastic_real.jpg" alt="" /></div>
+        <div class="card" id="p1card" style="left: 60px; top: 380px; width: 960px; height: 560px;"><img src="assets/plastic_real.jpg" alt="" /></div>
+        <div class="tag" id="p1chip" style="left: 90px; top: 850px;"><span class="chip red">MICROPLASTICS</span></div>
+        <div class="sticker" id="p1st" style="top: 150px;">my old board 😬</div>
+      </div>
+      <div id="p2" class="clip" data-start="7.1" data-duration="1.3" data-track-index="0">
+        <div class="blurfill"><img src="assets/wood_stained.jpg" alt="" /></div>
+        <div class="card" id="p2card" style="left: 190px; top: 330px; width: 700px; height: 1054px;"><img src="assets/wood_stained.jpg" alt="" /></div>
+        <div class="tag" id="p2chip" style="left: 220px; top: 1294px;"><span class="chip red">STAINS</span></div>
+        <div class="sticker" id="p2st" style="top: 150px;">wood isn't better 🤢</div>
+      </div>
+      <div id="p3" class="clip" data-start="8.4" data-duration="0.7" data-track-index="0">
+        <div class="blurfill"><img src="assets/wood_scratch.jpg" alt="" /></div>
+        <div class="card" id="p3card" style="left: 60px; top: 420px; width: 960px; height: 640px;"><img src="assets/wood_scratch.jpg" alt="" /></div>
+        <div class="tag" id="p3chip" style="left: 90px; top: 970px;"><span class="chip red">DEEP GROOVES</span></div>
+        <div class="sticker" id="p3st" style="top: 150px;">wood isn't better 🤢</div>
+      </div>
+      <div id="p4" class="clip" data-start="9.1" data-duration="0.62" data-track-index="0">
+        <div class="blurfill"><img src="assets/wood_moldy.jpg" alt="" /></div>
+        <div class="card" id="p4card" style="left: 60px; top: 450px; width: 960px; height: 560px;"><img src="assets/wood_moldy.jpg" alt="" /></div>
+        <div class="tag" id="p4chip" style="left: 90px; top: 920px;"><span class="chip red">MOLD</span></div>
+        <div class="sticker" id="p4st" style="top: 150px;">wood isn't better 🤢</div>
+      </div>
+      <div id="p5" class="clip" data-start="9.72" data-duration="1.78" data-track-index="0">
+        <div class="blurfill"><img src="assets/ti_kitchen.jpg" alt="" /></div>
+        <div class="card" id="p5card" style="left: 70px; top: 330px; width: 940px; height: 935px;"><img src="assets/ti_kitchen.jpg" alt="" /></div>
+        <div class="sticker" id="p5st" style="top: 150px;">100% titanium ✨</div>
+      </div>
+      <div id="p6" class="clip" data-start="11.5" data-duration="2.8" data-track-index="0">
+        <div class="blurfill"><img src="assets/rinse_photo.jpg" alt="" /></div>
+        <div class="card" id="p6card" style="left: 130px; top: 300px; width: 820px; height: 1153px;"><img src="assets/rinse_photo.jpg" alt="" /></div>
+        <div class="tag" id="p6chip" style="left: 160px; top: 1363px;"><span class="chip acc">NON-POROUS</span></div>
+        <div class="sticker" id="p6st" style="top: 150px;">nothing soaks in 💧</div>
+      </div>
+      <div id="p7" class="clip" data-start="14.3" data-duration="1.38" data-track-index="0">
+        <div class="blurfill"><img src="assets/knife_photo.jpg" alt="" /></div>
+        <div class="card" id="p7card" style="left: 110px; top: 320px; width: 860px; height: 934px;"><img src="assets/knife_photo.jpg" alt="" /></div>
+        <div class="tag" id="p7chip" style="left: 140px; top: 1164px;"><span class="chip acc">SOFTER THAN STEEL</span></div>
+        <div class="sticker" id="p7st" style="top: 150px;">knife-friendly 🔪</div>
+      </div>
+      <div id="p9" class="clip" data-start="18.36" data-duration="1.57" data-track-index="0">
+        <div class="blurfill"><img src="assets/lemon_photo.jpg" alt="" /></div>
+        <div class="card" id="p9card" style="left: 40px; top: 420px; width: 1000px; height: 687px;"><img src="assets/lemon_photo.jpg" alt="" /></div>
+        <div class="tag" id="p9chip" style="left: 70px; top: 1017px;"><span class="chip acc">NO STAINS</span></div>
+        <div class="sticker" id="p9st" style="top: 150px;">acid-proof 🍋</div>
+      </div>
+      <div id="p10" class="clip" data-start="19.93" data-duration="1.77" data-track-index="0">
+        <div class="blurfill"><img src="assets/dishwasher_photo.jpg" alt="" /></div>
+        <div class="card" id="p10card" style="left: 220px; top: 300px; width: 640px; height: 1108px;"><img src="assets/dishwasher_photo.jpg" alt="" /></div>
+        <div class="sticker" id="p10st" style="top: 150px;">dishwasher safe 🧼</div>
+      </div>
+
+        <!-- 15.68 - 18.36: two sides (real photo, card flip) -->
+        <div id="p8" class="clip" data-start="15.68" data-duration="2.68" data-track-index="0">
+          <div class="blurfill"><img src="assets/board_food.jpg" alt="" /></div>
+          <div style="position: absolute; inset: 0; perspective: 2200px;">
+            <div class="flip" id="p8flip" style="left: 90px; top: 330px; width: 900px; height: 975px;">
+              <div class="side a"><img src="assets/board_food.jpg" alt="" /></div>
+              <div class="side b"><img src="assets/board_food.jpg" alt="" /></div>
+            </div>
+          </div>
+          <div class="tag" id="p8a" style="left: 120px; top: 1220px;"><span class="chip ink">SIDE A · MEAT 🥩</span></div>
+          <div class="tag" id="p8b" style="left: 120px; top: 1220px; opacity: 0;"><span class="chip acc">SIDE B · VEGGIES 🥦</span></div>
+          <div class="sticker" id="p8st" style="top: 150px;">double-sided 🔄</div>
+        </div>
+
+        <!-- 21.7 - 25: end card -->
+        <div id="end" class="clip bg-acc" data-start="21.7" data-duration="3.3" data-track-index="0">
+          <img class="abs" id="burstA" src="assets/burst.svg" alt="" style="left: -40px; top: -40px; width: 420px;" data-layout-allow-overflow />
+          <img class="abs" id="burstB" src="assets/burst.svg" alt="" style="right: -40px; bottom: -40px; width: 380px; transform: rotate(180deg);" data-layout-allow-overflow />
+          <div class="card" id="endCard" style="left: 140px; top: 330px; width: 800px; height: 866px;"><img src="assets/board_food.jpg" alt="" /></div>
+          <div class="price" id="price" style="left: 790px; top: 240px;"><span class="s">UNDER</span><span class="p">$30</span></div>
+          <div class="sticker" id="endSt1" style="top: 150px; left: 360px; background: #111; color: #fff;">⭐ 4.7 on Amazon</div>
+          <div class="sticker" id="endSt2" style="top: 1290px; background: #ffe14d;">tap “Shop now” 👇</div>
+        </div>
+      </div>
+
+      <div id="look" class="clip" data-start="0" data-duration="25" data-track-index="1">
+        <div class="grain" data-layout-allow-overflow id="grain"></div>
+      </div>
+
+      <div id="captions" class="clip" data-start="0" data-duration="25" data-track-index="3">
+        <div class="caps">
+          <div class="cap" id="cap1"><span class="cw" id="w1_0">STOP!</span></div>
+          <div class="cap" id="cap2"><span class="cw" id="w2_0">IF</span> <span class="cw" id="w2_1">YOU</span> <span class="cw" id="w2_2">STILL</span></div>
+          <div class="cap" id="cap3"><span class="cw" id="w3_0">CHOP</span> <span class="cw" id="w3_1">ON</span> <span class="cw" id="w3_2">PLASTIC</span></div>
+          <div class="cap" id="cap4"><span class="cw" id="w4_0">YOU</span> <span class="cw" id="w4_1">NEED</span> <span class="cw" id="w4_2">TO</span></div>
+          <div class="cap" id="cap5"><span class="cw" id="w5_0">SEE</span> <span class="cw" id="w5_1">THIS</span></div>
+          <div class="cap" id="cap6"><span class="cw" id="w6_0">THIS</span> <span class="cw" id="w6_1">IS</span> <span class="cw" id="w6_2">MY</span></div>
+          <div class="cap" id="cap7"><span class="cw" id="w7_0">OLD</span> <span class="cw" id="w7_1">PLASTIC</span> <span class="cw" id="w7_2">BOARD</span></div>
+          <div class="cap" id="cap8"><span class="cw" id="w8_0">EVERY</span> <span class="cw" id="w8_1">CUT</span> <span class="cw" id="w8_2">SCRAPES</span></div>
+          <div class="cap" id="cap9"><span class="cw" id="w9_0">TINY</span> <span class="cw" id="w9_1">BITS</span> <span class="cw" id="w9_2">INTO</span></div>
+          <div class="cap" id="cap10"><span class="cw" id="w10_0">YOUR</span> <span class="cw" id="w10_1">FOOD</span></div>
+          <div class="cap" id="cap11"><span class="cw" id="w11_0">AND</span> <span class="cw" id="w11_1">WOOD?</span></div>
+          <div class="cap" id="cap12"><span class="cw" id="w12_0">STAINS</span></div>
+          <div class="cap" id="cap13"><span class="cw" id="w13_0">DEEP</span> <span class="cw" id="w13_1">GROOVES</span></div>
+          <div class="cap" id="cap14"><span class="cw" id="w14_0">EVEN</span> <span class="cw" id="w14_1">MOLD</span></div>
+          <div class="cap" id="cap15"><span class="cw" id="w15_0">SO</span> <span class="cw" id="w15_1">I</span> <span class="cw" id="w15_2">SWITCHED</span></div>
+          <div class="cap" id="cap16"><span class="cw" id="w16_0">TO</span> <span class="cw" id="w16_1">PURE</span> <span class="cw" id="w16_2">TITANIUM</span></div>
+          <div class="cap" id="cap17"><span class="cw" id="w17_0">NOTHING</span> <span class="cw" id="w17_1">SOAKS</span> <span class="cw" id="w17_2">IN</span></div>
+          <div class="cap" id="cap18"><span class="cw" id="w18_0">I</span> <span class="cw" id="w18_1">JUST</span> <span class="cw" id="w18_2">RINSE</span></div>
+          <div class="cap" id="cap19"><span class="cw" id="w19_0">IT</span></div>
+          <div class="cap" id="cap20"><span class="cw" id="w20_0">AND</span> <span class="cw" id="w20_1">IT&#x27;S</span> <span class="cw" id="w20_2">CLEAN</span></div>
+          <div class="cap" id="cap21"><span class="cw" id="w21_0">IT&#x27;S</span> <span class="cw" id="w21_1">EASY</span> <span class="cw" id="w21_2">ON</span></div>
+          <div class="cap" id="cap22"><span class="cw" id="w22_0">MY</span> <span class="cw" id="w22_1">KNIVES</span></div>
+          <div class="cap" id="cap23"><span class="cw" id="w23_0">TWO</span> <span class="cw" id="w23_1">SIDES</span></div>
+          <div class="cap" id="cap24"><span class="cw" id="w24_0">ONE</span> <span class="cw" id="w24_1">FOR</span> <span class="cw" id="w24_2">MEAT</span></div>
+          <div class="cap" id="cap25"><span class="cw" id="w25_0">ONE</span> <span class="cw" id="w25_1">FOR</span> <span class="cw" id="w25_2">VEGGIES</span></div>
+          <div class="cap" id="cap26"><span class="cw" id="w26_0">LEMON</span> <span class="cw" id="w26_1">DOESN&#x27;T</span> <span class="cw" id="w26_2">EVEN</span></div>
+          <div class="cap" id="cap27"><span class="cw" id="w27_0">STAIN</span> <span class="cw" id="w27_1">IT</span></div>
+          <div class="cap" id="cap28"><span class="cw" id="w28_0">AND</span> <span class="cw" id="w28_1">IT</span> <span class="cw" id="w28_2">GOES</span></div>
+          <div class="cap" id="cap29"><span class="cw" id="w29_0">RIGHT</span> <span class="cw" id="w29_1">IN</span> <span class="cw" id="w29_2">THE</span></div>
+          <div class="cap" id="cap30"><span class="cw" id="w30_0">DISHWASHER</span></div>
+          <div class="cap" id="cap31"><span class="cw" id="w31_0">BEST</span> <span class="cw" id="w31_1">KITCHEN</span> <span class="cw" id="w31_2">UPGRADE</span></div>
+          <div class="cap" id="cap32"><span class="cw" id="w32_0">UNDER</span> <span class="cw" id="w32_1">THIRTY</span> <span class="cw" id="w32_2">BUCKS</span></div>
+          <div class="cap" id="cap33"><span class="cw" id="w33_0">LINK</span> <span class="cw" id="w33_1">IS</span> <span class="cw" id="w33_2">BELOW!</span></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let seed = 9;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+      const specks = [];
+      const host = document.getElementById("p1");
+      for (let i = 0; i < 36; i++) { const d = document.createElement("div"); d.className = "speck"; Object.assign(d.style, { left: 300 + rnd() * 480 + "px", top: 560 + rnd() * 220 + "px", opacity: "0" }); host.appendChild(d); specks.push(d); }
+      const bubbles = [];
+      const host2 = document.getElementById("p10");
+      for (let i = 0; i < 16; i++) { const d = document.createElement("div"); d.className = "bubble"; const s = 30 + rnd() * 60; Object.assign(d.style, { width: s + "px", height: s + "px", left: 240 + rnd() * 600 + "px", top: 1200 + rnd() * 250 + "px", opacity: "0" }); host2.appendChild(d); bubbles.push(d); }
+
+      const tl = gsap.timeline({ paused: true });
+
+      // handheld phone drift + grain
+      tl.fromTo("#stage", { x: -5, y: 4, rotation: -0.3 }, { x: 5, y: -4, rotation: 0.3, duration: 0.9, ease: "sine.inOut", repeat: 27, yoyo: true }, 0);
+      tl.fromTo("#grain", { x: 0, y: 0 }, { x: 37, y: -23, duration: 0.1, ease: "steps(1)", repeat: 249, yoyo: true }, 0);
+
+      // hook
+      tl.fromTo("#beams", { rotation: 0 }, { rotation: 240, duration: 3.1, ease: "none" }, 0);
+      tl.fromTo("#hzTop", { x: 0 }, { x: -1170, duration: 3.1, ease: "none" }, 0);
+      tl.fromTo("#hzBot", { x: -1170 }, { x: 0, duration: 3.1, ease: "none" }, 0);
+      tl.fromTo("#strobe", { opacity: 0 }, { opacity: 0.38, duration: 0.25, ease: "steps(1)", repeat: 11, yoyo: true }, 0);
+      tl.fromTo("#warnIcon", { scale: 1.4, rotation: -10 }, { scale: 1, rotation: 0, duration: 0.35, ease: "back.out(3)" }, 0);
+      tl.to("#warnIcon", { scale: 1.08, duration: 0.25, repeat: 9, yoyo: true, ease: "sine.inOut" }, 0.4);
+      tl.fromTo("#kw1", { scale: 1.06 }, { scale: 1, duration: 0.22, ease: "power4.out" }, 0);
+      tl.fromTo("#kw2", { scale: 1.06 }, { scale: 1, duration: 0.22, ease: "power4.out" }, 0.08);
+
+      // real-photo scenes
+      tl.fromTo("#p1card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 3.0);
+      tl.fromTo("#p1card img", { scale: 1.0 }, { scale: 1.1, duration: 4.1, ease: "none" }, 3.0);
+      tl.fromTo("#p1st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 3.05);
+      tl.fromTo("#p1chip", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 3.3);
+      tl.fromTo("#p2card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 7.1);
+      tl.fromTo("#p2card img", { scale: 1.0 }, { scale: 1.1, duration: 1.3, ease: "none" }, 7.1);
+      tl.fromTo("#p2st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 7.1499999999999995);
+      tl.fromTo("#p2chip", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 7.3999999999999995);
+      tl.fromTo("#p3card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 8.4);
+      tl.fromTo("#p3card img", { scale: 1.0 }, { scale: 1.1, duration: 0.7, ease: "none" }, 8.4);
+      tl.fromTo("#p3st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 8.450000000000001);
+      tl.fromTo("#p3chip", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 8.700000000000001);
+      tl.fromTo("#p4card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 9.1);
+      tl.fromTo("#p4card img", { scale: 1.0 }, { scale: 1.1, duration: 0.62, ease: "none" }, 9.1);
+      tl.fromTo("#p4st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 9.15);
+      tl.fromTo("#p4chip", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 9.4);
+      tl.fromTo("#p5card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 9.72);
+      tl.fromTo("#p5card img", { scale: 1.0 }, { scale: 1.1, duration: 1.78, ease: "none" }, 9.72);
+      tl.fromTo("#p5st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 9.770000000000001);
+      tl.fromTo("#p6card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 11.5);
+      tl.fromTo("#p6card img", { scale: 1.0 }, { scale: 1.1, duration: 2.8, ease: "none" }, 11.5);
+      tl.fromTo("#p6st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 11.55);
+      tl.fromTo("#p6chip", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 11.8);
+      tl.fromTo("#p7card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 14.3);
+      tl.fromTo("#p7card img", { scale: 1.0 }, { scale: 1.1, duration: 1.38, ease: "none" }, 14.3);
+      tl.fromTo("#p7st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 14.350000000000001);
+      tl.fromTo("#p7chip", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 14.600000000000001);
+      tl.fromTo("#p9card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 18.36);
+      tl.fromTo("#p9card img", { scale: 1.0 }, { scale: 1.1, duration: 1.57, ease: "none" }, 18.36);
+      tl.fromTo("#p9st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 18.41);
+      tl.fromTo("#p9chip", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 18.66);
+      tl.fromTo("#p10card", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.45, ease: "power3.out" }, 19.93);
+      tl.fromTo("#p10card img", { scale: 1.0 }, { scale: 1.1, duration: 1.77, ease: "none" }, 19.93);
+      tl.fromTo("#p10st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.28, ease: "back.out(2.6)" }, 19.98);
+
+      // microplastic specks over the real plastic board
+      [4.6, 5.4, 6.2].forEach((t, k) => specks.forEach((el, i) => {
+        if (i % 3 !== k) return;
+        const a = -Math.PI * (0.15 + rnd() * 0.7), r = 140 + rnd() * 380;
+        tl.fromTo(el, { x: 0, y: 0, opacity: 1, scale: 0.5 + rnd() }, { x: Math.cos(a) * r, y: Math.sin(a) * r, opacity: 0, rotation: rnd() * 360, duration: 1.0, ease: "power2.out", immediateRender: false }, t);
+      }));
+
+      // flip (two sides)
+      tl.fromTo("#p8flip", { y: 120, opacity: 0, rotation: 4 }, { y: 0, opacity: 1, rotation: -2, duration: 0.45, ease: "power3.out" }, 15.7);
+      tl.fromTo("#p8st", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: 2, duration: 0.28, ease: "back.out(2.6)" }, 15.75);
+      tl.fromTo("#p8a", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 16.2);
+      tl.fromTo("#p8flip", { rotationY: 0 }, { rotationY: 180, duration: 0.65, ease: "power3.inOut", immediateRender: false }, 17.15);
+      tl.to("#p8a", { opacity: 0, duration: 0.15 }, 17.35);
+      tl.fromTo("#p8b", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, 17.55);
+
+      // dishwasher bubbles
+      bubbles.forEach((el, i) => tl.fromTo(el, { y: 0, opacity: 0, scale: 0.4 }, { y: -700 - (i % 5) * 90, opacity: 1, scale: 1, duration: 1.1, ease: "power1.out", immediateRender: false }, 20.1 + (i % 9) * 0.06));
+
+      // end card
+      tl.fromTo("#end", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(80% at 50% 50%)", duration: 0.45, ease: "power3.out" }, 21.7);
+      tl.fromTo(["#burstA", "#burstB"], { scale: 0 }, { scale: 1, duration: 0.45, ease: "back.out(2)" }, 21.9);
+      tl.fromTo("#endCard", { y: 240, rotation: 6, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.55, ease: "power3.out" }, 21.8);
+      tl.fromTo("#price", { scale: 0, rotation: -40 }, { scale: 1, rotation: 10, duration: 0.45, ease: "back.out(2.5)" }, 22.4);
+      tl.fromTo("#endSt1", { scale: 0.4, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: -3, duration: 0.3, ease: "back.out(2.6)" }, 22.7);
+      tl.fromTo("#endSt2", { scale: 0.4, opacity: 0, rotation: 10 }, { scale: 1, opacity: 1, rotation: 2, duration: 0.3, ease: "back.out(2.6)" }, 23.6);
+      tl.to("#endSt2", { scale: 1.06, duration: 0.25, repeat: 3, yoyo: true, ease: "sine.inOut" }, 24.0);
+
+      // word-by-word captions
+      tl.fromTo("#cap1", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 0.100);
+      tl.set("#cap1", { opacity: 0 }, 0.483);
+      tl.set("#w1_0", { color: "#ffe14d" }, 0.100);
+      tl.set("#w1_0", { color: "#ffffff" }, 0.488);
+      tl.fromTo("#cap2", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 0.488);
+      tl.set("#cap2", { opacity: 0 }, 1.047);
+      tl.set("#w2_0", { color: "#ffe14d" }, 0.488);
+      tl.set("#w2_0", { color: "#ffffff" }, 0.629);
+      tl.set("#w2_1", { color: "#ffe14d" }, 0.629);
+      tl.set("#w2_1", { color: "#ffffff" }, 0.805);
+      tl.set("#w2_2", { color: "#ffe14d" }, 0.805);
+      tl.set("#w2_2", { color: "#ffffff" }, 1.052);
+      tl.fromTo("#cap3", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 1.052);
+      tl.set("#cap3", { opacity: 0 }, 1.892);
+      tl.set("#w3_0", { color: "#ffe14d" }, 1.052);
+      tl.set("#w3_0", { color: "#ffffff" }, 1.263);
+      tl.set("#w3_1", { color: "#ffe14d" }, 1.263);
+      tl.set("#w3_1", { color: "#ffffff" }, 1.404);
+      tl.set("#w3_2", { color: "#ffe14d" }, 1.404);
+      tl.set("#w3_2", { color: "#ffffff" }, 1.897);
+      tl.fromTo("#cap4", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 1.897);
+      tl.set("#cap4", { opacity: 0 }, 2.421);
+      tl.set("#w4_0", { color: "#ffe14d" }, 1.897);
+      tl.set("#w4_0", { color: "#ffffff" }, 2.074);
+      tl.set("#w4_1", { color: "#ffe14d" }, 2.074);
+      tl.set("#w4_1", { color: "#ffffff" }, 2.285);
+      tl.set("#w4_2", { color: "#ffe14d" }, 2.285);
+      tl.set("#w4_2", { color: "#ffffff" }, 2.426);
+      tl.fromTo("#cap5", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 2.426);
+      tl.set("#cap5", { opacity: 0 }, 2.985);
+      tl.set("#w5_0", { color: "#ffe14d" }, 2.426);
+      tl.set("#w5_0", { color: "#ffffff" }, 2.602);
+      tl.set("#w5_1", { color: "#ffe14d" }, 2.602);
+      tl.set("#w5_1", { color: "#ffffff" }, 2.990);
+      tl.fromTo("#cap6", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 3.080);
+      tl.set("#cap6", { opacity: 0 }, 3.657);
+      tl.set("#w6_0", { color: "#ffe14d" }, 3.080);
+      tl.set("#w6_0", { color: "#ffffff" }, 3.329);
+      tl.set("#w6_1", { color: "#ffe14d" }, 3.329);
+      tl.set("#w6_1", { color: "#ffffff" }, 3.496);
+      tl.set("#w6_2", { color: "#ffe14d" }, 3.496);
+      tl.set("#w6_2", { color: "#ffffff" }, 3.662);
+      tl.fromTo("#cap7", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 3.662);
+      tl.set("#cap7", { opacity: 0 }, 4.738);
+      tl.set("#w7_0", { color: "#ffe14d" }, 3.662);
+      tl.set("#w7_0", { color: "#ffffff" }, 3.870);
+      tl.set("#w7_1", { color: "#ffe14d" }, 3.870);
+      tl.set("#w7_1", { color: "#ffffff" }, 4.244);
+      tl.set("#w7_2", { color: "#ffe14d" }, 4.244);
+      tl.set("#w7_2", { color: "#ffffff" }, 4.743);
+      tl.fromTo("#cap8", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 4.743);
+      tl.set("#cap8", { opacity: 0 }, 5.610);
+      tl.set("#w8_0", { color: "#ffe14d" }, 4.743);
+      tl.set("#w8_0", { color: "#ffffff" }, 5.033);
+      tl.set("#w8_1", { color: "#ffe14d" }, 5.033);
+      tl.set("#w8_1", { color: "#ffffff" }, 5.241);
+      tl.set("#w8_2", { color: "#ffe14d" }, 5.241);
+      tl.set("#w8_2", { color: "#ffffff" }, 5.615);
+      tl.fromTo("#cap9", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 5.615);
+      tl.set("#cap9", { opacity: 0 }, 6.358);
+      tl.set("#w9_0", { color: "#ffe14d" }, 5.615);
+      tl.set("#w9_0", { color: "#ffffff" }, 5.865);
+      tl.set("#w9_1", { color: "#ffe14d" }, 5.865);
+      tl.set("#w9_1", { color: "#ffffff" }, 6.114);
+      tl.set("#w9_2", { color: "#ffe14d" }, 6.114);
+      tl.set("#w9_2", { color: "#ffffff" }, 6.363);
+      tl.fromTo("#cap10", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 6.363);
+      tl.set("#cap10", { opacity: 0 }, 7.065);
+      tl.set("#w10_0", { color: "#ffe14d" }, 6.363);
+      tl.set("#w10_0", { color: "#ffffff" }, 6.613);
+      tl.set("#w10_1", { color: "#ffe14d" }, 6.613);
+      tl.set("#w10_1", { color: "#ffffff" }, 7.070);
+      tl.fromTo("#cap11", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 7.160);
+      tl.set("#cap11", { opacity: 0 }, 7.766);
+      tl.set("#w11_0", { color: "#ffe14d" }, 7.160);
+      tl.set("#w11_0", { color: "#ffffff" }, 7.351);
+      tl.set("#w11_1", { color: "#ffe14d" }, 7.351);
+      tl.set("#w11_1", { color: "#ffffff" }, 7.771);
+      tl.fromTo("#cap12", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 7.771);
+      tl.set("#cap12", { opacity: 0 }, 8.262);
+      tl.set("#w12_0", { color: "#ffe14d" }, 7.771);
+      tl.set("#w12_0", { color: "#ffffff" }, 8.267);
+      tl.fromTo("#cap13", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 8.267);
+      tl.set("#cap13", { opacity: 0 }, 9.026);
+      tl.set("#w13_0", { color: "#ffe14d" }, 8.267);
+      tl.set("#w13_0", { color: "#ffffff" }, 8.496);
+      tl.set("#w13_1", { color: "#ffe14d" }, 8.496);
+      tl.set("#w13_1", { color: "#ffffff" }, 9.031);
+      tl.fromTo("#cap14", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 9.031);
+      tl.set("#cap14", { opacity: 0 }, 9.675);
+      tl.set("#w14_0", { color: "#ffe14d" }, 9.031);
+      tl.set("#w14_0", { color: "#ffffff" }, 9.260);
+      tl.set("#w14_1", { color: "#ffe14d" }, 9.260);
+      tl.set("#w14_1", { color: "#ffffff" }, 9.680);
+      tl.fromTo("#cap15", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 9.780);
+      tl.set("#cap15", { opacity: 0 }, 10.455);
+      tl.set("#w15_0", { color: "#ffe14d" }, 9.780);
+      tl.set("#w15_0", { color: "#ffffff" }, 9.940);
+      tl.set("#w15_1", { color: "#ffe14d" }, 9.940);
+      tl.set("#w15_1", { color: "#ffffff" }, 10.060);
+      tl.set("#w15_2", { color: "#ffe14d" }, 10.060);
+      tl.set("#w15_2", { color: "#ffffff" }, 10.460);
+      tl.fromTo("#cap16", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 10.460);
+      tl.set("#cap16", { opacity: 0 }, 11.455);
+      tl.set("#w16_0", { color: "#ffe14d" }, 10.460);
+      tl.set("#w16_0", { color: "#ffffff" }, 10.620);
+      tl.set("#w16_1", { color: "#ffe14d" }, 10.620);
+      tl.set("#w16_1", { color: "#ffffff" }, 10.860);
+      tl.set("#w16_2", { color: "#ffe14d" }, 10.860);
+      tl.set("#w16_2", { color: "#ffffff" }, 11.460);
+      tl.fromTo("#cap17", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 11.560);
+      tl.set("#cap17", { opacity: 0 }, 12.480);
+      tl.set("#w17_0", { color: "#ffe14d" }, 11.560);
+      tl.set("#w17_0", { color: "#ffffff" }, 11.893);
+      tl.set("#w17_1", { color: "#ffe14d" }, 11.893);
+      tl.set("#w17_1", { color: "#ffffff" }, 12.152);
+      tl.set("#w17_2", { color: "#ffe14d" }, 12.152);
+      tl.set("#w17_2", { color: "#ffffff" }, 12.485);
+      tl.fromTo("#cap18", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 12.485);
+      tl.set("#cap18", { opacity: 0 }, 13.071);
+      tl.set("#w18_0", { color: "#ffe14d" }, 12.485);
+      tl.set("#w18_0", { color: "#ffffff" }, 12.596);
+      tl.set("#w18_1", { color: "#ffe14d" }, 12.596);
+      tl.set("#w18_1", { color: "#ffffff" }, 12.818);
+      tl.set("#w18_2", { color: "#ffe14d" }, 12.818);
+      tl.set("#w18_2", { color: "#ffffff" }, 13.076);
+      tl.fromTo("#cap19", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 13.076);
+      tl.set("#cap19", { opacity: 0 }, 13.404);
+      tl.set("#w19_0", { color: "#ffe14d" }, 13.076);
+      tl.set("#w19_0", { color: "#ffffff" }, 13.409);
+      tl.fromTo("#cap20", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 13.409);
+      tl.set("#cap20", { opacity: 0 }, 14.255);
+      tl.set("#w20_0", { color: "#ffe14d" }, 13.409);
+      tl.set("#w20_0", { color: "#ffffff" }, 13.594);
+      tl.set("#w20_1", { color: "#ffe14d" }, 13.594);
+      tl.set("#w20_1", { color: "#ffffff" }, 13.816);
+      tl.set("#w20_2", { color: "#ffe14d" }, 13.816);
+      tl.set("#w20_2", { color: "#ffffff" }, 14.260);
+      tl.fromTo("#cap21", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 14.360);
+      tl.set("#cap21", { opacity: 0 }, 14.976);
+      tl.set("#w21_0", { color: "#ffe14d" }, 14.360);
+      tl.set("#w21_0", { color: "#ffffff" }, 14.593);
+      tl.set("#w21_1", { color: "#ffe14d" }, 14.593);
+      tl.set("#w21_1", { color: "#ffffff" }, 14.825);
+      tl.set("#w21_2", { color: "#ffe14d" }, 14.825);
+      tl.set("#w21_2", { color: "#ffffff" }, 14.981);
+      tl.fromTo("#cap22", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 14.981);
+      tl.set("#cap22", { opacity: 0 }, 15.635);
+      tl.set("#w22_0", { color: "#ffe14d" }, 14.981);
+      tl.set("#w22_0", { color: "#ffffff" }, 15.136);
+      tl.set("#w22_1", { color: "#ffe14d" }, 15.136);
+      tl.set("#w22_1", { color: "#ffffff" }, 15.640);
+      tl.fromTo("#cap23", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 15.740);
+      tl.set("#cap23", { opacity: 0 }, 16.442);
+      tl.set("#w23_0", { color: "#ffe14d" }, 15.740);
+      tl.set("#w23_0", { color: "#ffffff" }, 15.948);
+      tl.set("#w23_1", { color: "#ffe14d" }, 15.948);
+      tl.set("#w23_1", { color: "#ffffff" }, 16.447);
+      tl.fromTo("#cap24", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 16.447);
+      tl.set("#cap24", { opacity: 0 }, 17.316);
+      tl.set("#w24_0", { color: "#ffe14d" }, 16.447);
+      tl.set("#w24_0", { color: "#ffffff" }, 16.655);
+      tl.set("#w24_1", { color: "#ffe14d" }, 16.655);
+      tl.set("#w24_1", { color: "#ffffff" }, 16.864);
+      tl.set("#w24_2", { color: "#ffe14d" }, 16.864);
+      tl.set("#w24_2", { color: "#ffffff" }, 17.321);
+      tl.fromTo("#cap25", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 17.321);
+      tl.set("#cap25", { opacity: 0 }, 18.315);
+      tl.set("#w25_0", { color: "#ffe14d" }, 17.321);
+      tl.set("#w25_0", { color: "#ffffff" }, 17.529);
+      tl.set("#w25_1", { color: "#ffe14d" }, 17.529);
+      tl.set("#w25_1", { color: "#ffffff" }, 17.737);
+      tl.set("#w25_2", { color: "#ffe14d" }, 17.737);
+      tl.set("#w25_2", { color: "#ffffff" }, 18.320);
+      tl.fromTo("#cap26", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 18.420);
+      tl.set("#cap26", { opacity: 0 }, 19.266);
+      tl.set("#w26_0", { color: "#ffe14d" }, 18.420);
+      tl.set("#w26_0", { color: "#ffffff" }, 18.691);
+      tl.set("#w26_1", { color: "#ffe14d" }, 18.691);
+      tl.set("#w26_1", { color: "#ffffff" }, 19.039);
+      tl.set("#w26_2", { color: "#ffe14d" }, 19.039);
+      tl.set("#w26_2", { color: "#ffffff" }, 19.271);
+      tl.fromTo("#cap27", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 19.271);
+      tl.set("#cap27", { opacity: 0 }, 19.885);
+      tl.set("#w27_0", { color: "#ffe14d" }, 19.271);
+      tl.set("#w27_0", { color: "#ffffff" }, 19.542);
+      tl.set("#w27_1", { color: "#ffe14d" }, 19.542);
+      tl.set("#w27_1", { color: "#ffffff" }, 19.890);
+      tl.fromTo("#cap28", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 19.990);
+      tl.set("#cap28", { opacity: 0 }, 20.504);
+      tl.set("#w28_0", { color: "#ffe14d" }, 19.990);
+      tl.set("#w28_0", { color: "#ffffff" }, 20.163);
+      tl.set("#w28_1", { color: "#ffe14d" }, 20.163);
+      tl.set("#w28_1", { color: "#ffffff" }, 20.301);
+      tl.set("#w28_2", { color: "#ffe14d" }, 20.301);
+      tl.set("#w28_2", { color: "#ffffff" }, 20.509);
+      tl.fromTo("#cap29", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 20.509);
+      tl.set("#cap29", { opacity: 0 }, 21.057);
+      tl.set("#w29_0", { color: "#ffe14d" }, 20.509);
+      tl.set("#w29_0", { color: "#ffffff" }, 20.751);
+      tl.set("#w29_1", { color: "#ffe14d" }, 20.751);
+      tl.set("#w29_1", { color: "#ffffff" }, 20.889);
+      tl.set("#w29_2", { color: "#ffe14d" }, 20.889);
+      tl.set("#w29_2", { color: "#ffffff" }, 21.062);
+      tl.fromTo("#cap30", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 21.062);
+      tl.set("#cap30", { opacity: 0 }, 21.645);
+      tl.set("#w30_0", { color: "#ffe14d" }, 21.062);
+      tl.set("#w30_0", { color: "#ffffff" }, 21.650);
+      tl.fromTo("#cap31", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 21.750);
+      tl.set("#cap31", { opacity: 0 }, 22.741);
+      tl.set("#w31_0", { color: "#ffe14d" }, 21.750);
+      tl.set("#w31_0", { color: "#ffffff" }, 21.999);
+      tl.set("#w31_1", { color: "#ffe14d" }, 21.999);
+      tl.set("#w31_1", { color: "#ffffff" }, 22.373);
+      tl.set("#w31_2", { color: "#ffe14d" }, 22.373);
+      tl.set("#w31_2", { color: "#ffffff" }, 22.746);
+      tl.fromTo("#cap32", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 22.746);
+      tl.set("#cap32", { opacity: 0 }, 23.862);
+      tl.set("#w32_0", { color: "#ffe14d" }, 22.746);
+      tl.set("#w32_0", { color: "#ffffff" }, 23.037);
+      tl.set("#w32_1", { color: "#ffe14d" }, 23.037);
+      tl.set("#w32_1", { color: "#ffffff" }, 23.369);
+      tl.set("#w32_2", { color: "#ffe14d" }, 23.369);
+      tl.set("#w32_2", { color: "#ffffff" }, 23.867);
+      tl.fromTo("#cap33", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.08 }, 23.867);
+      tl.set("#cap33", { opacity: 0 }, 24.775);
+      tl.set("#w33_0", { color: "#ffe14d" }, 23.867);
+      tl.set("#w33_0", { color: "#ffffff" }, 24.116);
+      tl.set("#w33_1", { color: "#ffe14d" }, 24.116);
+      tl.set("#w33_1", { color: "#ffffff" }, 24.282);
+      tl.set("#w33_2", { color: "#ffe14d" }, 24.282);
+      tl.set("#w33_2", { color: "#ffffff" }, 24.780);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

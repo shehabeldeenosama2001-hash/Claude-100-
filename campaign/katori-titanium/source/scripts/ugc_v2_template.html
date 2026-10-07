@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/v2.css" />
+    <style>
+      .line { overflow: hidden; display: block; }
+      #stage { position: absolute; inset: -30px; }
+      #beams { left: -760px; top: -1300px; width: 2600px; height: 2600px; border-radius: 50%;
+        background: conic-gradient(from 0deg, rgba(255,255,255,.22) 0 14deg, transparent 14deg 90deg, rgba(255,255,255,.22) 90deg 104deg, transparent 104deg 180deg, rgba(255,255,255,.22) 180deg 194deg, transparent 194deg 270deg, rgba(255,255,255,.22) 270deg 284deg, transparent 284deg 360deg); }
+      .hz { position: absolute; left: 0; width: 1140px; height: 110px; overflow: hidden; border-top: 6px solid #111; border-bottom: 6px solid #111; }
+      .hz .strip { position: absolute; left: 0; top: 0; width: 2600px; height: 100%; background: repeating-linear-gradient(-45deg, var(--hazard) 0 56px, #111 56px 112px); }
+      #strobe { background: #000; opacity: 0; }
+      .kw { position: absolute; left: 0; right: 0; text-align: center; font-family: Anton; font-size: 270px; line-height: .9; letter-spacing: 6px; }
+      .grain { position: absolute; inset: -60px; background: url("assets/grain.png"); background-size: 540px 960px; opacity: .06; mix-blend-mode: overlay; }
+      .sticker { position: absolute; left: 50%; transform: translateX(-50%); padding: 18px 30px; border-radius: 18px; background: #fff; color: #111; font-weight: 700; font-size: 46px; line-height: 1.2; text-align: center; white-space: nowrap; box-shadow: 0 8px 26px rgba(0,0,0,.25); }
+      .caps { position: absolute; left: 50px; right: 50px; top: 1330px; height: 240px; }
+      .cap { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-weight: 900; font-size: 92px; line-height: 1.05; color: #fff; opacity: 0;
+        -webkit-text-stroke: 5px #000; paint-order: stroke fill; text-shadow: 0 8px 20px rgba(0,0,0,.5); }
+      .cw { display: inline-block; }
+      .mag { position: absolute; width: 330px; height: 330px; border-radius: 50%; border: 10px solid #111; background: rgba(255,255,255,.35); box-shadow: 0 20px 40px rgba(0,0,0,.3); overflow: hidden; }
+      .mag .lbl { position: absolute; left: 50%; bottom: 34px; transform: translateX(-50%); background: var(--red); color: #fff; font-weight: 900; font-size: 24px; letter-spacing: 2px; padding: 6px 14px; border-radius: 8px; }
+      .mag .speck { width: 16px; height: 16px; background: #fff; box-shadow: 0 0 0 2px rgba(0,0,0,.25); }
+      .price { position: absolute; width: 240px; height: 240px; border-radius: 50%; background: #fff; color: var(--acc); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 40px rgba(0,0,0,.25); }
+      .price .s { font-weight: 800; font-size: 26px; letter-spacing: 4px; color: var(--ink); }
+      .price .p { font-family: Playfair; font-weight: 900; font-size: 100px; line-height: 1; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920">
+      <div id="stage" data-layout-allow-overflow>
+
+        <!-- HOOK: full-screen kitchen warning (0 - 3s) -->
+        <div id="s1" class="clip bg-red" data-start="0" data-duration="3.4" data-track-index="0">
+          <div class="abs" id="beams" data-layout-allow-overflow></div>
+          <div class="hz" style="top: 30px;"><div class="strip" id="hzTop" data-layout-allow-overflow></div></div>
+          <div class="hz" style="bottom: 30px;"><div class="strip" id="hzBot" data-layout-allow-overflow></div></div>
+          <img class="abs" id="warnIcon" src="assets/warning.svg" alt="" style="left: 400px; top: 220px; width: 340px;" />
+          <div class="kw" id="kw1" style="top: 590px; color: #fff;">KITCHEN</div>
+          <div class="kw" id="kw2" style="top: 840px; color: var(--hazard); -webkit-text-stroke: 6px #111; paint-order: stroke fill;">WARNING</div>
+          <div class="fill" id="strobe"></div>
+        </div>
+
+        <!-- plastic sheds microplastics (3 - 5.9) -->
+        <div id="s2" class="clip bg-paper" data-start="3" data-duration="2.9" data-track-index="0">
+          <img class="abs" id="plastic" src="assets/plastic_board.svg" alt="" style="left: 110px; top: 360px; width: 860px;" />
+          <img class="abs" id="knifeA" src="assets/knife.svg" alt="" style="left: 300px; top: 520px; width: 720px;" />
+          <div class="fill" id="specks2"></div>
+          <div class="mag" id="mag" style="left: 640px; top: 820px;"><div class="fill" id="magSpecks"></div><div class="lbl">MICROPLASTICS</div></div>
+        </div>
+
+        <!-- switched to titanium (5.9 - 7.7) -->
+        <div id="s3" class="clip bg-acc" data-start="5.9" data-duration="1.8" data-track-index="0">
+          <img class="abs" id="burst1" src="assets/burst.svg" alt="" style="right: -40px; top: -40px; width: 460px; transform: scaleX(-1);" data-layout-allow-overflow />
+          <img class="abs" id="burst2" src="assets/burst.svg" alt="" style="left: -40px; bottom: -40px; width: 420px; transform: scaleY(-1);" data-layout-allow-overflow />
+          <div class="shadow" style="left: 240px; top: 1320px; width: 620px; height: 100px;"></div>
+          <div class="tiboard" id="tb3" style="left: 270px; top: 380px; width: 560px; height: 805px;">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="sheen" id="tb3sheen"></div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+          </div>
+          <div class="tile" id="tile" style="left: 760px; top: 1000px;">
+            <div class="n">22</div><div class="sym">Ti</div><div class="nm">Titanium</div><div class="wt">47.867</div>
+          </div>
+        </div>
+
+        <!-- lemon: nothing soaks in (7.7 - 9.25) -->
+        <div id="s4" class="clip bg-paper" data-start="7.7" data-duration="1.55" data-track-index="0">
+          <div class="card" id="lemonCard" style="left: 40px; top: 420px; width: 1000px; height: 690px;"><img src="assets/lemon_photo.jpg" alt="" /></div>
+        </div>
+
+        <!-- knife-friendly (9.25 - 10.8) -->
+        <div id="s5" class="clip bg-paper" data-start="9.25" data-duration="1.55" data-track-index="0">
+          <div class="shadow" style="left: 240px; top: 1250px; width: 620px; height: 90px;"></div>
+          <div class="tiboard" id="tb5" style="left: 260px; top: 360px; width: 560px; height: 805px; transform: rotate(6deg);">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+          </div>
+          <img class="abs" id="knifeB" src="assets/knife.svg" alt="" style="left: 220px; top: 700px; width: 780px;" />
+        </div>
+
+        <!-- two sides (10.8 - 11.55) -->
+        <div id="s6" class="clip bg-paper" data-start="10.8" data-duration="0.75" data-track-index="0">
+          <div style="position: absolute; inset: 0; perspective: 1800px;">
+            <div class="tiboard" id="tb6" style="left: 260px; top: 360px; width: 560px; height: 805px;">
+              <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="side-label">SIDE A · MEAT</div></div>
+              <div class="face back"><div class="tone2"></div><div class="tone"></div><div class="side-label" style="opacity: 0;">SIDE B · VEGGIES</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- dishwasher (11.55 - 13.2) -->
+        <div id="s7" class="clip bg-paper" data-start="11.55" data-duration="1.65" data-track-index="0">
+          <div class="card" id="dwCard" style="left: 220px; top: 330px; width: 640px; height: 1108px;"><img src="assets/dishwasher_photo.jpg" alt="" /></div>
+          <div class="fill" id="bubbles"></div>
+        </div>
+
+        <!-- end card (13.2 - 15) -->
+        <div id="s8" class="clip bg-acc" data-start="13.2" data-duration="1.8" data-track-index="0">
+          <img class="abs" src="assets/burst.svg" alt="" style="left: -40px; top: -40px; width: 420px;" data-layout-allow-overflow />
+          <div class="shadow" style="left: 260px; top: 1240px; width: 560px; height: 90px;"></div>
+          <div class="tiboard" id="tb8" style="left: 300px; top: 420px; width: 480px; height: 690px;">
+            <div class="face front"><div class="tone2"></div><div class="tone"></div><div class="sheen" id="tb8sheen"></div></div>
+            <div class="face back"><div class="tone2"></div><div class="tone"></div></div>
+          </div>
+          <div class="price" id="price" style="left: 760px; top: 420px;"><span class="s">UNDER</span><span class="p">$30</span></div>
+        </div>
+      </div>
+
+      <div id="look" class="clip" data-start="0" data-duration="15" data-track-index="1">
+        <div class="grain" data-layout-allow-overflow id="grain"></div>
+      </div>
+
+{{STICKERS}}
+
+      <div id="captions" class="clip" data-start="0" data-duration="15" data-track-index="3">
+        <div class="caps">
+          {{CAPTIONS}}
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let seed = 7;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+      const make = (parentId, n, cls, styleFn) => {
+        const p = document.getElementById(parentId), els = [];
+        for (let i = 0; i < n; i++) { const d = document.createElement("div"); d.className = cls; Object.assign(d.style, styleFn(i)); p.appendChild(d); els.push(d); }
+        return els;
+      };
+      document.querySelectorAll(".tiboard").forEach((b) => {
+        for (let i = 1; i <= 6; i++) { const e = document.createElement("div"); e.className = "edge"; e.style.transform = `translateZ(${-i * 2}px)`; b.insertBefore(e, b.firstChild); }
+      });
+      const specks2 = make("specks2", 36, "speck", () => ({ left: "560px", top: "690px", background: rnd() > 0.5 ? "#fff" : "#cfe3ff" }));
+      const magSpecks = make("magSpecks", 18, "speck", () => ({ left: 30 + rnd() * 260 + "px", top: 30 + rnd() * 220 + "px", transform: `rotate(${rnd() * 90}deg)` }));
+      const bubbles = make("bubbles", 18, "bubble", () => { const s = 30 + rnd() * 60; return { width: s + "px", height: s + "px", left: 240 + rnd() * 600 + "px", top: 1250 + rnd() * 250 + "px" }; });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set("#knifeA", { x: 520, y: -260, rotation: 28, opacity: 1 }, 0);
+
+      // handheld drift
+      tl.fromTo("#stage", { x: -5, y: 4, rotation: -0.3 }, { x: 5, y: -4, rotation: 0.3, duration: 0.9, ease: "sine.inOut", repeat: 15, yoyo: true }, 0);
+      tl.fromTo("#grain", { x: 0, y: 0 }, { x: 37, y: -23, duration: 0.1, ease: "steps(1)", repeat: 149, yoyo: true }, 0);
+
+      // hook
+      tl.fromTo("#beams", { rotation: 0 }, { rotation: 260, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#hzTop", { x: 0 }, { x: -1270, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#hzBot", { x: -1270 }, { x: 0, duration: 3.4, ease: "none" }, 0);
+      tl.fromTo("#strobe", { opacity: 0 }, { opacity: 0.38, duration: 0.25, ease: "steps(1)", repeat: 11, yoyo: true }, 0);
+      tl.fromTo("#warnIcon", { scale: 1.4, rotation: -10 }, { scale: 1, rotation: 0, duration: 0.35, ease: "back.out(3)" }, 0);
+      tl.to("#warnIcon", { scale: 1.08, duration: 0.25, repeat: 9, yoyo: true, ease: "sine.inOut" }, 0.4);
+      tl.fromTo("#kw1", { scale: 1.06 }, { scale: 1, duration: 0.22, ease: "power4.out" }, 0);
+      tl.fromTo("#kw2", { scale: 1.06 }, { scale: 1, duration: 0.22, ease: "power4.out" }, 0.08);
+
+      // plastic + microplastics
+      tl.fromTo("#plastic", { rotation: -8, scale: 0.9 }, { rotation: -3, scale: 1, duration: 2.9, ease: "power1.out" }, 3.0);
+      [3.3, 3.8, 4.4].forEach((t, k) => {
+        tl.fromTo("#knifeA", { x: 520, y: -260, rotation: 28 }, { x: -260, y: 120, rotation: 10, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
+        specks2.forEach((el, i) => {
+          if (i % 3 !== k) return;
+          const a = -Math.PI * (0.1 + rnd() * 0.8), r = 140 + rnd() * 420;
+          tl.fromTo(el, { x: 0, y: 0, opacity: 1, scale: 0.5 + rnd() }, { x: Math.cos(a) * r, y: Math.sin(a) * r + 260, opacity: 0, rotation: rnd() * 360, duration: 0.9, ease: "power2.out" }, t + 0.18);
+        });
+      });
+      tl.set("#knifeA", { opacity: 0 }, 4.75);
+      tl.fromTo("#mag", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.4, ease: "back.out(2.4)" }, 4.75);
+      magSpecks.forEach((el, i) => tl.fromTo(el, { scale: 0 }, { scale: 1, duration: 0.2, ease: "back.out(3)" }, 4.95 + i * 0.03));
+
+      // titanium reveal
+      tl.fromTo("#s3", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(80% at 50% 50%)", duration: 0.45, ease: "power3.out" }, 5.9);
+      tl.fromTo(["#burst1", "#burst2"], { scale: 0 }, { scale: 1, duration: 0.45, ease: "back.out(2)" }, 6.05);
+      tl.fromTo("#tb3", { rotationY: -85, y: 200, opacity: 0 }, { rotationY: -18, y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 5.95);
+      tl.to("#tb3", { rotationY: 14, y: -16, duration: 1.1, ease: "sine.inOut" }, 6.65);
+      tl.fromTo("#tb3sheen", { x: -300 }, { x: 900, duration: 0.8, ease: "power2.inOut" }, 6.5);
+      tl.fromTo("#tile", { rotation: -25, scale: 0 }, { rotation: 6, scale: 1, duration: 0.45, ease: "back.out(2.2)" }, 6.6);
+
+      // lemon
+      tl.fromTo("#lemonCard", { y: 260, rotation: 5, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.45, ease: "power3.out" }, 7.7);
+      tl.to("#lemonCard img", { scale: 1.12, duration: 1.5, ease: "none" }, 7.7);
+
+      // knife-friendly
+      tl.fromTo("#tb5", { rotation: 12, scale: 0.9 }, { rotation: 6, scale: 1, duration: 1.5, ease: "power2.out" }, 9.25);
+      tl.fromTo("#knifeB", { x: 560, y: -140, rotation: -10 }, { x: -320, y: 80, rotation: -16, duration: 0.5, ease: "power2.inOut" }, 9.5);
+
+      // flip
+      tl.fromTo("#tb6", { rotationY: 0 }, { rotationY: 180, duration: 0.5, ease: "power3.inOut" }, 10.9);
+      tl.set("#tb6 .front .side-label", { opacity: 0 }, 11.15);
+      tl.set("#tb6 .back .side-label", { opacity: 1 }, 11.15);
+
+      // dishwasher
+      tl.fromTo("#dwCard", { y: 300, rotation: 6, opacity: 0 }, { y: 0, rotation: 2, opacity: 1, duration: 0.45, ease: "power3.out" }, 11.55);
+      bubbles.forEach((el, i) => tl.fromTo(el, { y: 0, opacity: 0, scale: 0.4 }, { y: -700 - (i % 5) * 90, opacity: 1, scale: 1, duration: 1.0, ease: "power1.out" }, 11.65 + (i % 9) * 0.06));
+
+      // end card
+      tl.fromTo("#s8", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(80% at 50% 50%)", duration: 0.45, ease: "power3.out" }, 13.2);
+      tl.fromTo("#tb8", { rotationY: -60, y: 160, opacity: 0 }, { rotationY: -14, y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 13.25);
+      tl.to("#tb8", { rotationY: 14, duration: 1.2, ease: "sine.inOut" }, 13.85);
+      tl.fromTo("#tb8sheen", { x: -300 }, { x: 900, duration: 0.8, ease: "power2.inOut" }, 13.8);
+      tl.fromTo("#price", { scale: 0, rotation: -40 }, { scale: 1, rotation: 10, duration: 0.4, ease: "back.out(2.5)" }, 13.6);
+
+      // stickers
+      {{STICKER_JS}}
+
+      // captions
+      {{CAPTION_JS}}
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

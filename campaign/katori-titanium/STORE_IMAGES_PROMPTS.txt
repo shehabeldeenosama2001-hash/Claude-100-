@@ -1,0 +1,85 @@
+KATORI - صور صفحة المنتج في Shopify (11 صورة) + برومبتاتها
+=====================================================================
+الصور دي هي اللي بتتحط في صفحة المنتج في المتجر (Product images)، مش إعلانات.
+ترتيبها في الصفحة زي الأرقام بالظبط. المقاس: مربع 1:1 (2000x2000).
+بيشتغلوا على: Nano Banana (Gemini) / ChatGPT Images / Ideogram.
+
+قبل كل برومبت ارفع صورة مرجع:
+  - صور 01 لـ 06 و08 (مقاس S): ارفع صورة لوح S على الأبيض (الفتحة الدايرية).
+  - صور 09 لـ 11 (L / XL / XXL): ارفع صورة اللوح أبو الفتحة المستطيلة (اللوح على الرخام).
+  - صورة 07: ارفع الصورتين.
+
+مهم: صور المقاسات (07 لـ 11) أنا عاملها بالأبعاد المظبوطة بالمقياس في output/store-images.
+الـ AI مش بيضمن إن الأحجام تطلع بنسب صح، فالأفضل تستخدم نسختي لصور المقاسات.
+لو هتولّدها بالـ AI، راجع الأرقام والنسب كويس.
+
+=====================================================================
+[01] الصورة الرئيسية (Main / Thumbnail)
+اللي بتعمله: أول صورة العميل بيشوفها في المتجر وفي نتايج البحث. المنتج لوحده على أبيض.
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, create a clean e-commerce main image: the same silver brushed-titanium cutting board (rounded corners, small round hanging hole at the top-right, vertical brushed grain) standing upright and centered, filling about 85% of the frame, on a pure white (#FFFFFF) background with only a very soft natural shadow underneath. Studio lighting, sharp detail, photorealistic. Square 1:1. No text, no props, no logos, do not change the product design.
+
+=====================================================================
+[02] زاوية 3/4 في استوديو
+اللي بتعمله: بتوري شكل اللوح من زاوية جانبية، فالعميل يحس إن المنتج حقيقي وثلاثي الأبعاد.
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, the same brushed-titanium cutting board standing at a 3/4 angle on a light grey seamless studio background, soft reflection on a glossy floor, gentle highlight sweeping across the brushed metal, soft shadow. Premium product photography, square 1:1. No text, keep the product identical.
+
+=====================================================================
+[03] إضاءة غامقة فخمة
+اللي بتعمله: بتدي إحساس إن المنتج بريميوم وغالي.
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, the same brushed-titanium cutting board standing upright on a dark slate surface against a dark charcoal background, subtle cool blue rim light outlining the edges, soft spotlight glow behind it, faint reflection below. Luxury moody product photography, square 1:1. No text, keep the product identical.
+
+=====================================================================
+[04] لوح طاير على لون البراند
+اللي بتعمله: صورة ملفتة بلون الحملة (بنفسجي)، بتربط صفحة المتجر بالإعلانات.
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, the same brushed-titanium cutting board floating and tilted in 3D in the center of a vivid indigo-purple (#4A2BE8) background with a faint white grid, soft shadow on the floor below, light glinting on the brushed metal. Modern, bold, premium, square 1:1. No text, keep the product identical.
+
+=====================================================================
+[05] Flat lay من فوق
+اللي بتعمله: بتوري اللوح وهو على الترابيزة من فوق، زي ما هيكون في مطبخ العميل.
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, a top-down flat lay of the same brushed-titanium cutting board lying on a beige linen tablecloth, slightly rotated, soft natural daylight from the side, crisp soft shadow. Minimal and clean, square 1:1. No food, no text, keep the product identical.
+
+=====================================================================
+[06] الوشّين (Double-sided)
+اللي بتعمله: بتوضح إن اللوح ليه وشّين تقدر تستخدم الاتنين.
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, two views of the same brushed-titanium cutting board fanned out and slightly overlapping (front side and back side), both tilted in opposite directions, on a soft white-grey studio gradient, soft shadows. Square 1:1. Optional small labels "SIDE A" and "SIDE B". Keep the product identical.
+
+=====================================================================
+[07] دليل المقاسات (Size Guide)
+اللي بتعمله: العميل يقارن الأربع مقاسات ببعض ويختار المناسب.
+---------------------------------------------------------------------
+Using the uploaded photos as exact product references, create a size guide image on a soft white-grey studio background: four brushed-titanium cutting boards standing side by side, bottom-aligned, drawn to scale relative to each other: S (8 x 11.5 in, small round hanging hole at top-right), L (9 x 13.5 in, rectangular handle slot at the top center), XL (11 x 15.5 in, rectangular handle slot), XXL (12 x 18 in, rectangular handle slot). Under each board a black pill with the size letter and the dimensions in inches and centimeters: "S 8 x 11.5 in / 20.3 x 29.2 cm", "L 9 x 13.5 in / 22.9 x 34.3 cm", "XL 11 x 15.5 in / 27.9 x 39.4 cm", "XXL 12 x 18 in / 30.5 x 45.7 cm". Headline at the top: "Pick your perfect size". Square 1:1.
+
+=====================================================================
+[08] مقاس S لوحده بالأبعاد
+اللي بتعمله: العميل يشوف مقاس S بالظبط بالبوصة والسنتي.
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, the size S brushed-titanium cutting board (small round hanging hole at top-right) standing upright on a soft white-grey background, with thin black dimension lines: a horizontal line above it labeled "8 in · 20.3 cm" and a vertical line on its left labeled "11.5 in · 29.2 cm". Headline at top-left: "8 x 11.5 inches". Clean technical product infographic, square 1:1.
+
+=====================================================================
+[09] مقاس L لوحده بالأبعاد
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, the size L brushed-titanium cutting board (rectangular handle slot at the top center) standing upright on a soft white-grey background, with thin black dimension lines: horizontal above labeled "9 in · 22.9 cm", vertical on the left labeled "13.5 in · 34.3 cm". Headline at top-left: "9 x 13.5 inches". Clean technical product infographic, square 1:1.
+
+=====================================================================
+[10] مقاس XL لوحده بالأبعاد
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, the size XL brushed-titanium cutting board (rectangular handle slot at the top center) standing upright on a soft white-grey background, with thin black dimension lines: horizontal above labeled "11 in · 27.9 cm", vertical on the left labeled "15.5 in · 39.4 cm". Headline at top-left: "11 x 15.5 inches". Clean technical product infographic, square 1:1.
+
+=====================================================================
+[11] مقاس XXL لوحده بالأبعاد
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference, the size XXL brushed-titanium cutting board (rectangular handle slot at the top center) standing upright on a soft white-grey background, with thin black dimension lines: horizontal above labeled "12 in · 30.5 cm", vertical on the left labeled "18 in · 45.7 cm". Headline at top-left: "12 x 18 inches". Clean technical product infographic, square 1:1.
+
+=====================================================================
+Negative prompt (لو الموقع بيدعمه):
+distorted product, wrong hole shape, extra holes, logos, watermark, misspelled text, wrong numbers, blurry, low quality
+
+قبل ما ترفع على Shopify:
+- راجع إن شكل الفتحة صح: S بفتحة دايرية، و L / XL / XXL بفتحة مستطيلة.
+- راجع الأرقام في صور المقاسات حرف حرف.
