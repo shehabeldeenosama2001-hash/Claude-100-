@@ -3,7 +3,7 @@ Usage: sound_v2.py <outdir> <ad|ugc>  -> writes music_<kind>_v2.wav and sfx_<kin
 import sys
 import numpy as np, soundfile as sf
 
-SR = 48000; T = 15.0; N = int(T * SR)
+SR = 48000; T = 25.0 if (len(sys.argv) > 2 and sys.argv[2] == "ad25") else 15.0; N = int(T * SR)
 rng = np.random.default_rng(22)
 t_all = np.arange(N) / SR
 
@@ -91,6 +91,21 @@ def build(kind):
         add(sfx, whoosh(.4, False), 9.95, .6)
         for i in range(10): add(sfx, pop(), 11.55 + i * 0.06, .6)
         add(sfx, whoosh(.45), 12.0, .8); add(sfx, boom(.8), 12.35); add(sfx, ting(1800), 13.5, .8)
+        music = beat(3.0)
+    elif kind == "ad25":
+        add(sfx, siren(3.0), 0.0, 0.55)
+        add(sfx, boom(), 0.0, .9); add(sfx, boom(.7), 1.75)
+        add(sfx, whoosh(), 2.75, .9); add(sfx, boom(.8), 3.0)
+        for tt in (4.3, 5.0, 5.7): add(sfx, swish(), tt - .1, .7)
+        add(sfx, ting(1500), 4.0, .5)
+        add(sfx, whoosh(.34), 6.3, .6)
+        for tt in (6.6, 7.1, 7.6): add(sfx, whoosh(.3, False), tt, .35)
+        add(sfx, whoosh(.5), 8.95, .9); add(sfx, boom(.9), 9.5); add(sfx, ting(2200), 10.2)
+        for tt in (11.6, 13.95, 15.65, 18.9, 21.2): add(sfx, whoosh(.34), tt, .55)
+        add(sfx, swish(), 14.4, .9)
+        add(sfx, whoosh(.7, False), 17.6, .6); add(sfx, ting(2600), 18.1, .6)
+        for i in range(10): add(sfx, pop(), 21.55 + i * 0.06, .6)
+        add(sfx, whoosh(.45), 22.35, .8); add(sfx, boom(.8), 22.75); add(sfx, ting(1800), 23.8, .8)
         music = beat(3.0)
     else:
         add(sfx, siren(2.9), 0.0, 0.5)

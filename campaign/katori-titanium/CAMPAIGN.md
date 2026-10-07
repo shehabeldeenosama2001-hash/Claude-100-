@@ -7,7 +7,8 @@
 
 | الملف | الوصف |
 |---|---|
-| `output/videos/katori-ad-15s-v2-9x16.mp4` | ⭐ **النسخة البريميوم (v2)**: إعلان 15 ثانية بستايل editorial |
+| `output/videos/katori-ad-25s-v2-9x16.mp4` | ⭐⭐ **الإعلان الأساسي، 25 ثانية**: إيقاع هادي وكل الصور حقيقية |
+| `output/videos/katori-ad-15s-v2-9x16.mp4` | نسخة v2 مدتها 15 ثانية (سريعة، مناسبة للـ Stories) |
 | `output/videos/katori-ugc-15s-v2-9x16.mp4` | ⭐ **UGC v2**: بنفس الستايل البريميوم مع كابشن وستيكرز |
 | `output/videos/katori-ad-15s-9x16.mp4` | النسخة الأولى (v1) |
 | `output/videos/katori-ugc-15s-9x16.mp4` | النسخة الأولى من الـ UGC (v1) |
@@ -20,6 +21,33 @@
 | `output/images/06-offer-cta.jpg` | صورة العرض والـ CTA |
 
 كل الصور مقاسها 4:5 (2160×2700). ده أفضل مقاس لفيد فيسبوك وإنستجرام.
+
+---
+
+## ⭐⭐ الإعلان الأساسي، 25 ثانية (`katori-ad-25s-v2-9x16.mp4`)
+
+**إيه اللي اتغير:**
+- مدته **25 ثانية** والفويس بسرعة طبيعية (كان 1.15x). كل ميزة واخدة 1.5 لـ 3 ثواني، فتلحق تشوف وتسمع.
+- **كل الصور حقيقية، مفيش AI ولا ريندر:**
+  - لوح خشب **عليه عفن حقيقي** (صورة عميل من ليستنج المنتج).
+  - لوح خشب **عليه بقع** (Pexels، تصوير Boryslav Shoot).
+  - **كلوز أب لخشب مخدوش ومبقّع** (Unsplash، تصوير Detlef Hansmann).
+  - لوح **بلاستيك مخدوش** حقيقي (من ليستنج المنتج).
+  - التيتانيوم: صور المنتج الحقيقية (على الرخام، تحت الحنفية، مع الليمون، في الغسالة، مع اللحمة والخضار).
+- **Pinterest:** البيئة اللي شغال فيها بتحجب Pinterest بالكامل، وكمان مش بتدعم سحب الصور منه. وصور Pinterest أصلاً ملك ناس تانية. عشان كده استخدمت Pexels وUnsplash (مجانية للاستخدام التجاري) وصور الليستنج. لو عندك صور معينة من Pinterest **وعندك حق استخدامها**، ابعتها هنا وأحطها مكان أي صورة.
+
+| الوقت | المشهد | الفويس أوفر |
+|---|---|---|
+| 0–3 | ⚠ KITCHEN WARNING على الشاشة كلها مع سارينة | *"Warning! Your cutting board is feeding you plastic."* |
+| 3–6.5 | Problem #1: بلاستيك مخدوش (صورة حقيقية)، جزيئات بتطير، وعلامة ✕ | *"Plastic boards shed tiny particles every time you cut."* |
+| 6.5–9.3 | Problem #2: كولاج 3 صور حقيقية للخشب (بقع، أخاديد، عفن) | *"And wood soaks up juices, stains, and smells."* |
+| 9.3–11.8 | Meet pure titanium: صورة المنتج الحقيقية وبلاطة Ti 22 | *"Meet the pure titanium cutting board."* |
+| 11.8–14.1 | 01: Nothing soaks in (تحت الحنفية) | *"It's non-porous, so nothing soaks in."* |
+| 14.1–15.8 | 02: Kind to your knives (السكينة والليمون) | *"It's gentle on your knives."* |
+| 15.8–19 | 03: Two sides (اللوح بيتقلب: Side A لحمة، Side B خضار) | *"Double-sided. One for meat, one for veggies."* |
+| 19–21.3 | 04: Acid? No problem (الليمون) | *"Acid-proof. Lemon won't stain it."* |
+| 21.3–22.8 | 05: Dishwasher safe (الغسالة) | *"And it's dishwasher safe."* |
+| 22.8–25 | Ditch plastic / Upgrade today، و Under $30، و 0 plastic · 0 mold · 0 odors، و ★4.7، وزرار SHOP NOW | *"Upgrade your kitchen. Tap shop now."* |
 
 ---
 
@@ -118,7 +146,15 @@
 ## إعادة البناء
 
 ```bash
-HF="npx hyperframes@0.8.140"; A2=source/audio/v2
+HF="npx hyperframes@0.8.140"
+# الإعلان 25 ثانية
+A3=source/audio/v2-25s
+(cd source/ad-25s-v2 && $HF render -q high -o /tmp/ad25.mp4)
+DUR=25 source/scripts/mix_v2.sh /tmp/ad25.mp4 $A3/music_ad25_v2.wav $A3/sfx_ad25_v2.wav output/videos/katori-ad-25s-v2-9x16.mp4 \
+  $A3/v01.wav@0.2 $A3/v02.wav@3.1 $A3/v03.wav@6.5 $A3/v04.wav@9.4 $A3/v05.wav@11.85 $A3/v06.wav@14.2 $A3/v07.wav@15.9 $A3/v08.wav@19.15 $A3/v09.wav@21.45 $A3/v10.wav@22.8
+# (الصوت: python3 source/scripts/sound_v2.py $A3 ad25)
+
+A2=source/audio/v2
 # v2 — إعلان
 (cd source/ad-15s-v2 && $HF render -q high -o /tmp/ad2.mp4)
 source/scripts/mix_v2.sh /tmp/ad2.mp4 $A2/music_ad_v2.wav $A2/sfx_ad_v2.wav output/videos/katori-ad-15s-v2-9x16.mp4 \
