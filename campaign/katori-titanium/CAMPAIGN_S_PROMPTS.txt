@@ -1,0 +1,67 @@
+KATORI - برومبتات حملة الصور (مقاس S) - Copy / Paste
+=====================================================================
+بيشتغلوا على: Nano Banana (Gemini) / ChatGPT Images / Ideogram / Midjourney
+قبل كل برومبت: ارفع صورة المنتج (اللوح على الأبيض بالفتحة الدايرية) كمرجع.
+المقاس: 4:5 عمودي (لو الموقع بيسأل: 1080x1350).
+
+نصيحة: الكلام المكتوب جوه الصورة بيطلع مظبوط في Nano Banana وChatGPT وIdeogram.
+لو الموقع بيبوّظ الكلام: امسح الجزء اللي بيبدأ بـ Text on image، وولّد الصورة من غير كلام، وأنا أحط الكلام عليها بعدين.
+
+=====================================================================
+[1] الصحة / الميكروبلاستيك
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same silver brushed-titanium cutting board, rounded corners, small round hanging hole at top-right, vertical brushed grain - do not change its design), create a 4:5 vertical premium social media ad. Light warm off-white background with a subtle grid. On the left, an old white plastic cutting board covered in deep knife scratches and yellow stains, tilted, with a red circular X badge on it. On the right, the clean titanium cutting board standing slightly tilted with a soft shadow. Editorial magazine style, clean composition, lots of breathing room, photorealistic objects.
+Text on image: small red uppercase kicker "THE PLASTIC PROBLEM", big serif headline "Your board is feeding you plastic." (mix of italic and bold serif), small red pill label "Scratched plastic sheds into food", small indigo pill label "0 microplastics", footer "KATORI · SIZE S · 8 x 11.5 IN".
+
+=====================================================================
+[2] النضافة / العفن
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same brushed-titanium cutting board with the small round hanging hole, design unchanged), create a 4:5 vertical premium ad. Light off-white background with a subtle grid. Top-left: an old wooden cutting board with dark mold spots and stains, tilted. Right: the clean shiny titanium board, larger, tilted the other way, soft shadow. Clean editorial layout, photorealistic.
+Text on image: indigo uppercase kicker "NON-POROUS TITANIUM", big serif headline "Nothing soaks in. Nothing grows." (bold + italic), red pill "Wood: mold & stains", three black pills stacked "No odors", "No stains", "No mold", footer "KATORI · SIZE S · 8 x 11.5 IN".
+
+=====================================================================
+[3] السهولة / التنضيف
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same brushed-titanium board with the small round hanging hole, design unchanged), create a 4:5 vertical ad. Vivid indigo-purple background (#4A2BE8) with a faint white grid and a white starburst shape in the top-right corner. On the right, a rounded photo card showing the titanium board held under a running kitchen faucet, water splashing and beading on the brushed metal. Bold, modern, premium.
+Text on image: light lavender kicker "ZERO EFFORT", huge white serif headline "Rinse." (bold) "Done." (italic), three white pills on the left "No scrubbing", "No oiling", "Dishwasher safe", footer "KATORI · SIZE S · 8 x 11.5 IN".
+
+=====================================================================
+[4] المتانة / فخامة غامقة
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same brushed-titanium board with the small round hanging hole, design unchanged), create a 4:5 vertical luxury ad. Dark charcoal studio background with a soft cool spotlight behind the board, the titanium board standing upright in the center with a subtle blue rim light and a soft reflection below. Moody, high-end product photography.
+Text on image: grey uppercase kicker "BUILT TO LAST", white serif headline "The last board you'll need." (bold + italic), three white pills "Won't crack", "Won't warp", "Won't rust", footer "KATORI · SIZE S · 8 x 11.5 IN".
+
+=====================================================================
+[5] السكاكين
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same brushed-titanium board with the small round hanging hole, design unchanged), create a 4:5 vertical ad. Light off-white grid background. A large rounded photo card showing hands slicing a lemon with a chef's knife on the titanium board, lemon slices on the board, natural daylight.
+Text on image: indigo kicker "SOFTER THAN STEEL", big serif headline "Kind to your knives." (italic + bold), indigo pill "Blades stay sharp longer", black pill "Double-sided", footer "KATORI · SIZE S · 8 x 11.5 IN".
+
+=====================================================================
+[6] الهدية
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same brushed-titanium board with the small round hanging hole, design unchanged), create a 4:5 vertical gift ad. Warm dark walnut-brown background with soft glow. The titanium board in the center wrapped with a glossy red satin ribbon (one vertical and one horizontal band) and a red bow, soft shadow. Cozy, premium, holiday gift feeling.
+Text on image: gold uppercase kicker "THE GIFT THAT GETS USED", white serif headline "For every home cook." (italic + bold), three white pills "Under $30", "Non-toxic", "Built to last", footer "KATORI · SIZE S · 8 x 11.5 IN".
+
+=====================================================================
+[7] الشكل البريميوم
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same brushed-titanium board with the small round hanging hole, design unchanged), create a 4:5 vertical ad. Vivid indigo-purple background with a faint white grid and white starburst shapes in the corners. The titanium board floating and tilted in 3D in the center with a soft shadow below, light glinting across the brushed metal. Bottom-left: a periodic-table style tile with a white border showing "22", "Ti", "Titanium", "47.867".
+Text on image: big white serif headline "Sleek. Pure. Titanium." (bold + italic), white pill "100% pure titanium", footer "KATORI · SIZE S · 8 x 11.5 IN".
+
+=====================================================================
+[8] العرض / CTA
+---------------------------------------------------------------------
+Using the uploaded photo as the exact product reference (same brushed-titanium board with the small round hanging hole, design unchanged), create a 4:5 vertical offer ad. Soft white-to-light-grey studio gradient background, the titanium board standing in the center with a soft shadow. Top-right: a black circular price badge, slightly rotated.
+Text on image: indigo kicker "DITCH PLASTIC FOR GOOD", big serif headline "Upgrade your board." (bold + italic), price badge "UNDER $30" (the "$30" in yellow), three black pills "0 plastic", "0 mold", "0 odors", gold stars "★★★★★ 4.7 on Amazon", a big rounded orange-yellow button "SHOP NOW →".
+
+=====================================================================
+ضيف ده في آخر أي برومبت لو الموقع بيدعم Negative Prompt:
+---------------------------------------------------------------------
+distorted product, changed board shape, extra holes, handle slot, logos, watermark, misspelled text, extra fingers, warped hands, blurry, low quality
+
+=====================================================================
+قبل ما تنشر:
+- راجع إن اللوح طالع بنفس شكل المنتج الحقيقي (فتحة دايرية صغيرة فوق على اليمين، مش فتحة مستطيلة).
+- راجع إن الكلام متكتبش غلط.
+- لو حاجة طلعت مش مظبوطة، ابعتلي الصورة وأنا أصلّحها أو أحط الكلام عليها.
