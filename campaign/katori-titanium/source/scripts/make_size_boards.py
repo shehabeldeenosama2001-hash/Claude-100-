@@ -4,6 +4,7 @@ Sizes from the Amazon listing (B0HJR2HCQC):
   S  = 8 x 11.5 in, round hanging hole        (the real cut-out is used as-is)
   L  = 9 x 13.5 in, rectangular handle slot
   XL = 11 x 15.5 in, rectangular handle slot
+  XXL = 12 x 18 in (listing B0HFC5JFW7), rectangular handle slot like L/XL
 All boards are written at the same scale (PPI px per inch) so they compare correctly.
 
 Usage: make_size_boards.py <assets_dir>   (expects board_cutout.png from cutout_board.py)
@@ -56,4 +57,5 @@ def slot_board(w_in, h_in, name):
 
 slot_board(9.0, 13.5, "L")
 slot_board(11.0, 15.5, "XL")
+slot_board(12.0, 18.0, "XXL")
 print("S", s_w, s_h)
