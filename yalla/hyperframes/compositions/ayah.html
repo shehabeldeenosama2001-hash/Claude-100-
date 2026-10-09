@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Amiri Quran";
+          src: url("assets/fonts/AmiriQuran.ttf") format("truetype");
+          font-weight: 400;
+          font-display: block;
+        }
+        #ayah-root { position: absolute; inset: 0; }
+        #ayah-text { top: 790px; font-family: "Amiri Quran", serif; font-size: 104px; line-height: 1.9; }
+        #ayah-underline { position: absolute; top: 1030px; height: 2px; background: #f6f0e1; transform-origin: 100% 50%; }
+        #ayah-ref { top: 1070px; font-size: 44px; font-weight: 500; opacity: 0.72; }
+      </style>
+      <!-- Scene 3 Ayah card (frames 180–330) -->
+      <div id="ayah-root" data-composition-id="ayah" data-width="1080" data-height="1920">
+        <div class="stage" id="ayah-stage">
+          <svg class="art" id="ayah-art" viewBox="0 0 1080 1920"></svg>
+          <div class="text" id="ayah-text"></div>
+          <div id="ayah-underline"></div>
+          <div class="text" id="ayah-ref"></div>
+        </div>
+        <div class="sweep-line" id="ayah-sweep"></div>
+      </div>
+      <script>
+        (() => {
+          const START = 6;
+          const k = YallaKit("ayah", START);
+          const { Y, B, REC, tl, s, at, CX, INOUT, $ } = k;
+          k.ready.then(() => {
+            const stage = $("#ayah-stage");
+            k.backdrop(stage, 5.6);
+            k.sweep(stage, $("#ayah-sweep"), 0);
+
+            // The ayah most present in this scene's window, shown whole
+            const scene = Y.scenes[2];
+            const from = s(scene.from);
+            const to = s(scene.from + scene.duration);
+            const overlap = (a) => Math.max(0, Math.min(a.end, to) - Math.max(a.start, from));
+            const ayah = REC.ayahs.reduce((best, a) => (overlap(a) > overlap(best) ? a : best));
+            $("#ayah-text").textContent = ayah.text;
+            $("#ayah-ref").textContent = `سورة ${REC.surahName} · آية ${ayah.n.toLocaleString("ar-EG")}`;
+
+            const ctx = document.createElement("canvas").getContext("2d");
+            ctx.font = '104px "Amiri Quran"';
+            const width = Math.min(920, ctx.measureText(ayah.text).width);
+            const underline = $("#ayah-underline");
+            underline.style.left = `${CX - width / 2}px`;
+            underline.style.width = `${width}px`;
+
+            // A small khatam above, drawn then turning slowly (3°/s)
+            const turn = k.svgEl("g", {}, $("#ayah-art"));
+            const star = k.svgEl("path", { d: Y.paths.khatam, class: "line", "stroke-width": 1.5, opacity: 0.6, transform: `translate(${CX} 690) scale(0.5)` }, turn);
+            k.drawOn(star, at(192), s(30));
+            tl.fromTo(turn, { rotation: 0, svgOrigin: `${CX} 690` }, { rotation: 15, svgOrigin: `${CX} 690`, duration: 5, ease: "none" }, 0.4);
+
+            // Quranic text: one unit, opacity only
+            tl.fromTo("#ayah-text", { opacity: 0 }, { opacity: 1, duration: s(B.ayahFade), ease: INOUT }, at(186));
+            tl.fromTo("#ayah-ref", { opacity: 0 }, { opacity: 0.72, duration: s(B.ayahFade), ease: INOUT }, at(186));
+            // Underline sweeps right-to-left in sync with the voice
+            tl.fromTo(underline, { scaleX: 0 }, { scaleX: 1, duration: ayah.end - ayah.start, ease: "none" }, ayah.start - START);
+
+            k.register();
+          });
+        })();
+      </script>
+    </template>
+  </body>
+</html>

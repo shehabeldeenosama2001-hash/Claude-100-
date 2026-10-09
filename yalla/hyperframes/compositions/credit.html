@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #credit-root { position: absolute; inset: 0; }
+        #credit-text { top: 760px; font-size: 92px; font-weight: 700; line-height: 1.45; }
+      </style>
+      <!-- Scene 6 Credit turn (frames 750–900) -->
+      <div id="credit-root" data-composition-id="credit" data-width="1080" data-height="1920">
+        <div class="stage" id="credit-stage">
+          <div class="text" id="credit-text"></div>
+        </div>
+        <div class="sweep-line" id="credit-sweep"></div>
+      </div>
+      <script>
+        (() => {
+          const k = YallaKit("credit", 25);
+          const { Y, B, tl, at, INOUT, $ } = k;
+          k.ready.then(() => {
+            const stage = $("#credit-stage");
+            const backdrop = k.backdrop(stage, 5.8);
+            k.sweep(stage, $("#credit-sweep"), 0);
+            // The lattice turns 3° more and brightens 10%
+            tl.fromTo(backdrop.extra, { rotation: 0, svgOrigin: "540 960" }, { rotation: B.latticeTurnDeg, svgOrigin: "540 960", duration: 5, ease: INOUT }, 0);
+            tl.fromTo(backdrop.bd, { filter: "brightness(1)" }, { filter: `brightness(${1 + B.latticeBrighten})`, duration: 5, ease: INOUT }, 0);
+
+            const box = $("#credit-text");
+            const spans = Y.copy.credit.flatMap((line) => {
+              const row = document.createElement("div");
+              box.appendChild(row);
+              return k.words(row, line);
+            });
+            k.wordsIn(spans, at(B.creditWordsAt));
+            k.register();
+          });
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #payoff-root { position: absolute; inset: 0; }
+      </style>
+      <!-- Scene 7 Future payoff (frames 900–1020) -->
+      <div id="payoff-root" data-composition-id="payoff" data-width="1080" data-height="1920">
+        <div class="stage" id="payoff-stage">
+          <svg class="art" id="payoff-art" viewBox="0 0 1080 1920"></svg>
+        </div>
+        <svg class="overlay" id="payoff-iris" viewBox="0 0 1080 1920"></svg>
+      </div>
+      <script>
+        (() => {
+          const k = YallaKit("payoff", 30);
+          const { Y, B, L, tl, s, at, clamp01, $ } = k;
+          k.ready.then(() => {
+            const stage = $("#payoff-stage");
+            k.backdrop(stage, 4.6);
+            k.iris(stage, $("#payoff-iris"), 0);
+            const art = $("#payoff-art");
+
+            const silhouette = k.svgEl("g", { transform: `translate(${L.silhouette.x} ${L.payoffSilhouetteY})` }, art);
+            Y.paths.mother.forEach((d) => k.svgEl("path", { d, class: "line", "stroke-width": 2.5 }, silhouette));
+
+            // The crown descends gently above her
+            const holder = k.svgEl("g", { transform: `translate(${L.crown.x} ${L.crown.y})` }, art);
+            const crown = k.svgEl("g", {}, holder);
+            const [c0, c1] = B.crownIn;
+            tl.fromTo(crown, { y: -B.crownDrop, opacity: 0 }, { y: 0, opacity: 1, duration: s(c1 - c0), ease: "power2.out" }, at(c0));
+            Y.paths.crown.forEach((d) => k.drawOn(k.svgEl("path", { d, class: "line", "stroke-width": 2 }, crown), at(c0), s(c1 - c0), "power2.out"));
+
+            // At most 12 fine star particles, drifting slowly
+            const sparks = Y.particles.map((p) => {
+              const r = p.size;
+              const q = r * 0.22;
+              return k.svgEl("path", { d: `M0 ${-r} L${q} ${-q} L${r} 0 L${q} ${q} L0 ${r} L${-q} ${q} L${-r} 0 L${-q} ${-q} Z`, fill: "#F6F0E1" }, art);
+            });
+            const clock = { t: 0 };
+            tl.fromTo(
+              clock,
+              { t: 0 },
+              {
+                t: 4.6,
+                duration: 4.6,
+                ease: "none",
+                onUpdate: () => {
+                  const t = clock.t;
+                  const fade = clamp01((t - 0.6) / 0.8);
+                  Y.particles.forEach((p, i) => {
+                    sparks[i].setAttribute("transform", `translate(${p.x} ${(p.y - t * 14).toFixed(1)})`);
+                    sparks[i].setAttribute("opacity", (fade * (0.3 + 0.35 * (1 + Math.sin(t * 1.6 + p.phase)))).toFixed(3));
+                  });
+                },
+              },
+              0,
+            );
+            k.register();
+          });
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+# Copies made by shared/sync.mjs (the originals live in shared/)
+hyperframes/assets/fonts/
+hyperframes/assets/audio/
+remotion/public/fonts/
+remotion/public/audio/
+
+# Local render output and tool caches (finished videos go in exports/)
+hyperframes/renders/
+hyperframes/snapshots/
+hyperframes/.hyperframes/
+remotion/out/

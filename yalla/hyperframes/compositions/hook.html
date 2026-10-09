@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #hook-root { position: absolute; inset: 0; }
+        #hook-text { top: 790px; font-size: 84px; font-weight: 700; line-height: 1.3; }
+        #hook-root .type-box { position: relative; display: inline-block; white-space: nowrap; }
+        #hook-root .ghost { visibility: hidden; }
+        #hook-root .typed { position: absolute; top: 0; right: 0; white-space: nowrap; }
+        #hook-cursor {
+          display: inline-block;
+          width: 5px;
+          height: 78px;
+          margin-inline-start: 10px;
+          vertical-align: -10px;
+          background: #f6f0e1;
+        }
+        #age-badge-row { top: 806px; }
+        #age-badge {
+          display: inline-block;
+          padding: 10px 48px 16px;
+          border: 2px solid #f6f0e1;
+          border-radius: 999px;
+          font-size: 58px;
+          font-weight: 600;
+        }
+      </style>
+      <!-- Scenes 1 Hook and 2 Age reveal share one stage (frames 0–180) -->
+      <div id="hook-root" data-composition-id="hook" data-width="1080" data-height="1920">
+        <div class="stage" id="hook-stage">
+          <svg class="art" id="hook-art" viewBox="0 0 1080 1920"></svg>
+          <div class="text" id="hook-text">
+            <span class="type-box"
+              ><span class="ghost" id="hook-ghost"></span
+              ><span class="typed"><span id="hook-chars"></span><span class="cursor" id="hook-cursor"></span></span
+            ></span>
+          </div>
+          <div class="text" id="age-badge-row"><span id="age-badge"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const k = YallaKit("hook", 0);
+          const { Y, B, L, REC, tl, s, CX, CY, SOFT, INOUT, clamp01, $ } = k;
+          k.ready.then(() => {
+            k.backdrop($("#hook-stage"), 6.6);
+            const art = $("#hook-art");
+
+            // An octagram outline draws itself around the voice
+            const octa = k.svgEl("polygon", { points: k.octaPoints(CX, CY, L.octagramRadius), class: "line", "stroke-width": 2, opacity: 0.7 }, art);
+            k.drawOn(octa, s(B.octagramDraw[0]), s(B.octagramDraw[1] - B.octagramDraw[0]));
+
+            // Rosette strokes draw in, then bloom 10% on the first long note
+            const bloom = k.svgEl("g", {}, art);
+            const frame = k.svgEl("g", { transform: `translate(${CX} ${CY}) scale(${L.octagramRadius * 1.04})` }, bloom);
+            const rosette = k.svgEl("path", { d: Y.paths.rosette, class: "line", "stroke-width": 1.5, opacity: 0.55 }, frame);
+            k.drawOn(rosette, s(B.rosetteDraw[0]), s(B.rosetteDraw[1] - B.rosetteDraw[0]));
+            tl.fromTo(bloom, { scale: 1, svgOrigin: `${CX} ${CY}` }, { scale: 1.1, svgOrigin: `${CX} ${CY}`, duration: s(24), ease: SOFT }, REC.firstLongNote);
+
+            // Waveform: amplitude follows the recitation timing
+            const wave = k.svgEl("path", { class: "line", "stroke-width": 2.5, opacity: 0.95 }, art);
+            const W = L.waveform;
+            const activity = (t) =>
+              Math.max(0, ...REC.ayahs.map((a) => clamp01((t - a.start) / W.ramp) * clamp01((a.end - t) / W.ramp)));
+            const waveD = (t) => {
+              const amp = W.base + W.gain * activity(t);
+              let d = "";
+              for (let i = 0; i < W.points; i++) {
+                const u = i / (W.points - 1);
+                const x = CX - W.width / 2 + u * W.width;
+                const env = Math.pow(Math.sin(Math.PI * u), 1.5);
+                const y = W.y + amp * env * (0.6 * Math.sin(2 * Math.PI * W.f1 * u + W.w1 * t) + 0.4 * Math.sin(2 * Math.PI * W.f2 * u - W.w2 * t));
+                d += `${i === 0 ? "M" : " L"}${x.toFixed(1)} ${y.toFixed(1)}`;
+              }
+              return d;
+            };
+
+            // Typed right-to-left, one grapheme at a time (colloquial line only)
+            const graphemes = Array.from(new Intl.Segmenter("ar", { granularity: "grapheme" }).segment(Y.copy.hook), (g) => g.segment);
+            $("#hook-ghost").textContent = Y.copy.hook;
+            const chars = $("#hook-chars");
+            const cursor = $("#hook-cursor");
+            const typeFrom = s(B.typeOn[0]);
+            const typeTo = s(B.typeOn[1]);
+            const clock = { t: 0 };
+            tl.fromTo(
+              clock,
+              { t: 0 },
+              {
+                t: 6.6,
+                duration: 6.6,
+                ease: "none",
+                onUpdate: () => {
+                  const t = clock.t;
+                  wave.setAttribute("d", waveD(t));
+                  const n = Math.round(clamp01((t - typeFrom) / (typeTo - typeFrom)) * graphemes.length);
+                  chars.textContent = graphemes.slice(0, n).join("");
+                  const typing = t >= typeFrom && t <= typeTo;
+                  cursor.style.opacity = typing || Math.floor(t * 2.4) % 2 === 0 ? "1" : "0";
+                },
+              },
+              0,
+            );
+            tl.to("#hook-text", { opacity: 0, y: -24, duration: s(B.hookTextOut[1] - B.hookTextOut[0]), ease: INOUT }, s(B.hookTextOut[0]));
+
+            $("#age-badge").textContent = Y.copy.age;
+            tl.fromTo("#age-badge", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: s(24), ease: SOFT }, s(B.badgeIn));
+
+            k.register();
+          });
+        })();
+      </script>
+    </template>
+  </body>
+</html>

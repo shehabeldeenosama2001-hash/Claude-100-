@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #slogan-root { position: absolute; inset: 0; }
+        #slogan-a { top: 690px; font-size: 116px; font-weight: 800; color: #ffffff; line-height: 1.3; }
+        #slogan-b { top: 860px; font-size: 160px; font-weight: 900; color: #ffffff; line-height: 1.3; }
+      </style>
+      <!-- Scene 8 Slogan (frames 1020–1140) -->
+      <div id="slogan-root" data-composition-id="slogan" data-width="1080" data-height="1920">
+        <div class="stage" id="slogan-stage">
+          <div class="text" id="slogan-a"></div>
+          <div class="text" id="slogan-b"></div>
+          <svg class="art" id="slogan-art" viewBox="0 0 1080 1920"></svg>
+        </div>
+        <div class="sweep-line" id="slogan-sweep"></div>
+      </div>
+      <script>
+        (() => {
+          const k = YallaKit("slogan", 34);
+          const { Y, B, L, tl, s, at, CX, INOUT, $ } = k;
+          k.ready.then(() => {
+            const stage = $("#slogan-stage");
+            k.backdrop(stage, 4);
+            k.sweep(stage, $("#slogan-sweep"), 0);
+
+            $("#slogan-a").textContent = Y.copy.sloganA;
+            $("#slogan-b").textContent = Y.copy.sloganB;
+            const [a0, a1] = B.sloganAIn;
+            tl.fromTo("#slogan-a", { opacity: 0 }, { opacity: 1, duration: s(a1 - a0), ease: INOUT }, at(a0));
+            // After a 20-frame hold, the second half reveals right-to-left
+            const [b0, b1] = B.sloganBReveal;
+            tl.fromTo("#slogan-b", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: s(b1 - b0), ease: INOUT }, at(b0));
+
+            // Logo draws inside a small octagram
+            const art = $("#slogan-art");
+            const logo = L.logo;
+            const star = k.svgEl("polygon", { points: k.octaPoints(CX, logo.cy, logo.r), class: "line", "stroke-width": 2, opacity: 0.7 }, art);
+            k.drawOn(star, at(B.logoStarDraw[0]), s(B.logoStarDraw[1] - B.logoStarDraw[0]));
+            const word = k.svgEl(
+              "text",
+              {
+                x: CX,
+                y: logo.cy + 34,
+                "text-anchor": "middle",
+                direction: "rtl",
+                "font-family": "Cairo",
+                "font-weight": 800,
+                "font-size": 104,
+                fill: "#F6F0E1",
+              },
+              art,
+            );
+            word.textContent = Y.copy.logo;
+            // The word is revealed right-to-left inside the drawn star
+            const ctx = document.createElement("canvas").getContext("2d");
+            ctx.font = '800 104px "Cairo"';
+            const wordWidth = Math.ceil(ctx.measureText(Y.copy.logo).width) + 4;
+            const [w0, w1] = B.logoWordDraw;
+            tl.fromTo(
+              word,
+              { clipPath: `inset(0px 0px 0px ${wordWidth}px)` },
+              { clipPath: "inset(0px 0px 0px 0px)", duration: s(w1 - w0), ease: INOUT },
+              at(w0),
+            );
+            k.register();
+          });
+        })();
+      </script>
+    </template>
+  </body>
+</html>

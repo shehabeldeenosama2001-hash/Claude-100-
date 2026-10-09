@@ -1,0 +1,35 @@
+{
+  "placeholder": true,
+  "note": "PLACEHOLDER timings. Replace with the word/ayah timestamps exported from the child's real recording (seconds from frame 0), then rebuild design.json.",
+  "surah": 112,
+  "surahName": "الإخلاص",
+  "textSource": "Uthmani text from The Noble Qur'an Encyclopedia (quranenc.com), via the quran-json package",
+  "firstLongNote": 4.4,
+  "end": 15.6,
+  "ayahs": [
+    {
+      "n": 1,
+      "text": "قُلۡ هُوَ ٱللَّهُ أَحَدٌ",
+      "start": 0.3,
+      "end": 3.2
+    },
+    {
+      "n": 2,
+      "text": "ٱللَّهُ ٱلصَّمَدُ",
+      "start": 3.8,
+      "end": 6.2
+    },
+    {
+      "n": 3,
+      "text": "لَمۡ يَلِدۡ وَلَمۡ يُولَدۡ",
+      "start": 6.8,
+      "end": 10.0
+    },
+    {
+      "n": 4,
+      "text": "وَلَمۡ يَكُن لَّهُۥ كُفُوًا أَحَدُۢ",
+      "start": 10.6,
+      "end": 15.6
+    }
+  ]
+}

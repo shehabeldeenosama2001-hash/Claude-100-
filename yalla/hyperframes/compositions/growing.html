@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #growing-root { position: absolute; inset: 0; }
+        #growing-root .card { position: absolute; inset: 0; }
+        #growing-root .card .text { top: 820px; font-size: 150px; font-weight: 800; line-height: 1.3; }
+      </style>
+      <!-- Scene 5 Growing up (frames 480–750) -->
+      <div id="growing-root" data-composition-id="growing" data-width="1080" data-height="1920">
+        <div class="stage" id="growing-stage">
+          <div class="card" id="card-0"><div class="text"></div></div>
+          <div class="card" id="card-1"><div class="text"></div></div>
+          <div class="card" id="card-2"><div class="text"></div></div>
+          <div class="card" id="card-3"><div class="text"></div></div>
+          <svg class="art" id="growing-art" viewBox="0 0 1080 1920"></svg>
+        </div>
+        <svg class="overlay" id="growing-iris" viewBox="0 0 1080 1920"></svg>
+      </div>
+      <script>
+        (() => {
+          const k = YallaKit("growing", 16);
+          const { Y, B, L, tl, s, at, CX, SOFT, INOUT, $ } = k;
+          k.ready.then(() => {
+            const stage = $("#growing-stage");
+            const overlay = $("#growing-iris");
+            k.backdrop(stage, 9.6);
+            k.iris(stage, overlay, 0);
+            const art = $("#growing-art");
+
+            // Progress ring around the star: one quarter per chapter card
+            const ring = L.ring;
+            k.svgEl("circle", { cx: CX, cy: ring.cy, r: ring.r, class: "line", "stroke-width": 2, opacity: 0.25 }, art);
+            const fill = k.drawable(
+              k.svgEl("circle", { cx: CX, cy: ring.cy, r: ring.r, class: "line", "stroke-width": 2, opacity: 0.7, transform: `rotate(-90 ${CX} ${ring.cy})` }, art),
+            );
+            tl.set(fill, { strokeDashoffset: 1 }, 0);
+            const turn = k.svgEl("g", {}, art);
+            const star = k.svgEl("path", { d: Y.paths.khatam, class: "line", "stroke-width": 1.5, opacity: 0.6, transform: `translate(${CX} ${ring.cy}) scale(0.95)` }, turn);
+            k.drawOn(star, 0.3, 1);
+            tl.fromTo(turn, { rotation: 0, svgOrigin: `${CX} ${ring.cy}` }, { rotation: 36, svgOrigin: `${CX} ${ring.cy}`, duration: 9, ease: "none" }, 0.3);
+
+            // The child grows a step taller with each card
+            const child = L.child;
+            const base = child.y + 462;
+            const grow = k.svgEl("g", {}, art);
+            const frame = k.svgEl("g", { transform: `translate(${child.x} ${child.y})` }, grow);
+            Y.paths.child.forEach((d, i) => k.drawOn(k.svgEl("path", { d, class: "line", "stroke-width": 2.5 }, frame), 0.4 + i * 0.12, 0.9));
+
+            Y.transitions.iris.at.slice(0, 4).forEach((frameAt, i) => {
+              const when = at(frameAt);
+              const card = $(`#card-${i}`);
+              card.querySelector(".text").textContent = Y.copy.chapters[i];
+              if (i > 0) {
+                k.iris(card, overlay, when);
+                tl.to(`#card-${i - 1}`, { opacity: 0, duration: s(10), ease: INOUT }, when);
+                tl.to(grow, { scaleY: 1 + i * B.childStep, svgOrigin: `${CX} ${base}`, duration: s(18), ease: SOFT }, when);
+              }
+              tl.to(fill, { strokeDashoffset: 1 - (i + 1) / 4, duration: s(B.ringFill), ease: INOUT }, when + s(4));
+            });
+
+            k.register();
+          });
+        })();
+      </script>
+    </template>
+  </body>
+</html>

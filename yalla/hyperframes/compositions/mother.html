@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #mother-root { position: absolute; inset: 0; }
+        #mother-text { top: 1250px; font-size: 66px; font-weight: 600; line-height: 1.4; }
+      </style>
+      <!-- Scene 4 Mother witness (frames 330–480) -->
+      <div id="mother-root" data-composition-id="mother" data-width="1080" data-height="1920">
+        <div class="stage" id="mother-stage">
+          <svg class="art" id="mother-art" viewBox="0 0 1080 1920"></svg>
+          <div class="text" id="mother-text"></div>
+        </div>
+        <div class="sweep-line" id="mother-sweep"></div>
+      </div>
+      <script>
+        (() => {
+          const k = YallaKit("mother", 11);
+          const { Y, B, L, s, at, $ } = k;
+          k.ready.then(() => {
+            const stage = $("#mother-stage");
+            k.backdrop(stage, 5.8);
+            k.sweep(stage, $("#mother-sweep"), 0);
+
+            // Line-art silhouette, strokes drawn in over 45 frames
+            const frame = k.svgEl("g", { transform: `translate(${L.silhouette.x} ${L.silhouette.y})` }, $("#mother-art"));
+            const [d0, d1] = B.silhouetteDraw;
+            const each = s(30);
+            Y.paths.mother.forEach((d, i, all) => {
+              const p = k.svgEl("path", { d, class: "line", "stroke-width": 2.5 }, frame);
+              k.drawOn(p, at(d0) + i * ((s(d1 - d0) - each) / (all.length - 1)), each);
+            });
+
+            k.wordsIn(k.words($("#mother-text"), Y.copy.mother), at(B.motherWordsAt));
+            k.register();
+          });
+        })();
+      </script>
+    </template>
+  </body>
+</html>
