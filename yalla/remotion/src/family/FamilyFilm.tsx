@@ -33,7 +33,8 @@ export const FamilyFilm: React.FC<Props> = ({ voiceoverSrc }) => {
       <Sequence name="5 Closing · family + end card" from={967} durationInFrames={360} premountFor={fps}>
         <ClosingScene />
       </Sequence>
-      <Audio name="Bed" src={staticFile(Y.audio.familyBed)} premountFor={fps} />
+      {/* Bed and transition effects, mixed with FFmpeg by shared/make-family-audio.sh */}
+      <Audio name="Music and effects" src={staticFile(Y.audio.familyMix)} premountFor={fps} />
       {voiceoverSrc ? <Audio name="Voiceover" src={staticFile(voiceoverSrc)} premountFor={fps} /> : null}
     </AbsoluteFill>
   );

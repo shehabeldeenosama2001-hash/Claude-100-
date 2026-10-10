@@ -205,7 +205,7 @@ const design = {
     roomTone: "audio/room-tone.wav",
     pad: "audio/pad.wav",
     recitation: "audio/recitation.wav",
-    familyBed: "audio/family-bed.wav",
+    familyMix: "audio/family-mix.wav",
   },
 };
 
