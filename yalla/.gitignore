@@ -9,3 +9,6 @@ hyperframes/renders/
 hyperframes/snapshots/
 hyperframes/.hyperframes/
 remotion/out/
+
+# Python bytecode
+__pycache__/
