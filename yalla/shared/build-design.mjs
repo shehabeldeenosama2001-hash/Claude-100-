@@ -108,6 +108,13 @@ const design = {
     sloganA: "قبل ما يكبر...",
     sloganB: "خليه يبدأ",
     logo: "يلا",
+    // Family film: dialogue split into the chunks shown as subtitles
+    familyHook: ["بنذاكرله كل مادة في الدنيا...", "إلا المادة اللي هيتسأل عنها قدام ربنا."],
+    familyMother: ["عندنا مفيش مجموعات كبيرة", "ابنك ممكن يضيع فيها.", "كل طفل عنده شيخه لوحده...", "واحد لواحد،", "من غير ما حد ياخد وقت حد."],
+    familyFather: ["وكل شيوخنا متخصصين،", "بيعلّموا ابنك التجويد والحفظ", "والقراءة الصحيحة والتربية الدينية...", "مش بس حفظ من غير فهم."],
+    familySon: ["أول حصة ليا كانت تجربة!", "جربتها الأول، وبعدين قررنا...", "من غير أي التزام!"],
+    familyDaughter: ["وكل طفل بيبدأ من مستواه هو،", "وبيتقدّم خطوة خطوة...", "لحد ما يوصل لآخر مستوى."],
+    familyClosing: ["إحنا في يلا مش بس بنحفظ...", "إحنا بنربّي جيل عارف دينه،", "وعارف يقرا كتاب ربنا صح."],
   },
   layout: {
     stageCenterY: 940,
@@ -198,6 +205,7 @@ const design = {
     roomTone: "audio/room-tone.wav",
     pad: "audio/pad.wav",
     recitation: "audio/recitation.wav",
+    familyBed: "audio/family-bed.wav",
   },
 };
 

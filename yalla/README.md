@@ -37,6 +37,19 @@ cd hyperframes && npx --yes hyperframes@0.8.143 render --quality delivery --outp
 cd remotion && npx remotion render YallaFilm out/yalla.mp4
 ```
 
+## The family film (`YallaFamily`, Remotion)
+
+A 44-second, six-scene film with the mother, father, son and daughter, built in `remotion/src/family/`.
+
+- **Characters:** each one is cut out of its reference sheet with HyperFrames' local background-removal model, upscaled ×3, and stored in `remotion/public/family/`. Their bounding boxes are in `cutouts.json`.
+- **Camera moves:** each scene gets its camera move as 2.5D parallax: dolly in, orbit left, tilt up, whip pan, dolly out, and a rising pull-back.
+- **Expressions and text:** expressions switch on key words, and the dialogue appears as Arabic subtitles. The script lives in `shared/design.json` under `copy.family*`.
+- **Voice:** there is no voice or lip movement yet. Once a voiceover is recorded, put it in `shared/audio/`, run `node shared/sync.mjs`, and render with `--props='{"voiceoverSrc":"audio/family-voice.wav"}'`. Retime the subtitle chunks in `scenes.tsx` (`timeLines(...)`) to match it.
+
+```console
+cd remotion && npx remotion render YallaFamily out/yalla-family.mp4
+```
+
 ## Notes
 
 - **Quranic text:** Surah Al-Ikhlas in Uthmani script, copied byte-for-byte from the Noble Qur'an Encyclopedia text (via the `quran-json` package). It is only ever faded or masked as a whole ayah.
