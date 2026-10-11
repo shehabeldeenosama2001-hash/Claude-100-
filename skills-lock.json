@@ -79,6 +79,12 @@
       "skillPath": "skills/hyperframes-studio/SKILL.md",
       "computedHash": "3ac6b0019626b0cfa0d067c52ae3e46b5d98722784b1ef103ac301a1815dfd7a"
     },
+    "llm-council": {
+      "source": "aiwithremy/claude-skills-llm-council",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "b6b68e15b1622ea5dc7760e6a3c723c62c8140103fde3052c096f7d8fc675a44"
+    },
     "media-use": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
