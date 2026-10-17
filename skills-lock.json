@@ -216,6 +216,12 @@
       "sourceType": "github",
       "skillPath": "text-to-sfx/SKILL.md",
       "computedHash": "84bfb533e5c2ff2b1626eb14ff78dd3188cace8e8e6aeeb484d53dd9b2902db2"
+    },
+    "xilo-opus-video": {
+      "source": "Kianzzz/xilo-opus-video",
+      "sourceType": "github",
+      "skillPath": "skills/xilo-opus-video/SKILL.md",
+      "computedHash": "47676683474f1ea6a7fc21fd9f4ee180cf70a9686310823c5b17aa157dc76031"
     }
   }
 }
