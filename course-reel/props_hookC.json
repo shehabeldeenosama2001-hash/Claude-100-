@@ -1,0 +1,128 @@
+{
+ "_note": "DEMO captions: placeholder Arabic copy timed to the real speech segments (silence-detected). Replace each segment's `text` with the real transcript and re-render.",
+ "videoSrc": "course-reel/raw.mp4",
+ "trimStart": 0.55,
+ "trimEnd": 38.45,
+ "hookVariant": "C",
+ "hookDuration": 2.4,
+ "brand": {
+  "courseName": "اسم الكورس",
+  "handle": "@your.handle"
+ },
+ "segments": [
+  {
+   "start": 0.69,
+   "end": 7.68,
+   "role": "intro",
+   "text": "لو نفسك تتعلم مهارة جديدة وتبدأ تكسب منها بجد، يبقى الكورس ده معمول عشانك"
+  },
+  {
+   "start": 8.58,
+   "end": 12.38,
+   "role": "feature",
+   "feature": 0,
+   "text": "أول حاجة، المحتوى كله عملي خطوة بخطوة"
+  },
+  {
+   "start": 12.82,
+   "end": 14.19,
+   "role": "feature",
+   "feature": 1,
+   "text": "تاني حاجة، شهادة معتمدة"
+  },
+  {
+   "start": 14.84,
+   "end": 17.07,
+   "role": "feature",
+   "feature": 1,
+   "text": "تقدر تحطها في الـ CV بتاعك"
+  },
+  {
+   "start": 17.59,
+   "end": 22.66,
+   "role": "feature",
+   "feature": 2,
+   "text": "تالت حاجة، متابعة شخصية وأي سؤال هرد عليك فيه بنفسي"
+  },
+  {
+   "start": 23.13,
+   "end": 29.43,
+   "role": "feature",
+   "feature": 3,
+   "text": "رابع حاجة، هتشتغل على مشاريع حقيقية تبني بيها سابقة أعمالك من أول يوم"
+  },
+  {
+   "start": 30.34,
+   "end": 34.63,
+   "role": "feature",
+   "feature": 4,
+   "text": "وخامس حاجة، الكورس معاك مدى الحياة بكل التحديثات"
+  },
+  {
+   "start": 35.01,
+   "end": 38.02,
+   "role": "cta",
+   "text": "احجز مكانك دلوقتي، اللينك في البايو"
+  }
+ ],
+ "features": [
+  {
+   "kind": "practical",
+   "title": "محتوى عملي",
+   "subtitle": "خطوة بخطوة من الصفر",
+   "steps": [
+    "افهم",
+    "طبّق",
+    "اتقن"
+   ]
+  },
+  {
+   "kind": "certificate",
+   "title": "شهادة معتمدة",
+   "subtitle": "تزوّد بيها الـ CV بتاعك"
+  },
+  {
+   "kind": "mentor",
+   "title": "متابعة شخصية",
+   "subtitle": "سؤالك ليه رد… مني أنا"
+  },
+  {
+   "kind": "projects",
+   "title": "مشاريع حقيقية",
+   "subtitle": "سابقة أعمال من أول يوم"
+  },
+  {
+   "kind": "lifetime",
+   "title": "وصول مدى الحياة",
+   "subtitle": "وكل التحديثات ببلاش"
+  }
+ ],
+ "hooks": {
+  "A": {
+   "line1": "٩٠٪ من الناس",
+   "line2": "بيدفعوا في كورسات غلط 😳",
+   "freezeAt": 25.0
+  },
+  "B": {
+   "count": 500,
+   "line1": "طالب غيّروا حياتهم",
+   "line2": "بالكورس ده… والسبب 👇",
+   "freezeAt": 21.0
+  },
+  "C": {
+   "seconds": 40,
+   "line1": "اديني ٤٠ ثانية",
+   "line2": "وهختصرلك سنة تعلم ⏱️",
+   "freezeAt": 9.5
+  }
+ },
+ "intro": {
+  "kicker": "٥ حاجات",
+  "headline": "هتاخدها من الكورس ده 👇"
+ },
+ "cta": {
+  "button": "احجز مكانك دلوقتي",
+  "sub": "اللينك في البايو 👆",
+  "ticker": "الأماكن محدودة 🔥"
+ }
+}
