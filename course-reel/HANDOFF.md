@@ -20,6 +20,7 @@
 - `reel_plan.json`: كل النصوص والتوقيتات والمميزات. ده الملف اللي بيتعدّل.
 - `props_hookB.json` و`props_hookC.json`: نفس الخطة بهوك مختلف.
 - `PLAN.md`: الخطة الكاملة بالتفصيل.
+- **الـ skill:** `.claude/skills/reel-motion-studio/` (فيها `SKILL.md` والقالب وسكريبت التسطيب). ومعاها `.claude/skills/watch/` للفرجة على فيديوهات مرجعية وتفريغها.
 - `source-code/`: كود Remotion، وهو `CourseReel.tsx` و`Captions.tsx` و`FeatureGraphics.tsx` و`Hook.tsx` و`theme.ts`، ومعاه سكريبت الرندر `render-course-reel.mjs` وسكريبت الصوت `synth_audio.py`.
 - `review/`: صور مراجعة للفريمات.
 - **الفيديو الخام الأصلي مش على الريبو.** لازم يترفع تاني في الشات الجديد.
