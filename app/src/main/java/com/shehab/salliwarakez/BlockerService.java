@@ -27,7 +27,9 @@ import java.util.Set;
  *    foreground is sent straight back to the home screen.
  * 2) Otherwise, every time a browser is opened the gate screen appears on top
  *    of it (type the phrase 5 times, then confirm 5 times).
- * 3) While uninstall protection is armed, any Settings / installer screen that
+ * 3) Facebook / Instagram / TikTok: the gate asks for the phrase 5 times only,
+ *    then leaves the app alone for 10 minutes.
+ * 4) While uninstall protection is armed, any Settings / installer screen that
  *    shows this app's name (app info, device admin, accessibility toggle,
  *    uninstall dialog) is closed immediately.
  */
@@ -110,8 +112,19 @@ public class BlockerService extends AccessibilityService {
 
         // 2) Gate on every browser open.
         if (browser) {
-            if (!BrowserGate.hasPass(pkg) && pkg.equals(activeWindowPackage())) {
-                showGate(pkg);
+            if (!BrowserGate.hasPass(pkg) && !GateActivity.visible
+                    && pkg.equals(activeWindowPackage())) {
+                showGate(pkg, false);
+            }
+            return;
+        }
+
+        // 3) Social apps: 5 phrases, then 10 minutes free.
+        if (SocialGate.isSocial(pkg)) {
+            BrowserGate.revoke();
+            if (!SocialGate.hasPass(this, pkg) && !GateActivity.visible
+                    && pkg.equals(activeWindowPackage())) {
+                showGate(pkg, true);
             }
             return;
         }
@@ -124,7 +137,7 @@ public class BlockerService extends AccessibilityService {
             }
         }
 
-        // 3) Uninstall / disable protection.
+        // 4) Uninstall / disable protection.
         if (isGuardedPackage(pkg)) {
             long now = SystemClock.uptimeMillis();
             if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED
@@ -146,18 +159,19 @@ public class BlockerService extends AccessibilityService {
     @Override
     public void onInterrupt() {}
 
-    private void showGate(String pkg) {
+    private void showGate(String pkg, boolean social) {
         long now = SystemClock.uptimeMillis();
         if (GateActivity.visible || now - lastGateLaunch < GATE_RELAUNCH_MS) return;
         lastGateLaunch = now;
         Intent i = new Intent(this, GateActivity.class)
                 .putExtra(GateActivity.EXTRA_PACKAGE, pkg)
+                .putExtra(GateActivity.EXTRA_SOCIAL, social)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
 
         handler.postDelayed(() -> {
-            if (!GateActivity.visible && !BrowserGate.hasPass(pkg)
-                    && pkg.equals(activeWindowPackage())) {
+            boolean hasPass = social ? SocialGate.hasPass(this, pkg) : BrowserGate.hasPass(pkg);
+            if (!GateActivity.visible && !hasPass && pkg.equals(activeWindowPackage())) {
                 performGlobalAction(GLOBAL_ACTION_HOME);
                 toast("افتح إعدادات «صلي وركز» واسمح له يظهر فوق التطبيقات / يفتح نوافذ في الخلفية");
             }

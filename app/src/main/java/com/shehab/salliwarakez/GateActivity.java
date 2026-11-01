@@ -12,14 +12,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * Shown on top of a browser every time one is opened:
+ * Browsers, every time one is opened:
  *   1) type «صلي على النبي» 5 times,
  *   2) confirm «متأكد إنك عايز تكمل؟» by tapping 5 times.
- * Only then is the browser allowed until you leave it.
+ *   Then the browser is allowed until you leave it.
+ * Facebook / Instagram / TikTok: step 1 only, then 10 minutes free (see SocialGate).
  */
 public class GateActivity extends Activity {
 
     static final String EXTRA_PACKAGE = "browser_package";
+    static final String EXTRA_SOCIAL = "social";
     static final int PHRASES_NEEDED = 5;
     static final int TAPS_NEEDED = 5;
     /** Short pause after each confirm tap so it can't be spam-tapped without reading. */
@@ -30,13 +32,14 @@ public class GateActivity extends Activity {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private String browserPkg;
+    private boolean social;
     private int phrases;
     private int tapsLeft;
     private boolean passed;
 
     private View phase1, phase2;
     private EditText input;
-    private TextView counter, feedback;
+    private TextView title, counter, feedback;
     private Button btnConfirm;
 
     @Override
@@ -47,6 +50,7 @@ public class GateActivity extends Activity {
         phase1 = findViewById(R.id.phase1);
         phase2 = findViewById(R.id.phase2);
         input = findViewById(R.id.input);
+        title = findViewById(R.id.gateTitle);
         counter = findViewById(R.id.counter);
         feedback = findViewById(R.id.feedback);
         btnConfirm = findViewById(R.id.btnConfirm);
@@ -72,12 +76,16 @@ public class GateActivity extends Activity {
         super.onNewIntent(intent);
         setIntent(intent);
         String pkg = intent.getStringExtra(EXTRA_PACKAGE);
-        // A different browser restarts the gate; the same one keeps the progress.
+        // A different app restarts the gate; the same one keeps the progress.
         if (pkg != null && !pkg.equals(browserPkg)) start(intent);
     }
 
     private void start(Intent intent) {
         browserPkg = intent.getStringExtra(EXTRA_PACKAGE);
+        social = intent.getBooleanExtra(EXTRA_SOCIAL, false);
+        title.setText(social
+                ? "قبل ما تفتح " + appLabel(browserPkg) + " اكتب ٥ مرات:"
+                : "قبل ما تفتح المتصفح اكتب ٥ مرات:");
         phrases = 0;
         tapsLeft = TAPS_NEEDED;
         passed = false;
@@ -96,9 +104,26 @@ public class GateActivity extends Activity {
             input.setText("");
             feedback.setText("اللهم صلِّ وسلم على نبينا محمد ﷺ");
             updateCounter();
-            if (phrases >= PHRASES_NEEDED) showConfirm();
+            if (phrases >= PHRASES_NEEDED) {
+                if (social) {
+                    passed = true;
+                    SocialGate.grant(this, browserPkg);
+                    finish(); // back to the app underneath, free for 10 minutes
+                } else {
+                    showConfirm();
+                }
+            }
         } else {
             feedback.setText("❌ اكتبها كده بالظبط: صلي على النبي");
+        }
+    }
+
+    private String appLabel(String pkg) {
+        try {
+            android.content.pm.PackageManager pm = getPackageManager();
+            return pm.getApplicationLabel(pm.getApplicationInfo(pkg, 0)).toString();
+        } catch (Exception e) {
+            return "التطبيق";
         }
     }
 
