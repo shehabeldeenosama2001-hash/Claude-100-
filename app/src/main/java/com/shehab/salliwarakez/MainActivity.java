@@ -1,0 +1,132 @@
+package com.shehab.salliwarakez;
+
+import android.app.Activity;
+import android.app.admin.DevicePolicyManager;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private TextView lockStatus, statusA11y, statusAdmin, restrictedHint;
+    private Button btnLock, btnA11y, btnAdmin, btnRestricted, btnUninstall;
+    private View setupCard;
+
+    private final Runnable tick = new Runnable() {
+        @Override public void run() {
+            refresh();
+            handler.postDelayed(this, 1000);
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        lockStatus = findViewById(R.id.lockStatus);
+        statusA11y = findViewById(R.id.statusA11y);
+        statusAdmin = findViewById(R.id.statusAdmin);
+        restrictedHint = findViewById(R.id.restrictedHint);
+        btnLock = findViewById(R.id.btnLock);
+        btnA11y = findViewById(R.id.btnA11y);
+        btnAdmin = findViewById(R.id.btnAdmin);
+        btnRestricted = findViewById(R.id.btnRestricted);
+        btnUninstall = findViewById(R.id.btnUninstall);
+        setupCard = findViewById(R.id.setupCard);
+
+        // The main button: no dialog, no question — lock immediately.
+        btnLock.setOnClickListener(v -> {
+            if (!Prefs.isAccessibilityEnabled(this)) {
+                Toast.makeText(this, "فعّل «خدمة الحجب» الأول من الإعداد اللي تحت 👇", Toast.LENGTH_LONG).show();
+                return;
+            }
+            Prefs.startLock(this);
+            refresh();
+            Toast.makeText(this, "🔒 اتقفلت كل المتصفحات ١٠ دقايق", Toast.LENGTH_SHORT).show();
+        });
+
+        btnA11y.setOnClickListener(v ->
+                startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)));
+
+        btnRestricted.setOnClickListener(v ->
+                startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.parse("package:" + getPackageName()))));
+
+        btnAdmin.setOnClickListener(v -> {
+            // Turning protection (back) on starts the 100-phrase count from zero.
+            Prefs.setUninstallAllowed(this, false);
+            Prefs.setPhraseCount(this, 0);
+            if (!Prefs.isAdminActive(this)) {
+                Intent i = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                i.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, Prefs.adminComponent(this));
+                i.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, getString(R.string.admin_explanation));
+                startActivity(i);
+            }
+            refresh();
+        });
+
+        btnUninstall.setOnClickListener(v -> startActivity(new Intent(this, UnlockActivity.class)));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.post(tick);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(tick);
+    }
+
+    private void refresh() {
+        boolean a11y = Prefs.isAccessibilityEnabled(this);
+        boolean admin = Prefs.isAdminActive(this);
+        boolean armed = Prefs.isArmed(this);
+        long remaining = Prefs.remainingLockMs(this);
+
+        if (remaining > 0) {
+            lockStatus.setText("🔒 المتصفحات مقفولة\nفاضل " + Prefs.formatRemaining(remaining));
+            btnLock.setText("🔒  ابدأ ١٠ دقايق من الأول");
+        } else {
+            lockStatus.setText("🌐 المتصفحات مفتوحة دلوقتي");
+            btnLock.setText("🔒  اقفل المتصفحات ١٠ دقايق");
+        }
+
+        statusA11y.setText(a11y ? "١. خدمة الحجب: ✅ شغّالة" : "١. خدمة الحجب: ❌ مش متفعّلة");
+        btnA11y.setVisibility(a11y ? View.GONE : View.VISIBLE);
+
+        // "Allow restricted settings" is only needed on Android 13+ for apps installed from an APK.
+        // Hidden once protection is armed, because that page is guarded then.
+        boolean showRestricted = !a11y && !armed && Build.VERSION.SDK_INT >= 33;
+        restrictedHint.setVisibility(showRestricted ? View.VISIBLE : View.GONE);
+        btnRestricted.setVisibility(showRestricted ? View.VISIBLE : View.GONE);
+
+        if (armed) {
+            statusAdmin.setText("٢. الحماية من المسح: ✅ شغّالة");
+            btnAdmin.setVisibility(View.GONE);
+        } else if (admin) {
+            statusAdmin.setText("٢. الحماية من المسح: ⏸ موقوفة (كتبت الـ ١٠٠ مرة)");
+            btnAdmin.setText("رجّع الحماية تاني");
+            btnAdmin.setVisibility(View.VISIBLE);
+        } else {
+            statusAdmin.setText("٢. الحماية من المسح: ❌ مش متفعّلة");
+            btnAdmin.setText("فعّل الحماية من المسح");
+            btnAdmin.setVisibility(View.VISIBLE);
+        }
+
+        setupCard.setVisibility(a11y && armed ? View.GONE : View.VISIBLE);
+        btnUninstall.setVisibility(armed ? View.VISIBLE : View.GONE);
+    }
+}

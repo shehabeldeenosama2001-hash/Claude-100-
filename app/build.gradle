@@ -1,0 +1,42 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.shehab.salliwarakez'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.shehab.salliwarakez'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    // Fixed signing key committed to the repo so every build can be installed
+    // as an update over the previous one (the app blocks its own uninstall).
+    signingConfigs {
+        release {
+            storeFile file('salli.keystore')
+            storePassword 'salliwarakez'
+            keyAlias 'salli'
+            keyPassword 'salliwarakez'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

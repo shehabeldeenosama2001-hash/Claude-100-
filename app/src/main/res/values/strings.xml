@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">صلي وركز</string>
+    <string name="a11y_desc">بيقفل المتصفحات لما تدوس على زرار القفل، وبيحمي الأبلكيشن من المسح لحد ما تكتب «صلي على النبي» ١٠٠ مرة.</string>
+    <string name="admin_explanation">التفعيل ده بيمنع مسح الأبلكيشن. علشان تمسحه لازم تكتب «صلي على النبي» ١٠٠ مرة جوه الأبلكيشن.</string>
+    <string name="admin_disable_warning">مش هينفع كده 🙂 افتح «صلي وركز» واكتب «صلي على النبي» ١٠٠ مرة الأول.</string>
+</resources>
