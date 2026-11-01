@@ -3,6 +3,7 @@
 An Android app that:
 
 - Has one big button that **locks every browser on the phone for 10 minutes**, right away with no confirmation.
+- **Every time a browser is opened**, a gate appears on top of it: type «صلي على النبي» 5 times, then confirm «متأكد إنك عايز تكمل؟ افتكر كل حاجة هتحصل بعدها» by tapping 5 times. The pass lasts until you leave the browser (home, another app, or screen off).
 - **Can't be uninstalled** until you type «صلي على النبي» **100 times** inside the app.
 
 ## Download
@@ -29,6 +30,7 @@ After step 3, any Settings or installer screen showing the app (app info, access
 | Browser blocking + guarding Settings screens (Accessibility Service) | `BlockerService.java` |
 | Uninstall prevention (Device Admin) | `AdminReceiver.java` |
 | Main screen with the lock button | `MainActivity.java` |
+| Gate shown on every browser open (5 phrases + 5 taps) | `GateActivity.java`, `BrowserGate.java` |
 | Type the phrase 100 times, paste blocked | `UnlockActivity.java` |
 
 ## Limits

@@ -1,11 +1,18 @@
 package com.shehab.salliwarakez;
 
 import android.accessibilityservice.AccessibilityService;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
@@ -18,7 +25,9 @@ import java.util.Set;
 /**
  * 1) While the 10-minute lock is running, any browser that comes to the
  *    foreground is sent straight back to the home screen.
- * 2) While uninstall protection is armed, any Settings / installer screen that
+ * 2) Otherwise, every time a browser is opened the gate screen appears on top
+ *    of it (type the phrase 5 times, then confirm 5 times).
+ * 3) While uninstall protection is armed, any Settings / installer screen that
  *    shows this app's name (app info, device admin, accessibility toggle,
  *    uninstall dialog) is closed immediately.
  */
@@ -49,18 +58,39 @@ public class BlockerService extends AccessibilityService {
     private static final long CONTENT_CHECK_INTERVAL_MS = 250;
     private static final long TOAST_INTERVAL_MS = 2500;
     private static final int MAX_NODES = 600;
+    private static final long GATE_RELAUNCH_MS = 1500;
+    /** If the gate hasn't appeared by then (some phones block pop-ups), close the browser. */
+    private static final long GATE_FALLBACK_MS = 2000;
 
     private final Set<String> browsers = new HashSet<>();
     private long browsersLoadedAt = -BROWSER_REFRESH_MS;
     private long lastGuardCheck;
     private long lastToast;
     private String appName;
+    private long lastGateLaunch;
+    private final Handler handler = new Handler(Looper.getMainLooper());
+
+    private final BroadcastReceiver screenOff = new BroadcastReceiver() {
+        @Override public void onReceive(Context context, Intent intent) {
+            BrowserGate.revoke();
+        }
+    };
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
         appName = getString(R.string.app_name);
         refreshBrowsers();
+        registerReceiver(screenOff, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            unregisterReceiver(screenOff);
+        } catch (IllegalArgumentException ignored) {
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -69,14 +99,32 @@ public class BlockerService extends AccessibilityService {
         String pkg = event.getPackageName().toString();
         if (pkg.equals(getPackageName())) return;
 
+        boolean browser = isBrowser(pkg);
+
         // 1) Browser lock.
-        if (Prefs.isLocked(this) && isBrowser(pkg)) {
+        if (Prefs.isLocked(this) && browser) {
             performGlobalAction(GLOBAL_ACTION_HOME);
             toast("🔒 المتصفحات مقفولة… فاضل " + Prefs.formatRemaining(Prefs.remainingLockMs(this)));
             return;
         }
 
-        // 2) Uninstall / disable protection.
+        // 2) Gate on every browser open.
+        if (browser) {
+            if (!BrowserGate.hasPass(pkg) && pkg.equals(activeWindowPackage())) {
+                showGate(pkg);
+            }
+            return;
+        }
+        if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+                && !isPassThrough(pkg)) {
+            String active = activeWindowPackage();
+            if (active == null || !isBrowser(active)) {
+                // Left the browser (home screen, recents, another app): next open asks again.
+                BrowserGate.revoke();
+            }
+        }
+
+        // 3) Uninstall / disable protection.
         if (isGuardedPackage(pkg)) {
             long now = SystemClock.uptimeMillis();
             if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED
@@ -97,6 +145,45 @@ public class BlockerService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {}
+
+    private void showGate(String pkg) {
+        long now = SystemClock.uptimeMillis();
+        if (GateActivity.visible || now - lastGateLaunch < GATE_RELAUNCH_MS) return;
+        lastGateLaunch = now;
+        Intent i = new Intent(this, GateActivity.class)
+                .putExtra(GateActivity.EXTRA_PACKAGE, pkg)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+
+        handler.postDelayed(() -> {
+            if (!GateActivity.visible && !BrowserGate.hasPass(pkg)
+                    && pkg.equals(activeWindowPackage())) {
+                performGlobalAction(GLOBAL_ACTION_HOME);
+                toast("افتح إعدادات «صلي وركز» واسمح له يظهر فوق التطبيقات / يفتح نوافذ في الخلفية");
+            }
+        }, GATE_FALLBACK_MS);
+    }
+
+    private String activeWindowPackage() {
+        AccessibilityNodeInfo root = getRootInActiveWindow();
+        if (root == null || root.getPackageName() == null) return null;
+        return root.getPackageName().toString();
+    }
+
+    /** Windows that pop up over a browser without meaning you left it. */
+    private boolean isPassThrough(String pkg) {
+        if (pkg.equals("android") || pkg.equals("com.android.systemui")) return true;
+        String p = pkg.toLowerCase(java.util.Locale.ROOT);
+        if (p.contains("inputmethod") || p.contains("keyboard") || p.contains("permissioncontroller")) {
+            return true;
+        }
+        String ime = Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
+        if (ime != null) {
+            ComponentName cn = ComponentName.unflattenFromString(ime);
+            if (cn != null && cn.getPackageName().equals(pkg)) return true;
+        }
+        return false;
+    }
 
     private boolean isBrowser(String pkg) {
         long now = SystemClock.elapsedRealtime();

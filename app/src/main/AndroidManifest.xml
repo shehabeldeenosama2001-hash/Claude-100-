@@ -41,6 +41,14 @@
             android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
+        <activity
+            android:name=".GateActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.shehab.salliwarakez.gate"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+
         <service
             android:name=".BlockerService"
             android:exported="true"
