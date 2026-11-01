@@ -108,7 +108,7 @@ public class GateActivity extends Activity {
                 if (social) {
                     passed = true;
                     SocialGate.grant(this, browserPkg);
-                    finish(); // back to the app underneath, free for 10 minutes
+                    returnToApp(); // free for 10 minutes
                 } else {
                     showConfirm();
                 }
@@ -148,8 +148,7 @@ public class GateActivity extends Activity {
         if (tapsLeft <= 0) {
             passed = true;
             BrowserGate.grant(browserPkg);
-            // Finishing returns to the browser that is waiting underneath.
-            finish();
+            returnToApp();
             return;
         }
         updateConfirmButton();
@@ -163,6 +162,25 @@ public class GateActivity extends Activity {
 
     private void updateConfirmButton() {
         btnConfirm.setText("أيوه، متأكد  (" + Prefs.toArabicDigits(String.valueOf(tapsLeft)) + ")");
+    }
+
+    /**
+     * Close the gate and bring the app back. Some phones drop to the home screen
+     * when this screen closes, so the app is brought to the front explicitly
+     * (same as tapping its icon: it resumes where you were).
+     */
+    private void returnToApp() {
+        Intent launch = browserPkg == null ? null
+                : getPackageManager().getLaunchIntentForPackage(browserPkg);
+        if (launch != null) {
+            launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            try {
+                startActivity(launch);
+            } catch (RuntimeException ignored) {
+                // Fall back to whatever is underneath.
+            }
+        }
+        finish();
     }
 
     private void giveUp() {

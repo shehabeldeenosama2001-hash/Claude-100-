@@ -52,7 +52,7 @@ public class BlockerService extends AccessibilityService {
     ));
 
     private static final String[] GUARDED_HINTS = {
-            "settings", "packageinstaller", "securitycenter", "safecenter",
+            "settings", "securitycenter", "safecenter",
             "permissioncontroller", "systemmanager", "devicecare"
     };
 
@@ -74,7 +74,7 @@ public class BlockerService extends AccessibilityService {
 
     private final BroadcastReceiver screenOff = new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) {
-            BrowserGate.revoke();
+            BrowserGate.revokeNow();
         }
     };
 
@@ -188,7 +188,9 @@ public class BlockerService extends AccessibilityService {
     private boolean isPassThrough(String pkg) {
         if (pkg.equals("android") || pkg.equals("com.android.systemui")) return true;
         String p = pkg.toLowerCase(java.util.Locale.ROOT);
-        if (p.contains("inputmethod") || p.contains("keyboard") || p.contains("permissioncontroller")) {
+        if (p.contains("inputmethod") || p.contains("keyboard") || p.contains("permissioncontroller")
+                || p.contains("packageinstaller") || p.contains("providers.downloads")
+                || p.contains("documentsui")) {
             return true;
         }
         String ime = Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
