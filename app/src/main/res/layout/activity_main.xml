@@ -110,7 +110,41 @@
                 android:background="@drawable/btn_green"
                 android:text="فعّل الحماية من المسح"
                 android:textColor="#FFFFFFFF" />
+
+            <TextView
+                android:id="@+id/statusBattery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/ink"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnBattery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_green"
+                android:text="اسمح له يشتغل في الخلفية"
+                android:textColor="#FFFFFFFF" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="لو خدمة الحجب بتقفل لوحدها: فعّل «التشغيل التلقائي» للأبلكيشن، وفي «آخر التطبيقات» اسحب «صلي وركز» لتحت أو دوس على القفل 🔒 علشان الموبايل مايقفلهوش."
+            android:textColor="@color/muted"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btnAutoStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_outline"
+            android:text="افتح «التشغيل التلقائي»"
+            android:textColor="@color/ink" />
 
         <Button
             android:id="@+id/btnUninstall"

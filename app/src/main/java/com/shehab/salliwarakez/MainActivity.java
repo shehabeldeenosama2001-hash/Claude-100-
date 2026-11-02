@@ -17,8 +17,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private TextView lockStatus, statusA11y, statusAdmin, restrictedHint;
-    private Button btnLock, btnA11y, btnAdmin, btnRestricted, btnUninstall;
+    private TextView lockStatus, statusA11y, statusAdmin, statusBattery, restrictedHint;
+    private Button btnLock, btnA11y, btnAdmin, btnBattery, btnRestricted, btnUninstall;
     private View setupCard;
 
     private final Runnable tick = new Runnable() {
@@ -36,6 +36,8 @@ public class MainActivity extends Activity {
         lockStatus = findViewById(R.id.lockStatus);
         statusA11y = findViewById(R.id.statusA11y);
         statusAdmin = findViewById(R.id.statusAdmin);
+        statusBattery = findViewById(R.id.statusBattery);
+        btnBattery = findViewById(R.id.btnBattery);
         restrictedHint = findViewById(R.id.restrictedHint);
         btnLock = findViewById(R.id.btnLock);
         btnA11y = findViewById(R.id.btnA11y);
@@ -76,6 +78,15 @@ public class MainActivity extends Activity {
         });
 
         btnUninstall.setOnClickListener(v -> startActivity(new Intent(this, UnlockActivity.class)));
+        btnBattery.setOnClickListener(v -> KeepAlive.requestBatteryUnrestricted(this));
+        findViewById(R.id.btnAutoStart).setOnClickListener(v -> KeepAlive.openAutoStart(this));
+
+        // Lets the "صلي وركز شغّال" notification show, which keeps the service alive.
+        if (Build.VERSION.SDK_INT >= 33
+                && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                        != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
+        }
     }
 
     @Override
@@ -126,7 +137,13 @@ public class MainActivity extends Activity {
             btnAdmin.setVisibility(View.VISIBLE);
         }
 
-        setupCard.setVisibility(a11y && armed ? View.GONE : View.VISIBLE);
+        boolean battery = KeepAlive.isBatteryUnrestricted(this);
+        statusBattery.setText(battery
+                ? "٣. الشغل في الخلفية: ✅ مسموح"
+                : "٣. الشغل في الخلفية: ❌ الموبايل ممكن يقفل خدمة الحجب");
+        btnBattery.setVisibility(battery ? View.GONE : View.VISIBLE);
+
+        setupCard.setVisibility(a11y && armed && battery ? View.GONE : View.VISIBLE);
         btnUninstall.setVisibility(armed ? View.VISIBLE : View.GONE);
     }
 }

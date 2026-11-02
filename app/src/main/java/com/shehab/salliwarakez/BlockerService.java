@@ -70,6 +70,8 @@ public class BlockerService extends AccessibilityService {
     private long lastToast;
     private String appName;
     private long lastGateLaunch;
+    /** Class of the last full-screen window, e.g. "...StartupAppListActivity". */
+    private String lastWindowPkg = "", lastWindowClass = "";
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private final BroadcastReceiver screenOff = new BroadcastReceiver() {
@@ -84,6 +86,7 @@ public class BlockerService extends AccessibilityService {
         appName = getString(R.string.app_name);
         refreshBrowsers();
         registerReceiver(screenOff, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+        KeepAlive.startForeground(this);
     }
 
     @Override
@@ -100,6 +103,11 @@ public class BlockerService extends AccessibilityService {
         if (event == null || event.getPackageName() == null) return;
         String pkg = event.getPackageName().toString();
         if (pkg.equals(getPackageName())) return;
+        if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+                && event.getClassName() != null) {
+            lastWindowPkg = pkg;
+            lastWindowClass = event.getClassName().toString();
+        }
 
         boolean browser = isBrowser(pkg);
 
@@ -146,6 +154,7 @@ public class BlockerService extends AccessibilityService {
             }
             lastGuardCheck = now;
             if (!Prefs.isArmed(this)) return;
+            if (isKeepAliveScreen(pkg)) return;
 
             AccessibilityNodeInfo root = getRootInActiveWindow();
             if (root != null && containsText(root, appName, new int[]{0})) {
@@ -176,6 +185,17 @@ public class BlockerService extends AccessibilityService {
                 toast("افتح إعدادات «صلي وركز» واسمح له يظهر فوق التطبيقات / يفتح نوافذ في الخلفية");
             }
         }, GATE_FALLBACK_MS);
+    }
+
+    /**
+     * Battery / auto-start screens list this app too, but they can't switch the
+     * protection off, so they stay usable (needed to keep the app running).
+     */
+    private boolean isKeepAliveScreen(String pkg) {
+        if (!pkg.equals(lastWindowPkg)) return false;
+        String c = lastWindowClass.toLowerCase(java.util.Locale.ROOT);
+        return c.contains("battery") || c.contains("fuelgauge") || c.contains("startup")
+                || c.contains("autostart") || c.contains("autolaunch") || c.contains("powerusage");
     }
 
     private String activeWindowPackage() {
