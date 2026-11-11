@@ -87,6 +87,14 @@ public class BlockerService extends AccessibilityService {
         refreshBrowsers();
         registerReceiver(screenOff, new IntentFilter(Intent.ACTION_SCREEN_OFF));
         KeepAlive.startForeground(this);
+        Diagnostics.record(this, "connected", "ok");
+        Watchdog.check(this);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Diagnostics.record(this, "unbound", "system unbound the service");
+        return super.onUnbind(intent);
     }
 
     @Override
@@ -100,6 +108,18 @@ public class BlockerService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        // A crash here makes Android switch the service off, so never let one escape.
+        try {
+            handleEvent(event);
+        } catch (Throwable t) {
+            try {
+                Diagnostics.record(this, "caught", Diagnostics.stackTrace(t));
+            } catch (Throwable ignored) {
+            }
+        }
+    }
+
+    private void handleEvent(AccessibilityEvent event) {
         if (event == null || event.getPackageName() == null) return;
         String pkg = event.getPackageName().toString();
         if (pkg.equals(getPackageName())) return;

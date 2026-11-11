@@ -93,6 +93,11 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         handler.post(tick);
+        try {
+            ((TextView) findViewById(R.id.diagnostics)).setText(Diagnostics.report(this));
+        } catch (RuntimeException e) {
+            ((TextView) findViewById(R.id.diagnostics)).setText(String.valueOf(e));
+        }
     }
 
     @Override

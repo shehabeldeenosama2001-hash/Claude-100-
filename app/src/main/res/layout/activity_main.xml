@@ -154,5 +154,28 @@
             android:background="@drawable/btn_outline"
             android:text="عايز تمسح الأبلكيشن؟"
             android:textColor="@color/muted" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="🔧 تشخيص (صوّر الجزء ده وابعته لو الخدمة اتقفلت)"
+            android:textColor="@color/muted"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/diagnostics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/card"
+            android:fontFamily="monospace"
+            android:layoutDirection="ltr"
+            android:padding="12dp"
+            android:textColor="@color/muted"
+            android:textDirection="ltr"
+            android:textIsSelectable="true"
+            android:textSize="11sp" />
     </LinearLayout>
 </ScrollView>
