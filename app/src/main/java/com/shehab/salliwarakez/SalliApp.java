@@ -9,5 +9,6 @@ public class SalliApp extends Application {
         Diagnostics.installCrashRecorder(this);
         Watchdog.schedule(this);
         MonitorService.start(this);
+        Revive.schedule(this);
     }
 }

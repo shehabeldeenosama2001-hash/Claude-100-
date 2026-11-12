@@ -90,6 +90,10 @@
                 android:value="Self-control blocker backup engine that must keep running to block browsers and social apps." />
         </service>
 
+        <receiver
+            android:name=".Revive"
+            android:exported="false" />
+
         <service
             android:name=".Watchdog"
             android:exported="false"

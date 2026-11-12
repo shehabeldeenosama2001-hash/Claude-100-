@@ -21,7 +21,7 @@ import android.provider.Settings;
  * service in the foreground and opens the battery / auto-start settings.
  */
 final class KeepAlive {
-    private static final String CHANNEL = "keep_alive";
+    private static final String CHANNEL = "keep_alive_visible";
     private static final int NOTIFICATION_ID = 1;
 
     /** OEM auto-start / background managers, tried in order. */
@@ -44,9 +44,10 @@ final class KeepAlive {
     static void startForeground(Service service) {
         try {
             NotificationManager nm = service.getSystemService(NotificationManager.class);
+            if (nm != null) nm.deleteNotificationChannel("keep_alive"); // old hidden channel
             if (nm != null && nm.getNotificationChannel(CHANNEL) == null) {
                 NotificationChannel ch = new NotificationChannel(CHANNEL, "تشغيل صلي وركز",
-                        NotificationManager.IMPORTANCE_MIN);
+                        NotificationManager.IMPORTANCE_LOW);
                 ch.setShowBadge(false);
                 nm.createNotificationChannel(ch);
             }

@@ -41,6 +41,7 @@ public class MonitorService extends Service {
     private long lastQuery;
     private long lastGateLaunch;
     private long lastToast;
+    private long lastHeartbeat;
 
     // ---- static helpers ----
 
@@ -114,6 +115,7 @@ public class MonitorService extends Service {
         f.addAction(Intent.ACTION_USER_PRESENT);
         registerReceiver(screen, f);
         Diagnostics.record(this, "backup", "started");
+        Revive.schedule(this);
         PowerManager pm = getSystemService(PowerManager.class);
         if (pm == null || pm.isInteractive()) worker.post(poll);
     }
@@ -149,6 +151,11 @@ public class MonitorService extends Service {
     // ---- the actual work ----
 
     private void tick() {
+        long now = SystemClock.elapsedRealtime();
+        if (now - lastHeartbeat > 60_000) {
+            lastHeartbeat = now;
+            Diagnostics.record(this, "backup_seen", "alive");
+        }
         if (!isReady(this)) return;
         String pkg = currentForeground();
         if (pkg == null || pkg.equals(getPackageName())) return;
