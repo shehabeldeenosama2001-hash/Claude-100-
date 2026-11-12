@@ -16,6 +16,9 @@ final class Prefs {
     private static final String KEY_LOCK_UNTIL = "lock_until";
     private static final String KEY_COUNT = "phrase_count";
     private static final String KEY_UNINSTALL_ALLOWED = "uninstall_allowed";
+    private static final String KEY_GUARD_PAUSED_UNTIL = "guard_paused_until";
+    /** How long a permission button may open a guarded settings page. */
+    static final long GUARD_PAUSE_MS = 60 * 1000L;
 
     private Prefs() {}
 
@@ -53,6 +56,21 @@ final class Prefs {
 
     static void setUninstallAllowed(Context c, boolean allowed) {
         sp(c).edit().putBoolean(KEY_UNINSTALL_ALLOWED, allowed).apply();
+    }
+
+    /** Lets a permission button from the app open its settings page without the guard closing it. */
+    static void pauseGuard(Context c) {
+        sp(c).edit().putLong(KEY_GUARD_PAUSED_UNTIL, System.currentTimeMillis() + GUARD_PAUSE_MS).apply();
+    }
+
+    static void endGuardPause(Context c) {
+        sp(c).edit().remove(KEY_GUARD_PAUSED_UNTIL).apply();
+    }
+
+    static boolean isGuardPaused(Context c) {
+        long until = sp(c).getLong(KEY_GUARD_PAUSED_UNTIL, 0);
+        long now = System.currentTimeMillis();
+        return until > now && until - now <= GUARD_PAUSE_MS;
     }
 
     static ComponentName adminComponent(Context c) {

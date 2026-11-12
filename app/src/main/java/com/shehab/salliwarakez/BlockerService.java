@@ -162,7 +162,7 @@ public class BlockerService extends AccessibilityService {
             }
             lastGuardCheck = now;
             if (!Prefs.isArmed(this)) return;
-            if (isKeepAliveScreen(pkg)) return;
+            if (isKeepAliveScreen(pkg) || Prefs.isGuardPaused(this)) return;
 
             AccessibilityNodeInfo root = getRootInActiveWindow();
             if (root != null && containsText(root, appName, new int[]{0})) {

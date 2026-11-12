@@ -78,9 +78,16 @@ public class MainActivity extends Activity {
         });
 
         btnUninstall.setOnClickListener(v -> startActivity(new Intent(this, UnlockActivity.class)));
-        btnBattery.setOnClickListener(v -> KeepAlive.requestBatteryUnrestricted(this));
-        findViewById(R.id.btnAutoStart).setOnClickListener(v -> KeepAlive.openAutoStart(this));
+        btnBattery.setOnClickListener(v -> {
+            Prefs.pauseGuard(this);
+            KeepAlive.requestBatteryUnrestricted(this);
+        });
+        findViewById(R.id.btnAutoStart).setOnClickListener(v -> {
+            Prefs.pauseGuard(this);
+            KeepAlive.openAutoStart(this);
+        });
         findViewById(R.id.btnUsage).setOnClickListener(v -> {
+            Prefs.pauseGuard(this);
             Intent i = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             try {
                 startActivity(i);
@@ -89,6 +96,7 @@ public class MainActivity extends Activity {
             }
         });
         findViewById(R.id.btnOverlay).setOnClickListener(v -> {
+            Prefs.pauseGuard(this);
             Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + getPackageName()));
             try {
@@ -110,6 +118,8 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         handler.post(tick);
+        // Back in the app: any one-minute pause from a permission button ends now.
+        Prefs.endGuardPause(this);
         MonitorService.start(this);
         try {
             ((TextView) findViewById(R.id.diagnostics)).setText(Diagnostics.report(this));
