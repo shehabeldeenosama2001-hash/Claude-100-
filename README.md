@@ -33,6 +33,8 @@ After step 3, any Settings or installer screen showing the app (app info, access
 | Main screen with the lock button | `MainActivity.java` |
 | Gate shown on every browser open (5 phrases + 5 taps) | `GateActivity.java`, `BrowserGate.java` |
 | Facebook / Instagram / TikTok gate (5 phrases, 10-minute pass) | `SocialGate.java` |
+| Backup engine when the phone switches Accessibility off (usage stats + display over apps) | `MonitorService.java` |
+| Keep-alive, watchdog notification, diagnostics | `KeepAlive.java`, `Watchdog.java`, `Diagnostics.java` |
 | Type the phrase 100 times, paste blocked | `UnlockActivity.java` |
 
 ## Limits

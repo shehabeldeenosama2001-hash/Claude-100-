@@ -59,6 +59,9 @@ final class Diagnostics {
                 .append(Build.MANUFACTURER).append(' ').append(Build.MODEL).append('\n');
         appendIf(b, "Service on", p.getString("connected", null));
         appendIf(b, "Service off", p.getString("unbound", null));
+        appendIf(b, "Backup engine", p.getString("backup", null));
+        b.append("Backup ready: ").append(MonitorService.isReady(c))
+                .append(" • a11y running: ").append(BlockerService.running).append('\n');
         appendIf(b, "Error caught", p.getString("caught", null));
         appendIf(b, "Crash", p.getString("crash", null));
 

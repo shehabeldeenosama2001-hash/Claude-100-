@@ -8,5 +8,6 @@ public class SalliApp extends Application {
         super.onCreate();
         Diagnostics.installCrashRecorder(this);
         Watchdog.schedule(this);
+        MonitorService.start(this);
     }
 }

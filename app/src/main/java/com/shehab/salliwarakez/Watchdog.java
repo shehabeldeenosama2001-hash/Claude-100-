@@ -37,9 +37,11 @@ public class Watchdog extends JobService {
     }
 
     static void check(Context c) {
+        MonitorService.start(c);
         NotificationManager nm = c.getSystemService(NotificationManager.class);
         if (nm == null) return;
-        if (Prefs.isAccessibilityEnabled(c)) {
+        // Fine if either engine can do the job.
+        if (Prefs.isAccessibilityEnabled(c) || MonitorService.isReady(c)) {
             nm.cancel(NOTIFICATION_ID);
             return;
         }

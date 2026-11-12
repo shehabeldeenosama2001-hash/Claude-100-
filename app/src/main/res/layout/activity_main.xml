@@ -127,6 +127,41 @@
                 android:background="@drawable/btn_green"
                 android:text="اسمح له يشتغل في الخلفية"
                 android:textColor="#FFFFFFFF" />
+
+            <TextView
+                android:id="@+id/statusBackup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/ink"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/backupHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="بيشتغل بداله لو الموبايل قفل خدمة الحجب. محتاج صلاحيتين:"
+                android:textColor="@color/muted"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnUsage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_green"
+                android:text="الوصول لبيانات الاستخدام"
+                android:textColor="#FFFFFFFF" />
+
+            <Button
+                android:id="@+id/btnOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_green"
+                android:text="الظهور فوق التطبيقات الأخرى"
+                android:textColor="#FFFFFFFF" />
         </LinearLayout>
 
         <TextView

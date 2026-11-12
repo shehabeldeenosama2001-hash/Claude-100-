@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 
         // The main button: no dialog, no question — lock immediately.
         btnLock.setOnClickListener(v -> {
-            if (!Prefs.isAccessibilityEnabled(this)) {
+            if (!Prefs.isAccessibilityEnabled(this) && !MonitorService.isReady(this)) {
                 Toast.makeText(this, "فعّل «خدمة الحجب» الأول من الإعداد اللي تحت 👇", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -80,6 +80,23 @@ public class MainActivity extends Activity {
         btnUninstall.setOnClickListener(v -> startActivity(new Intent(this, UnlockActivity.class)));
         btnBattery.setOnClickListener(v -> KeepAlive.requestBatteryUnrestricted(this));
         findViewById(R.id.btnAutoStart).setOnClickListener(v -> KeepAlive.openAutoStart(this));
+        findViewById(R.id.btnUsage).setOnClickListener(v -> {
+            Intent i = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            try {
+                startActivity(i);
+            } catch (RuntimeException e) {
+                Toast.makeText(this, "افتح الإعدادات ← الوصول لبيانات الاستخدام", Toast.LENGTH_LONG).show();
+            }
+        });
+        findViewById(R.id.btnOverlay).setOnClickListener(v -> {
+            Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            try {
+                startActivity(i);
+            } catch (RuntimeException e) {
+                startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION));
+            }
+        });
 
         // Lets the "صلي وركز شغّال" notification show, which keeps the service alive.
         if (Build.VERSION.SDK_INT >= 33
@@ -93,6 +110,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         handler.post(tick);
+        MonitorService.start(this);
         try {
             ((TextView) findViewById(R.id.diagnostics)).setText(Diagnostics.report(this));
         } catch (RuntimeException e) {
@@ -148,7 +166,16 @@ public class MainActivity extends Activity {
                 : "٣. الشغل في الخلفية: ❌ الموبايل ممكن يقفل خدمة الحجب");
         btnBattery.setVisibility(battery ? View.GONE : View.VISIBLE);
 
-        setupCard.setVisibility(a11y && armed && battery ? View.GONE : View.VISIBLE);
+        boolean usage = MonitorService.hasUsageAccess(this);
+        boolean overlay = MonitorService.canShowOverApps(this);
+        ((TextView) findViewById(R.id.statusBackup)).setText(usage && overlay
+                ? "٤. الحماية الاحتياطية: ✅ جاهزة"
+                : "٤. الحماية الاحتياطية: ❌ ناقصها صلاحيات");
+        findViewById(R.id.backupHint).setVisibility(usage && overlay ? View.GONE : View.VISIBLE);
+        findViewById(R.id.btnUsage).setVisibility(usage ? View.GONE : View.VISIBLE);
+        findViewById(R.id.btnOverlay).setVisibility(overlay ? View.GONE : View.VISIBLE);
+
+        setupCard.setVisibility(a11y && armed && battery && usage && overlay ? View.GONE : View.VISIBLE);
         btnUninstall.setVisibility(armed ? View.VISIBLE : View.GONE);
     }
 }

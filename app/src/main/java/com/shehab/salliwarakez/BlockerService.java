@@ -35,28 +35,12 @@ import java.util.Set;
  */
 public class BlockerService extends AccessibilityService {
 
-    private static final Set<String> KNOWN_BROWSERS = new HashSet<>(Arrays.asList(
-            "com.android.chrome", "com.chrome.beta", "com.chrome.dev", "com.chrome.canary",
-            "org.chromium.chrome", "com.google.android.apps.chrome",
-            "org.mozilla.firefox", "org.mozilla.firefox_beta", "org.mozilla.fenix",
-            "org.mozilla.focus", "org.mozilla.klar",
-            "com.opera.browser", "com.opera.browser.beta", "com.opera.mini.native", "com.opera.gx",
-            "com.microsoft.emmx", "com.brave.browser", "com.duckduckgo.mobile.android",
-            "com.sec.android.app.sbrowser", "com.sec.android.app.sbrowser.beta",
-            "com.UCMobile.intl", "com.uc.browser.en", "com.mi.globalbrowser", "com.android.browser",
-            "com.huawei.browser", "com.heytap.browser", "com.coloros.browser", "com.vivo.browser",
-            "com.kiwibrowser.browser", "com.yandex.browser", "com.vivaldi.browser",
-            "com.ecosia.android", "mark.via.gp", "com.cloudmosa.puffinFree",
-            "org.torproject.torbrowser", "com.transsion.phoenix", "com.qwant.liberty",
-            "acr.browser.lightning", "com.stoutner.privacybrowser.standard"
-    ));
 
     private static final String[] GUARDED_HINTS = {
             "settings", "securitycenter", "safecenter",
             "permissioncontroller", "systemmanager", "devicecare"
     };
 
-    private static final long BROWSER_REFRESH_MS = 5 * 60 * 1000L;
     private static final long CONTENT_CHECK_INTERVAL_MS = 250;
     private static final long TOAST_INTERVAL_MS = 2500;
     private static final int MAX_NODES = 600;
@@ -64,10 +48,11 @@ public class BlockerService extends AccessibilityService {
     /** If the gate hasn't appeared by then (some phones block pop-ups), close the browser. */
     private static final long GATE_FALLBACK_MS = 2000;
 
-    private final Set<String> browsers = new HashSet<>();
-    private long browsersLoadedAt = -BROWSER_REFRESH_MS;
     private long lastGuardCheck;
     private long lastToast;
+    /** True while Android has this service connected (the backup engine stays idle then). */
+    static volatile boolean running;
+
     private String appName;
     private long lastGateLaunch;
     /** Class of the last full-screen window, e.g. "...StartupAppListActivity". */
@@ -84,7 +69,8 @@ public class BlockerService extends AccessibilityService {
     protected void onServiceConnected() {
         super.onServiceConnected();
         appName = getString(R.string.app_name);
-        refreshBrowsers();
+        running = true;
+        MonitorService.start(this);
         registerReceiver(screenOff, new IntentFilter(Intent.ACTION_SCREEN_OFF));
         KeepAlive.startForeground(this);
         Diagnostics.record(this, "connected", "ok");
@@ -93,12 +79,14 @@ public class BlockerService extends AccessibilityService {
 
     @Override
     public boolean onUnbind(Intent intent) {
+        running = false;
         Diagnostics.record(this, "unbound", "system unbound the service");
         return super.onUnbind(intent);
     }
 
     @Override
     public void onDestroy() {
+        running = false;
         try {
             unregisterReceiver(screenOff);
         } catch (IllegalArgumentException ignored) {
@@ -208,14 +196,15 @@ public class BlockerService extends AccessibilityService {
     }
 
     /**
-     * Battery / auto-start screens list this app too, but they can't switch the
+     * Battery / auto-start / usage-access / overlay screens list this app too, but they can't switch the
      * protection off, so they stay usable (needed to keep the app running).
      */
     private boolean isKeepAliveScreen(String pkg) {
         if (!pkg.equals(lastWindowPkg)) return false;
         String c = lastWindowClass.toLowerCase(java.util.Locale.ROOT);
         return c.contains("battery") || c.contains("fuelgauge") || c.contains("startup")
-                || c.contains("autostart") || c.contains("autolaunch") || c.contains("powerusage");
+                || c.contains("autostart") || c.contains("autolaunch") || c.contains("powerusage")
+                || c.contains("usage") || c.contains("overlay");
     }
 
     private String activeWindowPackage() {
@@ -224,46 +213,12 @@ public class BlockerService extends AccessibilityService {
         return root.getPackageName().toString();
     }
 
-    /** Windows that pop up over a browser without meaning you left it. */
     private boolean isPassThrough(String pkg) {
-        if (pkg.equals("android") || pkg.equals("com.android.systemui")) return true;
-        String p = pkg.toLowerCase(java.util.Locale.ROOT);
-        if (p.contains("inputmethod") || p.contains("keyboard") || p.contains("permissioncontroller")
-                || p.contains("packageinstaller") || p.contains("providers.downloads")
-                || p.contains("documentsui")) {
-            return true;
-        }
-        String ime = Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
-        if (ime != null) {
-            ComponentName cn = ComponentName.unflattenFromString(ime);
-            if (cn != null && cn.getPackageName().equals(pkg)) return true;
-        }
-        return false;
+        return Apps.isPassThrough(this, pkg);
     }
 
     private boolean isBrowser(String pkg) {
-        long now = SystemClock.elapsedRealtime();
-        if (now - browsersLoadedAt > BROWSER_REFRESH_MS) refreshBrowsers();
-        return browsers.contains(pkg);
-    }
-
-    /** Known browsers + whatever installed app can open a plain web link. */
-    private void refreshBrowsers() {
-        browsersLoadedAt = SystemClock.elapsedRealtime();
-        browsers.clear();
-        browsers.addAll(KNOWN_BROWSERS);
-        PackageManager pm = getPackageManager();
-        for (String url : new String[]{"http://example.com", "https://example.com"}) {
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            i.addCategory(Intent.CATEGORY_BROWSABLE);
-            List<ResolveInfo> list = pm.queryIntentActivities(i, PackageManager.MATCH_ALL);
-            for (ResolveInfo ri : list) {
-                if (ri.activityInfo != null) browsers.add(ri.activityInfo.packageName);
-            }
-        }
-        browsers.remove(getPackageName());
-        // The system "choose an app" sheet is not a browser.
-        browsers.remove("android");
+        return Apps.isBrowser(this, pkg);
     }
 
     private static boolean isGuardedPackage(String pkg) {
