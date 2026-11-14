@@ -73,6 +73,33 @@ final class Prefs {
         return until > now && until - now <= GUARD_PAUSE_MS;
     }
 
+    // ---- «صلي على النبي» counter ----
+
+    private static String today() {
+        return new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(new java.util.Date());
+    }
+
+    /** Called every time the phrase is typed correctly anywhere in the app. */
+    static void countSalawat(Context c) {
+        SharedPreferences p = sp(c);
+        String day = today();
+        int todayCount = day.equals(p.getString("salawat_day", "")) ? p.getInt("salawat_today", 0) : 0;
+        p.edit()
+                .putLong("salawat_total", p.getLong("salawat_total", 0) + 1)
+                .putString("salawat_day", day)
+                .putInt("salawat_today", todayCount + 1)
+                .apply();
+    }
+
+    static long salawatTotal(Context c) {
+        return sp(c).getLong("salawat_total", 0);
+    }
+
+    static int salawatToday(Context c) {
+        SharedPreferences p = sp(c);
+        return today().equals(p.getString("salawat_day", "")) ? p.getInt("salawat_today", 0) : 0;
+    }
+
     static ComponentName adminComponent(Context c) {
         return new ComponentName(c, AdminReceiver.class);
     }

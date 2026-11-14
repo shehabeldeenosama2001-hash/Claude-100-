@@ -21,6 +21,19 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/salawatCounter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/card"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:padding="16dp"
+            android:textColor="@color/green"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/lockStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

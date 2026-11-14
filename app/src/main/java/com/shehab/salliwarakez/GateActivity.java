@@ -100,6 +100,7 @@ public class GateActivity extends Activity {
     private void submit() {
         if (PhraseInput.normalize(input.getText()).isEmpty()) return;
         if (PhraseInput.matches(input.getText())) {
+            Prefs.countSalawat(this);
             phrases++;
             input.setText("");
             feedback.setText("اللهم صلِّ وسلم على نبينا محمد ﷺ");

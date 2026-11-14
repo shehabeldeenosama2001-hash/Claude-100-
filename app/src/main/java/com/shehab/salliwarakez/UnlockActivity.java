@@ -59,6 +59,7 @@ public class UnlockActivity extends Activity {
         if (PhraseInput.normalize(input.getText()).isEmpty()) return;
 
         if (PhraseInput.matches(input.getText())) {
+            Prefs.countSalawat(this);
             int n = Prefs.phraseCount(this) + 1;
             Prefs.setPhraseCount(this, n);
             input.setText("");

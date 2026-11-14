@@ -166,6 +166,10 @@ public class MainActivity extends Activity {
     }
 
     private void refresh() {
+        ((TextView) findViewById(R.id.salawatCounter)).setText(
+                "🤍 صليت على النبي ﷺ\n"
+                        + Prefs.toArabicDigits(String.valueOf(Prefs.salawatTotal(this))) + " مرة"
+                        + "\nالنهارده: " + Prefs.toArabicDigits(String.valueOf(Prefs.salawatToday(this))));
         boolean a11y = Prefs.isAccessibilityEnabled(this);
         boolean admin = Prefs.isAdminActive(this);
         boolean armed = Prefs.isArmed(this);
