@@ -162,6 +162,41 @@
                 android:background="@drawable/btn_green"
                 android:text="الظهور فوق التطبيقات الأخرى"
                 android:textColor="#FFFFFFFF" />
+
+            <TextView
+                android:id="@+id/statusVpn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/ink"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/vpnHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="الـ VPN ده مش بيلمس النت بتاعك، شغلته إنه يخلي الموبايل مايقفلش الأبلكيشن. بعد ما تشغّله: افتح إعدادات الـ VPN ← ⚙ جنب «صلي وركز» ← شغّل «Always-on VPN». ⚠️ ماتشغّلش «Block connections without VPN»."
+                android:textColor="@color/muted"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnVpn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_green"
+                android:text="شغّل الـ VPN"
+                android:textColor="#FFFFFFFF" />
+
+            <Button
+                android:id="@+id/btnVpnSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_outline"
+                android:text="افتح إعدادات الـ VPN (Always-on)"
+                android:textColor="@color/ink" />
         </LinearLayout>
 
         <TextView

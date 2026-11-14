@@ -29,6 +29,7 @@ public class Revive extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         MonitorService.start(context);
+        KeepVpnService.start(context);
         Watchdog.check(context);
         schedule(context);
     }

@@ -90,6 +90,19 @@
                 android:value="Self-control blocker backup engine that must keep running to block browsers and social apps." />
         </service>
 
+        <service
+            android:name=".KeepVpnService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Local VPN that keeps the self-control blocker alive and cuts browser internet during a lock." />
+        </service>
+
         <receiver
             android:name=".Revive"
             android:exported="false" />

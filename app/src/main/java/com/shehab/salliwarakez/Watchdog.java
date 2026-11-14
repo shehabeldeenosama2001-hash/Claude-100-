@@ -38,6 +38,7 @@ public class Watchdog extends JobService {
 
     static void check(Context c) {
         MonitorService.start(c);
+        KeepVpnService.start(c);
         NotificationManager nm = c.getSystemService(NotificationManager.class);
         if (nm == null) return;
         // Fine if either engine can do the job.

@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
+    private static final int REQUEST_VPN = 77;
+
     private final Handler handler = new Handler(Looper.getMainLooper());
     private TextView lockStatus, statusA11y, statusAdmin, statusBattery, restrictedHint;
     private Button btnLock, btnA11y, btnAdmin, btnBattery, btnRestricted, btnUninstall;
@@ -53,6 +55,7 @@ public class MainActivity extends Activity {
                 return;
             }
             Prefs.startLock(this);
+            KeepVpnService.start(this); // switches the tunnel to cut browser internet
             refresh();
             Toast.makeText(this, "🔒 اتقفلت كل المتصفحات ١٠ دقايق", Toast.LENGTH_SHORT).show();
         });
@@ -95,6 +98,23 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, "افتح الإعدادات ← الوصول لبيانات الاستخدام", Toast.LENGTH_LONG).show();
             }
         });
+        findViewById(R.id.btnVpn).setOnClickListener(v -> {
+            Intent consent = android.net.VpnService.prepare(this);
+            if (consent != null) {
+                startActivityForResult(consent, REQUEST_VPN);
+            } else {
+                KeepVpnService.start(this);
+                handler.postDelayed(this::refresh, 800);
+            }
+        });
+        findViewById(R.id.btnVpnSettings).setOnClickListener(v -> {
+            Prefs.pauseGuard(this);
+            try {
+                startActivity(new Intent(Settings.ACTION_VPN_SETTINGS));
+            } catch (RuntimeException e) {
+                Toast.makeText(this, "افتح الإعدادات ← VPN", Toast.LENGTH_LONG).show();
+            }
+        });
         findViewById(R.id.btnOverlay).setOnClickListener(v -> {
             Prefs.pauseGuard(this);
             Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -115,12 +135,23 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_VPN && resultCode == RESULT_OK) {
+            KeepVpnService.start(this);
+            handler.postDelayed(this::refresh, 800);
+            Toast.makeText(this, "✅ اتشغّل. دلوقتي دوس «افتح إعدادات الـ VPN» وشغّل Always-on", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         handler.post(tick);
         // Back in the app: any one-minute pause from a permission button ends now.
         Prefs.endGuardPause(this);
         MonitorService.start(this);
+        KeepVpnService.start(this);
         try {
             ((TextView) findViewById(R.id.diagnostics)).setText(Diagnostics.report(this));
         } catch (RuntimeException e) {
@@ -185,7 +216,14 @@ public class MainActivity extends Activity {
         findViewById(R.id.btnUsage).setVisibility(usage ? View.GONE : View.VISIBLE);
         findViewById(R.id.btnOverlay).setVisibility(overlay ? View.GONE : View.VISIBLE);
 
-        setupCard.setVisibility(a11y && armed && battery && usage && overlay ? View.GONE : View.VISIBLE);
+        boolean vpn = KeepVpnService.isAllowed(this) && KeepVpnService.running;
+        ((TextView) findViewById(R.id.statusVpn)).setText(vpn
+                ? "٥. الـ VPN (علشان مايتقفلش): ✅ شغّال"
+                : "٥. الـ VPN (علشان مايتقفلش): ❌ مقفول");
+        findViewById(R.id.btnVpn).setVisibility(vpn ? View.GONE : View.VISIBLE);
+
+        setupCard.setVisibility(a11y && armed && battery && usage && overlay && vpn
+                ? View.GONE : View.VISIBLE);
         btnUninstall.setVisibility(armed ? View.VISIBLE : View.GONE);
     }
 }

@@ -10,5 +10,6 @@ public class SalliApp extends Application {
         Watchdog.schedule(this);
         MonitorService.start(this);
         Revive.schedule(this);
+        KeepVpnService.start(this);
     }
 }
