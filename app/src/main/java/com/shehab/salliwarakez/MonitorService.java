@@ -33,6 +33,9 @@ public class MonitorService extends Service {
     private static final long GATE_FALLBACK_MS = 2000;
     private static final long TOAST_INTERVAL_MS = 2500;
 
+    /** True while the backup engine is alive in this process. */
+    static volatile boolean running;
+
     private HandlerThread thread;
     private Handler worker;
     private final Handler main = new Handler(Looper.getMainLooper());
@@ -114,6 +117,7 @@ public class MonitorService extends Service {
         f.addAction(Intent.ACTION_SCREEN_ON);
         f.addAction(Intent.ACTION_USER_PRESENT);
         registerReceiver(screen, f);
+        running = true;
         Diagnostics.record(this, "backup", "started");
         Revive.schedule(this);
         PowerManager pm = getSystemService(PowerManager.class);
@@ -128,6 +132,7 @@ public class MonitorService extends Service {
 
     @Override
     public void onDestroy() {
+        running = false;
         try {
             unregisterReceiver(screen);
         } catch (IllegalArgumentException ignored) {

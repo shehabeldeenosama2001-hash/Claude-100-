@@ -62,6 +62,7 @@ final class Diagnostics {
         appendIf(b, "Backup engine", p.getString("backup", null));
         appendIf(b, "Backup last seen", p.getString("backup_seen", null));
         appendIf(b, "VPN", p.getString("vpn", null));
+        appendIf(b, "Came back by", p.getString("revived", null));
         b.append("Backup ready: ").append(MonitorService.isReady(c))
                 .append(" • a11y running: ").append(BlockerService.running).append('\n');
         appendIf(b, "Error caught", p.getString("caught", null));

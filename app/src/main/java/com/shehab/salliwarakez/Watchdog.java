@@ -20,6 +20,8 @@ import android.provider.Settings;
  */
 public class Watchdog extends JobService {
     private static final int JOB_ID = 42;
+    /** One-shot job that runs once the internet is back (power-saving modes turn data off). */
+    private static final int NETWORK_JOB_ID = 43;
     private static final String CHANNEL = "watchdog";
     private static final int NOTIFICATION_ID = 2;
 
@@ -29,6 +31,21 @@ public class Watchdog extends JobService {
             if (js == null || js.getPendingJob(JOB_ID) != null) return;
             JobInfo job = new JobInfo.Builder(JOB_ID, new ComponentName(c, Watchdog.class))
                     .setPeriodic(15 * 60 * 1000L)
+                    .setPersisted(true)
+                    .build();
+            js.schedule(job);
+        } catch (RuntimeException ignored) {
+        }
+        scheduleNetworkJob(c, false);
+    }
+
+    static void scheduleNetworkJob(Context c, boolean replace) {
+        try {
+            JobScheduler js = c.getSystemService(JobScheduler.class);
+            if (js == null || (!replace && js.getPendingJob(NETWORK_JOB_ID) != null)) return;
+            JobInfo job = new JobInfo.Builder(NETWORK_JOB_ID, new ComponentName(c, Watchdog.class))
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setMinimumLatency(3 * 60 * 1000L)
                     .setPersisted(true)
                     .build();
             js.schedule(job);
@@ -68,7 +85,15 @@ public class Watchdog extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters params) {
+        boolean wasDown = !BlockerService.running && !MonitorService.running;
+        if (wasDown) {
+            Diagnostics.record(this, "revived", params.getJobId() == NETWORK_JOB_ID ? "network job" : "periodic job");
+        }
         check(this);
+        if (params.getJobId() == NETWORK_JOB_ID) {
+            // Re-arm for the next time (e.g. after leaving power-saving mode again).
+            scheduleNetworkJob(this, true);
+        }
         return false;
     }
 
@@ -81,7 +106,9 @@ public class Watchdog extends JobService {
     public static class BootReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Diagnostics.record(context, "revived", String.valueOf(intent.getAction()));
             schedule(context);
+            Revive.schedule(context);
             check(context);
         }
     }

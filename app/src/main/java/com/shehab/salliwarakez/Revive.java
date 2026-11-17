@@ -28,6 +28,9 @@ public class Revive extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (!BlockerService.running && !MonitorService.running) {
+            Diagnostics.record(context, "revived", "alarm");
+        }
         MonitorService.start(context);
         KeepVpnService.start(context);
         Watchdog.check(context);
