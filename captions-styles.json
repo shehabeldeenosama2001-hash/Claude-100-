@@ -1,0 +1,525 @@
+{
+  "source": "https://captions.ai (scraped 2026-11-21)",
+  "styles": [
+    {
+      "id": "bloom",
+      "name": "Bloom",
+      "description": "A soft, dewy aesthetic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/dd1df6c5-ae37-4ed9-b3e2-2604ee8bd4cc.jpg",
+      "categories": [
+        "Trending",
+        "New",
+        "Lifestyle"
+      ],
+      "url": "https://captions.ai/styles/bloom"
+    },
+    {
+      "id": "elevate",
+      "name": "Elevate",
+      "description": "A premium, refined aesthetic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/0570cd9e-4714-4bfb-94fc-95b3d9445804.png",
+      "categories": [
+        "Trending",
+        "Lifestyle",
+        "Minimal"
+      ],
+      "url": "https://captions.ai/styles/elevate"
+    },
+    {
+      "id": "ember",
+      "name": "Ember",
+      "description": "Warm, golden-hour tones.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/ember_thumbnail.png",
+      "categories": [
+        "Trending",
+        "Entertainment",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/ember"
+    },
+    {
+      "id": "ignite",
+      "name": "Ignite",
+      "description": "Bold, electric edits.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/ignite_thumbnail.jpeg",
+      "categories": [
+        "Trending",
+        "New",
+        "Bold",
+        "Business",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/ignite"
+    },
+    {
+      "id": "impact",
+      "name": "Impact II",
+      "description": "Punchy and dynamic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/0af9e8c8-e6ff-4884-9429-09efdc1a55d5.png",
+      "categories": [
+        "Trending",
+        "Bold",
+        "Business",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/impact"
+    },
+    {
+      "id": "paper",
+      "name": "Paper II",
+      "description": "Moody literary vibes.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/a0623aad-f503-4205-bb8d-c859dcd16ec6.jpeg",
+      "categories": [
+        "Trending",
+        "Educational",
+        "Lifestyle",
+        "Polished"
+      ],
+      "url": "https://captions.ai/styles/paper"
+    },
+    {
+      "id": "prime",
+      "name": "Prime",
+      "description": "Futuristic and modern.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/prime_thumbnail.jpeg",
+      "categories": [
+        "Trending",
+        "Business",
+        "Minimal"
+      ],
+      "url": "https://captions.ai/styles/prime"
+    },
+    {
+      "id": "sketch",
+      "name": "Sketch",
+      "description": "Playful and artistic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/sketch_thumbnail.jpg",
+      "categories": [
+        "Trending",
+        "Business",
+        "Lifestyle",
+        "Polished"
+      ],
+      "url": "https://captions.ai/styles/sketch"
+    },
+    {
+      "id": "sonnet",
+      "name": "Sonnet",
+      "description": "Soft, poetic style.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/ai_edit_sonnet_thumbnail.png",
+      "categories": [
+        "Trending",
+        "Minimal",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/sonnet"
+    },
+    {
+      "id": "volt",
+      "name": "Volt",
+      "description": "Vivid and electric.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/c60d62c8-cf45-4101-8f22-30c02d278a3d.png",
+      "categories": [
+        "Trending",
+        "Bold",
+        "Business"
+      ],
+      "url": "https://captions.ai/styles/volt"
+    },
+    {
+      "id": "y2k",
+      "name": "Y2K",
+      "description": "That digicam aesthetic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/7f4dd0f8-4c7f-4d2f-8c19-59adaff2fa42.png",
+      "categories": [
+        "Trending",
+        "New",
+        "Bold",
+        "Entertainment"
+      ],
+      "url": "https://captions.ai/styles/y2k"
+    },
+    {
+      "id": "chalk",
+      "name": "Chalk",
+      "description": "A hand-drawn, tactile feel.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/3608aa00-5863-48f9-905e-76401b71deba.png",
+      "categories": [
+        "New"
+      ],
+      "url": "https://captions.ai/styles/chalk"
+    },
+    {
+      "id": "evo",
+      "name": "Evo",
+      "description": "Sharp professional style.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/533ec3f8-02e7-482f-bb80-269629ea7007.png",
+      "categories": [
+        "New",
+        "Business",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/evo"
+    },
+    {
+      "id": "focus",
+      "name": "Focus",
+      "description": "Built to convert.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/608c0701-5f87-455a-afe7-89590c3bd2a8.png",
+      "categories": [
+        "New",
+        "Business"
+      ],
+      "url": "https://captions.ai/styles/focus"
+    },
+    {
+      "id": "lift",
+      "name": "Lift",
+      "description": "Corporate and clean.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/d6faf46e-8929-4256-b81c-326dcda0023a.png",
+      "categories": [
+        "New",
+        "Business"
+      ],
+      "url": "https://captions.ai/styles/lift"
+    },
+    {
+      "id": "linen",
+      "name": "Linen",
+      "description": "Calm and elevated.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/96e3a260-d9b6-47f3-9b45-b14db1828b59.png",
+      "categories": [
+        "New",
+        "Lifestyle"
+      ],
+      "url": "https://captions.ai/styles/linen"
+    },
+    {
+      "id": "prism-pro",
+      "name": "Prism Pro",
+      "description": "Bright, minimal aesthetic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/0806be9e-d0b3-4c0f-8308-263e461fe9f8.png",
+      "categories": [
+        "New",
+        "Business"
+      ],
+      "url": "https://captions.ai/styles/prism-pro"
+    },
+    {
+      "id": "stack",
+      "name": "Stack",
+      "description": "Clean, analytical edits.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/f62a5f32-f1eb-4975-9445-c7ced3a81e33.jpg",
+      "categories": [
+        "New",
+        "Business"
+      ],
+      "url": "https://captions.ai/styles/stack"
+    },
+    {
+      "id": "form",
+      "name": "Form",
+      "description": "Bold and athletic, for sports and motivation.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/113cd4b0-7e6d-4aed-89a4-5f01639af30f.jpg",
+      "categories": [
+        "Bold",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/form"
+    },
+    {
+      "id": "grit",
+      "name": "Grit",
+      "description": "Tough, athletic style.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/ai_edit_grit_thumbnail.png",
+      "categories": [
+        "Bold",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/grit"
+    },
+    {
+      "id": "pulse",
+      "name": "Pulse",
+      "description": "Sleek, dark aesthetic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/thumbnails/f7d07989-7dc9-42a1-8e90-8f083fc85e67.jpeg",
+      "categories": [
+        "Bold"
+      ],
+      "url": "https://captions.ai/styles/pulse"
+    },
+    {
+      "id": "rocket",
+      "name": "Rocket",
+      "description": "Hype energy with gaming influence.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/ai_edit_rocket_thumbnail.png",
+      "categories": [
+        "Bold"
+      ],
+      "url": "https://captions.ai/styles/rocket"
+    },
+    {
+      "id": "velocity",
+      "name": "Velocity",
+      "description": "Bold, kinetic style.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/velocity_thumbnail.jpeg",
+      "categories": [
+        "Bold",
+        "Business"
+      ],
+      "url": "https://captions.ai/styles/velocity"
+    },
+    {
+      "id": "blueprint",
+      "name": "Blueprint",
+      "description": "An organized, clean aesthetic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/blueprint_thumbnail.jpeg",
+      "categories": [
+        "Business",
+        "Educational",
+        "Polished"
+      ],
+      "url": "https://captions.ai/styles/blueprint"
+    },
+    {
+      "id": "growth",
+      "name": "Growth",
+      "description": "Data-driven edits for business content.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/growth-thumbnail.jpeg",
+      "categories": [
+        "Business"
+      ],
+      "url": "https://captions.ai/styles/growth"
+    },
+    {
+      "id": "magazine",
+      "name": "Magazine",
+      "description": "Curated, high-fashion aesthetic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/thumbnails/d0f119e5-751e-48c7-ab6b-afb8dfe5278c.jpeg",
+      "categories": [
+        "Business",
+        "Lifestyle",
+        "Polished"
+      ],
+      "url": "https://captions.ai/styles/magazine"
+    },
+    {
+      "id": "align",
+      "name": "Align",
+      "description": "Polished, for luxury edits.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/align_thumbnail_1.png",
+      "categories": [
+        "Educational",
+        "Minimal",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/align"
+    },
+    {
+      "id": "rebel",
+      "name": "Rebel",
+      "description": "Raw and grungy.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/rebel_thumbnail.JPG",
+      "categories": [
+        "Educational",
+        "Polished"
+      ],
+      "url": "https://captions.ai/styles/rebel"
+    },
+    {
+      "id": "recess",
+      "name": "Recess",
+      "description": "Light, spacious edits.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/recess-thumbnail.jpeg",
+      "categories": [
+        "Educational",
+        "Minimal",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/recess"
+    },
+    {
+      "id": "vinyl",
+      "name": "Vinyl II",
+      "description": "Retro 80s aesthetic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/vinyl_ii_thumbnail.jpeg",
+      "categories": [
+        "Educational",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/vinyl"
+    },
+    {
+      "id": "zine",
+      "name": "Zine",
+      "description": "Crafty, playful energy.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/zine_thumbnail.png",
+      "categories": [
+        "Educational",
+        "Lifestyle",
+        "Polished"
+      ],
+      "url": "https://captions.ai/styles/zine"
+    },
+    {
+      "id": "analog",
+      "name": "Analog",
+      "description": "Retro and nostalgic.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/0dedf9d4-f2bb-4b6f-b297-410d5f0a77fa.png",
+      "categories": [
+        "Entertainment"
+      ],
+      "url": "https://captions.ai/styles/analog"
+    },
+    {
+      "id": "cinematic",
+      "name": "Cinematic II",
+      "description": "Film-quality details for rich edits.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/8d817202-7480-42df-aedd-363686fa9fe5.png",
+      "categories": [
+        "Entertainment"
+      ],
+      "url": "https://captions.ai/styles/cinematic"
+    },
+    {
+      "id": "film",
+      "name": "Film",
+      "description": "Moody and textured.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/film_thumbnail.JPG",
+      "categories": [
+        "Entertainment"
+      ],
+      "url": "https://captions.ai/styles/film"
+    },
+    {
+      "id": "kai",
+      "name": "Kai",
+      "description": "Soft, aura glow.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/ai-edit_kai_thumbnail.png",
+      "categories": [
+        "Entertainment",
+        "Motivation"
+      ],
+      "url": "https://captions.ai/styles/kai"
+    },
+    {
+      "id": "neon",
+      "name": "Neon",
+      "description": "Vibrant neon style.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/neon_thumbnail.jpeg",
+      "categories": [
+        "Entertainment"
+      ],
+      "url": "https://captions.ai/styles/neon"
+    },
+    {
+      "id": "story",
+      "name": "Story",
+      "description": "Minimal edits for focused storytelling.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/video_style_thumbnail/internal_uploads/56634732-46de-45d5-b2b3-861da5ecfa9f.png",
+      "categories": [
+        "Entertainment",
+        "Lifestyle",
+        "Minimal"
+      ],
+      "url": "https://captions.ai/styles/story"
+    },
+    {
+      "id": "archive",
+      "name": "Archive",
+      "description": "Clean and timeless.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/archive_thumbnail.png",
+      "categories": [
+        "Minimal"
+      ],
+      "url": "https://captions.ai/styles/archive"
+    },
+    {
+      "id": "clarity",
+      "name": "Clarity",
+      "description": "Modern and playful.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/clarity_thumbnail.jpeg",
+      "categories": [
+        "Minimal"
+      ],
+      "url": "https://captions.ai/styles/clarity"
+    },
+    {
+      "id": "core",
+      "name": "Core",
+      "description": "Bold, clean style.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/core_thumbnail.jpg",
+      "categories": [
+        "Minimal"
+      ],
+      "url": "https://captions.ai/styles/core"
+    },
+    {
+      "id": "lumen",
+      "name": "Lumen",
+      "description": "Light and airy.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/lumen_thumbnail.JPG",
+      "categories": [
+        "Minimal"
+      ],
+      "url": "https://captions.ai/styles/lumen"
+    },
+    {
+      "id": "byline",
+      "name": "Byline",
+      "description": "Understated elegance.",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/ai_edit_byline_thumbnail.png",
+      "categories": [
+        "Polished"
+      ],
+      "url": "https://captions.ai/styles/byline"
+    }
+  ],
+  "home_templates": [
+    {
+      "id": "tour",
+      "name": "Tour",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/2d1f87288d10d187beb754534c57aacd26c89b47e4f66726219ac02253098005.jpg"
+    },
+    {
+      "id": "strategist",
+      "name": "Strategist",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/74ae53fb01e1c949c32b5aba1014dc951700ef78667a52e33aeb2c2d8d66efbf.jpg"
+    },
+    {
+      "id": "cozy",
+      "name": "Cozy",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/ad90b37eeb159a83604dd3ec0edac7a2d51983f0c81b3b7f2e17b6a622de44fe.jpg"
+    },
+    {
+      "id": "vox-style",
+      "name": "Vox-Style",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/bea76745631afc068fbebde27eee8c64c875843fa5ca76e4c78d7a735ddd2b37.jpg"
+    },
+    {
+      "id": "sequence",
+      "name": "Sequence",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/76571bed89079cf11c980c41019701760dab545221ad18fa533e42ed5b2a93da.jpg"
+    },
+    {
+      "id": "open-house",
+      "name": "Open House",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/573ccb20a6dc204adba217361b4233c5c1b1616523fd5c9ae4aa75ff222a8b75.jpg"
+    },
+    {
+      "id": "aura",
+      "name": "Aura",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/28817c075ff201b05fc1f344e43d3666b76a2a017590d862fb7cb376a21b1c3a.jpg"
+    },
+    {
+      "id": "bulletin",
+      "name": "Bulletin",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/c93bb0e41d365710ca213c94d620e9759fd16b0561d9631c1e80eb79f85a70d7.jpg"
+    },
+    {
+      "id": "tiles",
+      "name": "Tiles",
+      "thumbnail": "https://captions-cdn.xyz/ai-edit/tesseract-style-previews/0965d9f71b758f8622bd24624284269243882057fe1cb1e1a0def06d10c6b58b.jpg"
+    }
+  ]
+}
