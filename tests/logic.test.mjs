@@ -1,50 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import {
-  HOUR, DAY, MIN, reminderAction, freshReminderFields, urgency, humanDuration, computeStats, breakdown,
-} from '../app/js/logic.js';
+import { HOUR, DAY, MIN, urgency, humanDuration, computeStats, breakdown } from '../docs/js/logic.js';
 
 const now = new Date('2026-11-22T12:00:00').getTime();
 const task = (over = {}) => ({ id: 'x', title: 'تقرير', status: 'active', createdAt: now - DAY, dueAt: now + 2 * DAY, ...over });
-
-test('no reminder when more than 24h left', () => {
-  assert.equal(reminderAction(task(), now), null);
-});
-
-test('first reminder exactly when entering the last 24h', () => {
-  const r = reminderAction(task({ dueAt: now + DAY }), now);
-  assert.equal(r.kind, 'reminder');
-  assert.deepEqual(r.patch, { lastReminderAt: now });
-});
-
-test('reminder repeats hourly (with tolerance) until acknowledged', () => {
-  const t = task({ dueAt: now + 10 * HOUR, lastReminderAt: now - 30 * MIN });
-  assert.equal(reminderAction(t, now), null);
-  t.lastReminderAt = now - 56 * MIN;
-  assert.equal(reminderAction(t, now).kind, 'reminder');
-  t.reminderAck = true;
-  assert.equal(reminderAction(t, now), null);
-});
-
-test('overdue fires once, even if reminders were acknowledged', () => {
-  const t = task({ dueAt: now - MIN, reminderAck: true });
-  const r = reminderAction(t, now);
-  assert.equal(r.kind, 'overdue');
-  Object.assign(t, r.patch);
-  assert.equal(reminderAction(t, now + HOUR), null);
-});
-
-test('done tasks never notify', () => {
-  assert.equal(reminderAction(task({ status: 'done', dueAt: now - DAY }), now), null);
-});
-
-test('fresh fields delay first reminder by an hour inside the 24h window', () => {
-  const f = freshReminderFields(now + 5 * HOUR, now);
-  assert.equal(f.lastReminderAt, now);
-  assert.equal(reminderAction(task({ dueAt: now + 5 * HOUR, ...f }), now + 30 * MIN), null);
-  assert.equal(reminderAction(task({ dueAt: now + 5 * HOUR, ...f }), now + HOUR).kind, 'reminder');
-  assert.equal(freshReminderFields(now + 3 * DAY, now).lastReminderAt, null);
-});
 
 test('urgency levels', () => {
   assert.equal(urgency(task({ dueAt: now + 5 * DAY }), now), 'ok');

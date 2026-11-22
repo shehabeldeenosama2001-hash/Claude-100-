@@ -37,7 +37,7 @@ body {
 button, input, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 
-/* ———— Splash / Login ———— */
+/* ———— Splash ———— */
 .splash { position: fixed; inset: 0; display: grid; place-items: center; background: var(--bg); z-index: 50; }
 .logo-mark {
   width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
@@ -46,13 +46,6 @@ button { cursor: pointer; }
   box-shadow: 0 8px 24px -8px var(--accent);
 }
 .logo-mark.big { width: 84px; height: 84px; border-radius: 26px; font-size: 44px; }
-.login {
-  min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 14px; padding: 24px; text-align: center;
-}
-.login h1 { margin: 6px 0 0; font-size: 36px; }
-.login p { margin: 0; color: var(--muted); max-width: 340px; line-height: 1.8; }
-.login small { color: var(--muted); }
 
 /* ———— Layout ———— */
 .app { max-width: 780px; margin: 0 auto; padding: 0 16px calc(110px + env(safe-area-inset-bottom)); }
@@ -89,13 +82,6 @@ button { cursor: pointer; }
 
 .list { display: grid; gap: 12px; }
 .section-label { color: var(--muted); font-size: 13px; font-weight: 700; margin: 10px 4px 0; }
-
-/* ———— Banner ———— */
-.banner {
-  margin: 4px 0 14px; padding: 12px 14px; border-radius: 14px; font-size: 14px; line-height: 1.7;
-  background: color-mix(in srgb, var(--accent) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-  display: flex; align-items: center; gap: 12px; justify-content: space-between; flex-wrap: wrap;
-}
 
 /* ———— Task card ———— */
 .task {

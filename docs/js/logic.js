@@ -1,11 +1,8 @@
-// منطق "تاسكاتي" الصافي — من غير أي DOM — بيستخدمه التطبيق والمنبّه (notifier) الاتنين.
+// منطق "تاسكاتي" الصافي (من غير DOM) عشان يبقى سهل نختبره.
 
 export const MIN = 60 * 1000;
 export const HOUR = 60 * MIN;
 export const DAY = 24 * HOUR;
-
-/** المسافة اللي بنسمح بيها عشان المنبّه بيشتغل كل ~5 دقايق ومواعيده مش مظبوطة بالثانية */
-export const REMINDER_TOLERANCE = 5 * MIN;
 
 /** تقسيم الوقت الباقي لأيام وساعات ودقايق وثواني */
 export function breakdown(ms) {
@@ -59,57 +56,6 @@ export function humanDuration(ms) {
   if (!b.days && b.minutes) parts.push(plural(b.minutes, UNITS.minute));
   if (!parts.length) return 'أقل من دقيقة';
   return parts.slice(0, 2).join(' و ');
-}
-
-// ———— التذكيرات ————
-
-/**
- * بيقرر هل لازم نبعت إشعار للتاسك دي دلوقتي.
- * - آخر ٢٤ ساعة: تذكير كل ساعة لحد ما المستخدم يضغط "شفته" (reminderAck).
- * - لما الوقت يخلص: إشعار فوري مرة واحدة.
- * بيرجع null أو { kind, patch } — الـ patch يتحفظ على التاسك بعد الإرسال.
- */
-export function reminderAction(task, now = Date.now()) {
-  if (!task || task.status !== 'active') return null;
-  const left = task.dueAt - now;
-
-  if (left <= 0) {
-    return task.overdueSentAt ? null : { kind: 'overdue', patch: { overdueSentAt: now } };
-  }
-
-  if (left <= DAY && !task.reminderAck) {
-    const last = task.lastReminderAt || 0;
-    if (now - last >= HOUR - REMINDER_TOLERANCE) {
-      return { kind: 'reminder', patch: { lastReminderAt: now } };
-    }
-  }
-  return null;
-}
-
-/**
- * حقول التذكير لما تاسك تتعمل أو ميعادها يتغير.
- * لو التاسك أصلاً في آخر ٢٤ ساعة، أول تذكير بييجي بعد ساعة (مش فوراً وانت لسه كاتبها).
- */
-export function freshReminderFields(dueAt, now = Date.now()) {
-  return {
-    reminderAck: false,
-    overdueSentAt: null,
-    lastReminderAt: dueAt - now <= DAY ? now : null,
-  };
-}
-
-/** نص الإشعار */
-export function notificationText(kind, task, now = Date.now(), formatDate = (t) => new Date(t).toLocaleString('ar-EG')) {
-  if (kind === 'overdue') {
-    return {
-      title: `🚨 وقت «${task.title}» خلص!`,
-      body: `الديدلاين كان ${formatDate(task.dueAt)} — اتصرّف 💪`,
-    };
-  }
-  return {
-    title: `⏳ باقي ${humanDuration(task.dueAt - now)} على «${task.title}»`,
-    body: 'لسه مخلصتهاش. اضغط "شفته" عشان أوقف التذكير ده.',
-  };
 }
 
 // ———— الإحصائيات ————

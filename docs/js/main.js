@@ -1,8 +1,8 @@
-import { createStore, isConfigured } from './store.js';
-import { breakdown, urgency, remainingFraction, humanDuration, computeStats, reminderAction, notificationText, DAY } from './logic.js';
+import { LocalStore } from './store.js';
+import { breakdown, urgency, remainingFraction, humanDuration, computeStats, DAY } from './logic.js';
 
 const $ = (s, el = document) => el.querySelector(s);
-const store = createStore();
+const store = new LocalStore();
 let tasks = [];
 let editingId = null;
 let deferredInstall = null;
@@ -42,7 +42,6 @@ function countdownHTML(t, now) {
 
 function taskCard(t, now) {
   const level = urgency(t, now);
-  const showAck = level === 'urgent' && !t.reminderAck;
   return `
   <article class="task" data-id="${t.id}" data-level="${level}">
     <div class="task-head">
@@ -57,7 +56,6 @@ function taskCard(t, now) {
     ${t.notes ? `<p class="notes">${esc(t.notes)}</p>` : ''}
     <div class="actions">
       <button class="btn done" data-act="done">✓ خلّصتها</button>
-      ${showAck ? '<button class="btn sm" data-act="ack" title="يوقف تذكير كل ساعة">🔕 شفته</button>' : ''}
       <span class="spacer"></span>
       <button class="icon-btn" data-act="edit" title="تعديل" aria-label="تعديل">✏️</button>
       <button class="icon-btn" data-act="delete" title="حذف" aria-label="حذف">🗑</button>
@@ -165,92 +163,60 @@ function renderStats() {
 }
 
 // ———————————— الإعدادات ————————————
-const perm = () => ('Notification' in self ? Notification.permission : 'unsupported');
-
-function pushState() {
-  if (perm() === 'unsupported') return { label: 'مش مدعوم', cls: 'off' };
-  if (perm() === 'granted') return { label: 'شغّالة', cls: 'on' };
-  if (perm() === 'denied') return { label: 'مقفولة', cls: 'off' };
-  return { label: 'مش متفعّلة', cls: '' };
-}
-
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 const isStandalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 
 function renderSettings() {
-  const p = pushState();
-  const u = store.user || {};
+  const total = tasks.length;
   $('#settings').innerHTML = `
     <div class="panel">
-      <h3>الحساب</h3>
-      <div class="set-row">
-        <div><strong>${esc(u.displayName || u.email || '')}</strong>
-          <p>${store.mode === 'firebase' ? 'متزامن على كل أجهزتك اللي داخل منها بنفس الحساب ☁️' : 'وضع التجربة: التاسكات محفوظة على الجهاز ده بس. وصّل Firebase عشان المزامنة (شوف README).'}</p></div>
-        ${store.mode === 'firebase' ? '<button class="btn sm" id="signout">خروج</button>' : '<span class="pill">محلي</span>'}
-      </div>
-    </div>
-    <div class="panel">
-      <h3>الإشعارات</h3>
-      <div class="set-row">
-        <div><strong>إشعارات برّا التطبيق</strong>
-          <p>تذكير كل ساعة في آخر ٢٤ ساعة لحد ما تضغط "شفته"، وإشعار فوري لما الوقت يخلص.</p></div>
-        <span class="pill ${p.cls}">${p.label}</span>
-      </div>
-      <div class="set-row">
-        <button class="btn primary" id="enable-push">🔔 ${perm() === 'granted' ? 'سجّل الجهاز ده تاني' : 'فعّل الإشعارات على الجهاز ده'}</button>
-        <button class="btn" id="test-push">جرّب إشعار</button>
-      </div>
-      ${perm() === 'denied' ? '<p class="hint">الإشعارات مقفولة من المتصفح. افتح إعدادات الموقع (القفل 🔒 جنب العنوان) وخلّي الإشعارات "سماح".</p>' : ''}
-      ${store.mode === 'local' ? '<p class="hint">⚠️ في وضع التجربة التذكيرات بتشتغل بس والتطبيق مفتوح. بعد توصيل Firebase هتوصلك حتى والتطبيق مقفول.</p>' : ''}
-    </div>
-    <div class="panel">
-      <h3>سطّب التطبيق</h3>
-      ${deferredInstall ? '<div class="set-row"><div><strong>سطّبه كبرنامج</strong><p>يفتح لوحده من غير المتصفح ويبقى ليه أيقونة.</p></div><button class="btn primary" id="install">سطّب</button></div>' : ''}
+      <h3>سطّب التطبيق على الموبايل</h3>
+      ${deferredInstall ? '<div class="set-row"><div><strong>سطّبه بضغطة</strong><p>هيبقى ليه أيقونة ويفتح لوحده من غير المتصفح.</p></div><button class="btn primary" id="install">سطّب</button></div>' : ''}
       ${isStandalone ? '<p class="hint">✅ التطبيق متسطّب على الجهاز ده.</p>' : `
         <p class="hint">
-          <b>آيفون:</b> افتحه من Safari ← زرار المشاركة ⬆️ ← <b>Add to Home Screen</b>. (لازم تسطّبه عشان الإشعارات تشتغل على الآيفون.)<br/>
-          <b>أندرويد:</b> من Chrome ← ⋮ ← <b>Install app / إضافة إلى الشاشة الرئيسية</b>.<br/>
-          <b>اللاب:</b> من Chrome أو Edge ← أيقونة التسطيب ⊕ في شريط العنوان.
+          ${isIOS ? '' : '<b>أندرويد:</b> من Chrome ← ⋮ ← <b>Install app</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.<br/>'}
+          <b>آيفون:</b> من Safari ← زرار المشاركة ⬆️ ← <b>Add to Home Screen</b>.
         </p>`}
+    </div>
+    <div class="panel">
+      <h3>بياناتك</h3>
+      <div class="set-row">
+        <div><strong>محفوظة على الموبايل ده بس 🔒</strong>
+          <p>مش متربطة بأي حساب أو سيرفر. عندك ${n2(total)} تاسك (منهم في الأرشيف ${n2(tasks.filter((t) => t.status === 'done').length)}).</p></div>
+      </div>
+      <div class="set-row">
+        <div><strong>نسخة احتياطية</strong>
+          <p>لو مسحت بيانات المتصفح أو غيّرت الموبايل التاسكات هتضيع. خد نسخة كل فترة واحتفظ بيها.</p></div>
+      </div>
+      <div class="set-row">
+        <button class="btn primary" id="export">⬇️ حفظ نسخة</button>
+        <button class="btn" id="import">⬆️ استرجاع نسخة</button>
+        <input type="file" id="import-file" accept="application/json,.json" hidden />
+      </div>
     </div>`;
 
-  $('#signout')?.addEventListener('click', () => store.signOut());
   $('#install')?.addEventListener('click', async () => { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall = null; renderSettings(); });
-  $('#enable-push').addEventListener('click', enablePush);
-  $('#test-push').addEventListener('click', async () => {
-    if (perm() !== 'granted') return toast('فعّل الإشعارات الأول');
-    await showLocalNotification({ kind: 'test', title: '👋 أهلاً من تاسكاتي', body: 'الإشعارات شغّالة تمام.' });
+  $('#export').addEventListener('click', exportBackup);
+  $('#import').addEventListener('click', () => $('#import-file').click());
+  $('#import-file').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try { toast(`رجّعت ${n2(store.importJSON(await file.text()))} تاسك ✅`); } catch (err) { toast(err.message || 'الملف ده مش سليم'); }
   });
 }
 
-async function enablePush() {
-  if (isIOS && !isStandalone) return toast('على الآيفون لازم تسطّب التطبيق الأول (Add to Home Screen)');
-  try {
-    const res = await store.enablePush();
-    toast(res === 'granted' ? 'تمام! الجهاز ده هيوصله الإشعارات 🔔' : 'لازم توافق على الإشعارات من المتصفح');
-  } catch (e) {
-    console.error(e);
-    toast(e.message || 'حصلت مشكلة في تفعيل الإشعارات');
+async function exportBackup() {
+  const json = store.exportJSON();
+  const name = `taskaty-${new Date().toISOString().slice(0, 10)}.json`;
+  const file = new File([json], name, { type: 'application/json' });
+  // على الموبايل نفتح قايمة المشاركة (تبعتها لنفسك على واتساب/درايف)، ولو مش متاحة ننزّلها
+  if (navigator.canShare?.({ files: [file] })) {
+    try { await navigator.share({ files: [file], title: 'نسخة تاسكاتي' }); return; } catch (e) { if (e.name === 'AbortError') return; }
   }
-  renderSettings();
-  renderBanner();
-}
-
-async function showLocalNotification(payload) {
-  const reg = await navigator.serviceWorker?.ready;
-  if (reg?.active) reg.active.postMessage({ type: 'notify', payload });
-  else new Notification(payload.title, { body: payload.body, dir: 'rtl' });
-}
-
-function renderBanner() {
-  const b = $('#banner');
-  if (perm() === 'default') {
-    b.innerHTML = '<span>🔔 فعّل الإشعارات عشان أفكّرك قبل الديدلاين وأقولك لو الوقت خلص.</span><button class="btn sm primary" id="banner-push">فعّل</button>';
-    b.hidden = false;
-    $('#banner-push').onclick = enablePush;
-  } else {
-    b.hidden = true;
-  }
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(file), download: name });
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  toast('اتحفظت النسخة ✅');
 }
 
 // ———————————— التنقّل ————————————
@@ -333,7 +299,6 @@ async function act(action, id) {
   if (!t) return;
   switch (action) {
     case 'done': await store.update(id, { status: 'done' }); toast('عاش! 🎉 اتنقلت للأرشيف'); break;
-    case 'ack': await store.update(id, { reminderAck: true }); toast('تمام، مش هفكّرك تاني بيها 🔕'); break;
     case 'edit': openEditor(t); break;
     case 'restore': await store.update(id, { status: 'active' }); toast('رجعت للتاسكات'); break;
     case 'delete':
@@ -354,60 +319,12 @@ $('#fab').addEventListener('click', () => openEditor());
 
 addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstall = e; if (currentView === 'settings') renderSettings(); });
 
-/** الضغط على الإشعار (من الـ SW أو من رابط ?ack= / ?done=) */
-let pendingAction = null;
-function handleNotificationAction(action, taskId) {
-  if (!taskId) return;
-  if (!tasks.length) { pendingAction = [action, taskId]; return; }
-  const t = tasks.find((x) => x.id === taskId);
-  if (!t || t.status !== 'active') return;
-  if (action === 'done') act('done', taskId);
-  else if (!t.reminderAck && t.dueAt > Date.now()) store.update(taskId, { reminderAck: true });
-  show('tasks');
-  requestAnimationFrame(() => document.querySelector(`.task[data-id="${CSS.escape(taskId)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
-}
-navigator.serviceWorker?.addEventListener('message', (e) => {
-  if (e.data?.type === 'notification-click') handleNotificationAction(e.data.action, e.data.taskId);
-});
-
-// ———————————— التذكيرات في وضع التجربة ————————————
-// (مع Firebase المنبّه اللي على GitHub هو اللي بيبعت، عشان توصل والتطبيق مقفول)
-async function localReminderLoop() {
-  if (store.mode !== 'local' || perm() !== 'granted') return;
-  const now = Date.now();
-  for (const t of tasks) {
-    const a = reminderAction(t, now);
-    if (!a) continue;
-    await store.update(t.id, a.patch);
-    await showLocalNotification({ kind: a.kind, taskId: t.id, ...notificationText(a.kind, t, now, (x) => fmtDate.format(x)) });
-  }
-}
-
 // ———————————— البداية ————————————
-async function boot() {
+function boot() {
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch((e) => console.warn('SW', e));
-
-  let user;
-  try { user = await store.init(); } catch (e) {
-    console.error(e);
-    $('#splash').innerHTML = '<p style="padding:24px;text-align:center">مش قادر أوصل لـ Firebase. اتأكد من النت ومن الإعدادات في firebase-config.js</p>';
-    return;
-  }
+  store.init();
   $('#splash').hidden = true;
-
-  if (isConfigured && !user) {
-    $('#login').hidden = false;
-    $('#signin').addEventListener('click', () => store.signIn().catch((e) => toast(e.message)));
-    return;
-  }
-
   $('#app').hidden = false;
-
-  const params = new URLSearchParams(location.search);
-  if (params.has('ack') || params.has('done')) {
-    pendingAction = [params.has('done') ? 'done' : 'ack', params.get('done') || params.get('ack')];
-    history.replaceState(null, '', location.pathname);
-  }
 
   let first = true;
   store.subscribe((list) => {
@@ -420,16 +337,8 @@ async function boot() {
     } else {
       renderAll();
     }
-    if (pendingAction && tasks.length) { const [a, id] = pendingAction; pendingAction = null; handleNotificationAction(a, id); }
   });
-
-  renderBanner();
-  // نجدّد تسجيل الجهاز بهدوء (التوكن بيتغير كل فترة)
-  if (store.mode === 'firebase' && perm() === 'granted') store.enablePush().catch(() => {});
-
   setInterval(tick, 1000);
-  setInterval(localReminderLoop, 30 * 1000);
-  localReminderLoop();
 }
 
 boot();
