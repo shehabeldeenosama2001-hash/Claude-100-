@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>تاسكاتي</title>
+  <meta name="description" content="سجّل تاسكاتك واعرف باقي قد إيه على كل ديدلاين" />
+  <meta name="theme-color" content="#0e1016" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="تاسكاتي" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/firebase-config.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <div id="splash" class="splash"><div class="logo-mark big">✓</div></div>
+
+  <!-- شاشة الدخول (Firebase) -->
+  <section id="login" class="login" hidden>
+    <div class="logo-mark big">✓</div>
+    <h1>تاسكاتي</h1>
+    <p>كل تاسكاتك في مكان واحد، على اللاب والموبايل، ومعاك عدّاد لكل ديدلاين.</p>
+    <button id="signin" class="btn primary lg">
+      <svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+      ادخل بحساب جوجل
+    </button>
+    <small>نفس الحساب على كل أجهزتك = نفس التاسكات</small>
+  </section>
+
+  <!-- التطبيق -->
+  <div id="app" class="app" hidden>
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo-mark">✓</div>
+        <div>
+          <h1>تاسكاتي</h1>
+          <p id="summary" class="summary"></p>
+        </div>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-view="tasks" class="active"><span class="ico">☰</span><span>التاسكات</span></button>
+        <button role="tab" data-view="archive"><span class="ico">🗂</span><span>الأرشيف</span></button>
+        <button role="tab" data-view="stats"><span class="ico">📊</span><span>إحصائيات</span></button>
+        <button role="tab" data-view="settings"><span class="ico">⚙︎</span><span>الإعدادات</span></button>
+      </nav>
+    </header>
+
+    <div id="banner" class="banner" hidden></div>
+
+    <main>
+      <section id="view-tasks" class="view active">
+        <div id="task-list" class="list"></div>
+      </section>
+      <section id="view-archive" class="view">
+        <div id="archive-list" class="list"></div>
+      </section>
+      <section id="view-stats" class="view">
+        <div id="stats"></div>
+      </section>
+      <section id="view-settings" class="view">
+        <div id="settings"></div>
+      </section>
+    </main>
+
+    <button id="fab" class="fab" aria-label="تاسك جديدة">+</button>
+  </div>
+
+  <!-- إضافة / تعديل -->
+  <dialog id="editor" class="sheet">
+    <form id="task-form" method="dialog" novalidate>
+      <header class="sheet-head">
+        <h2 id="editor-title">تاسك جديدة</h2>
+        <button type="button" class="icon-btn" data-close aria-label="إغلاق">✕</button>
+      </header>
+      <label class="field">
+        <span>اسم التاسك</span>
+        <input name="title" required maxlength="120" placeholder="مثلاً: تسليم تقرير المشروع" autocomplete="off" />
+      </label>
+      <div class="row">
+        <label class="field">
+          <span>تاريخ التسليم</span>
+          <input name="date" type="date" required />
+        </label>
+        <label class="field">
+          <span>الساعة <em>(اختياري)</em></span>
+          <input name="time" type="time" />
+        </label>
+      </div>
+      <div class="quick">
+        <button type="button" data-quick="0">النهارده</button>
+        <button type="button" data-quick="1">بكرة</button>
+        <button type="button" data-quick="3">بعد ٣ أيام</button>
+        <button type="button" data-quick="7">بعد أسبوع</button>
+      </div>
+      <label class="field">
+        <span>ملاحظات</span>
+        <textarea name="notes" rows="3" maxlength="2000" placeholder="أي تفاصيل عايز تفتكرها…"></textarea>
+      </label>
+      <p id="form-error" class="form-error" hidden></p>
+      <footer class="sheet-foot">
+        <button type="submit" class="btn primary">حفظ</button>
+        <button type="button" class="btn ghost" data-close>إلغاء</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

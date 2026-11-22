@@ -1,0 +1,7 @@
+{
+  "name": "taskaty-notifier",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node index.mjs" },
+  "dependencies": { "firebase-admin": "^12.7.0" }
+}
