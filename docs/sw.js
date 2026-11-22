@@ -1,5 +1,5 @@
 // Service Worker: بيخلّي التطبيق يفتح من غير نت.
-const CACHE = 'taskaty-v2';
+const CACHE = 'taskaty-v3';
 const SHELL = [
   './', './index.html', './css/style.css', './js/main.js', './js/logic.js', './js/store.js',
   './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png',

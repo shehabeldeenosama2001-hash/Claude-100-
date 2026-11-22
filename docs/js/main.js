@@ -1,8 +1,8 @@
-import { LocalStore } from './store.js';
+import { createStore } from './store.js';
 import { breakdown, urgency, remainingFraction, humanDuration, computeStats, DAY } from './logic.js';
 
 const $ = (s, el = document) => el.querySelector(s);
-const store = new LocalStore();
+let store;
 let tasks = [];
 let editingId = null;
 let deferredInstall = null;
@@ -181,9 +181,10 @@ function renderSettings() {
     <div class="panel">
       <h3>بياناتك</h3>
       <div class="set-row">
-        <div><strong>محفوظة على الموبايل ده بس 🔒</strong>
-          <p>مش متربطة بأي حساب أو سيرفر. عندك ${n2(total)} تاسك (منهم في الأرشيف ${n2(tasks.filter((t) => t.status === 'done').length)}).</p></div>
+        <div><strong>${store.kind === 'cloud' ? 'محفوظة في حسابك ☁️🔒' : 'محفوظة على الموبايل ده بس 🔒'}</strong>
+          <p>${store.kind === 'cloud' ? 'محدش غيرك يقدر يشوفها، ومش هتضيع لو مسحت بيانات المتصفح.' : 'مش متربطة بأي حساب أو سيرفر.'} عندك ${n2(total)} تاسك (منهم في الأرشيف ${n2(tasks.filter((t) => t.status === 'done').length)}).</p></div>
       </div>
+      ${store.canExport ? `
       <div class="set-row">
         <div><strong>نسخة احتياطية</strong>
           <p>لو مسحت بيانات المتصفح أو غيّرت الموبايل التاسكات هتضيع. خد نسخة كل فترة واحتفظ بيها.</p></div>
@@ -192,16 +193,16 @@ function renderSettings() {
         <button class="btn primary" id="export">⬇️ حفظ نسخة</button>
         <button class="btn" id="import">⬆️ استرجاع نسخة</button>
         <input type="file" id="import-file" accept="application/json,.json" hidden />
-      </div>
+      </div>` : ''}
     </div>`;
 
   $('#install')?.addEventListener('click', async () => { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall = null; renderSettings(); });
-  $('#export').addEventListener('click', exportBackup);
-  $('#import').addEventListener('click', () => $('#import-file').click());
-  $('#import-file').addEventListener('change', async (e) => {
+  $('#export')?.addEventListener('click', exportBackup);
+  $('#import')?.addEventListener('click', () => $('#import-file').click());
+  $('#import-file')?.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    try { toast(`رجّعت ${n2(store.importJSON(await file.text()))} تاسك ✅`); } catch (err) { toast(err.message || 'الملف ده مش سليم'); }
+    try { toast(`رجّعت ${n2(await store.importJSON(await file.text()))} تاسك ✅`); } catch (err) { toast(err.message || 'الملف ده مش سليم'); }
   });
 }
 
@@ -293,6 +294,16 @@ document.querySelectorAll('[data-quick]').forEach((b) => b.addEventListener('cli
   $('#task-form').date.value = toDateInput(d);
 }));
 
+// ———————————— تأكيد الحذف ————————————
+function askConfirm(message) {
+  const dlg = $('#confirm');
+  $('#confirm-msg').textContent = message;
+  dlg.showModal();
+  return new Promise((resolve) => {
+    dlg.addEventListener('close', () => resolve(dlg.returnValue === 'yes'), { once: true });
+  });
+}
+
 // ———————————— الأحداث ————————————
 async function act(action, id) {
   const t = tasks.find((x) => x.id === id);
@@ -302,7 +313,7 @@ async function act(action, id) {
     case 'edit': openEditor(t); break;
     case 'restore': await store.update(id, { status: 'active' }); toast('رجعت للتاسكات'); break;
     case 'delete':
-      if (confirm(`تمسح «${t.title}» نهائي؟`)) { await store.remove(id); toast('اتمسحت'); }
+      if (await askConfirm(`تمسح «${t.title}» نهائي؟`)) { await store.remove(id); toast('اتمسحت'); }
       break;
   }
 }
@@ -320,9 +331,10 @@ $('#fab').addEventListener('click', () => openEditor());
 addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstall = e; if (currentView === 'settings') renderSettings(); });
 
 // ———————————— البداية ————————————
-function boot() {
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch((e) => console.warn('SW', e));
-  store.init();
+async function boot() {
+  if ('serviceWorker' in navigator && !self.TASKATY_EMBEDDED) navigator.serviceWorker.register('sw.js').catch((e) => console.warn('SW', e));
+  store = await createStore();
+  await store.init();
   $('#splash').hidden = true;
   $('#app').hidden = false;
 

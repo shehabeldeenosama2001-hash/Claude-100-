@@ -2,6 +2,8 @@
 const KEY = 'taskaty.tasks.v1';
 
 export class LocalStore {
+  kind = 'local';
+  canExport = true;
   #listeners = new Set();
   #tasks = [];
 
@@ -51,4 +53,8 @@ export class LocalStore {
     this.#save();
     return valid.length;
   }
+}
+
+export async function createStore() {
+  return new LocalStore();
 }

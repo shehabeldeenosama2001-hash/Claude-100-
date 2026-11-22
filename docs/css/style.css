@@ -139,6 +139,9 @@ button { cursor: pointer; }
 .btn.done { background: color-mix(in srgb, var(--ok) 16%, var(--surface-2)); border-color: color-mix(in srgb, var(--ok) 35%, transparent); color: var(--ok); }
 .btn.warn { color: var(--urgent); }
 .btn.ghost { background: transparent; }
+.btn.danger { background: var(--overdue); border-color: transparent; color: #fff; flex: 1; padding: 11px; }
+.confirm { width: min(380px, 100% - 32px); }
+.confirm p { margin: 0; font-size: 16px; font-weight: 700; line-height: 1.7; }
 .btn.lg { padding: 12px 22px; font-size: 16px; border-radius: 14px; }
 .btn.sm { padding: 6px 10px; font-size: 13px; }
 .actions .spacer { flex: 1; }
